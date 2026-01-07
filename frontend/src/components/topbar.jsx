@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import '../styles/topbar.css'
 import { FaSearch, FaPlus, FaChevronDown } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
@@ -129,15 +129,19 @@ export default function Topbar() {
         {productsOpen && (
           <div className="products-dropdown">
             <div className="dropdown-content">
-              {productCategories.map((category, index) => (
-                <a 
-                  key={index} 
-                  href={`/products/${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                  className="dropdown-item"
-                >
-                  {category}
-                </a>
-              ))}
+              {productCategories.map((category, index) => {
+                const categorySlug = category.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+                return (
+                  <Link 
+                    key={index} 
+                    to={`/products?category=${categorySlug}`}
+                    className="dropdown-item"
+                    onClick={() => setProductsOpen(false)}
+                  >
+                    {category}
+                  </Link>
+                )
+              })}
             </div>
           </div>
         )}

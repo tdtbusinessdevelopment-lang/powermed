@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
 import '../styles/products.css'
 
@@ -12,6 +13,7 @@ export default function Products() {
     'Sexual Wellness Peptides',
     'Fat Burner Injectables (Not Peptides)',
     'Hormones & Growth Factors (Not Peptides)',
+    'Injectable Pens',
     'Vitamins, Cofactors & Others'
   ]
 
@@ -58,9 +60,29 @@ export default function Products() {
     }
   ]
 
+  const [searchParams, setSearchParams] = useSearchParams()
   const [activeCategory, setActiveCategory] = useState(0)
   const [filtersExpanded, setFiltersExpanded] = useState(filterGroups.map(fg => fg.expanded))
   const [selectedFilters, setSelectedFilters] = useState({})
+
+  // Function to convert category name to slug (matching topbar logic)
+  const categoryToSlug = (categoryName) => {
+    return categoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+  }
+
+  // Set active category from URL parameter on mount
+  useEffect(() => {
+    const categoryParam = searchParams.get('category')
+    if (categoryParam) {
+      // Find the category index that matches the slug
+      const categoryIndex = categories.findIndex(cat => 
+        categoryToSlug(cat) === categoryParam
+      )
+      if (categoryIndex !== -1) {
+        setActiveCategory(categoryIndex)
+      }
+    }
+  }, [searchParams, categories])
 
   // All products organized by category
   const allProducts = [
@@ -480,6 +502,9 @@ export default function Products() {
 
   const handleCategoryClick = (index) => {
     setActiveCategory(index)
+    // Update URL with the selected category slug
+    const categorySlug = categoryToSlug(categories[index])
+    setSearchParams({ category: categorySlug })
   }
 
   const toggleFilterGroup = (index) => {
