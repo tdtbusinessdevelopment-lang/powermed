@@ -12,6 +12,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Kufam';
+  src: url('../assets/fonts/Kufam-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 :root{
   --red: #FF3233;
   --dark-red: #CC2627;
@@ -24,3 +31,126 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.hero-content {
+  position: relative;
+}
+
+.hero-background img {
+  width: 80%;
+  margin-left: 290px;
+  display: block;
+}
+
+.hero-text {
+  position: absolute;
+  top: 0;              
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 60px;    
+  margin-top: 20px;  
+}
+
+
+.hero-tagline {
+  font-family: 'Kufam', sans-serif;
+  font-size: 3.5rem;
+  font-weight: bold;
+  line-height: 1.4;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.tagline-line-1,
+.tagline-line-2,
+.tagline-line-3 {
+  display: block;
+  font-size: 64px;
+  text-align: left;
+}
+
+.tagline-power {
+  color: #02989E;
+}
+
+.tagline-m {
+  color: #FF3233;
+}
+
+.tagline-ed {
+  color: #02989E;
+}
+
+.hero-text p{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  width: 650px;
+  padding: 20px 0;
+  line-height: 1.6;
+}
+
+.shop-now-btn {
+  width: fit-content;
+  padding: 10px 2rem;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  background-color: transparent;
+  border: 3px solid #4A9E9E;
+  border-radius: 30px;
+  color: #FF3233;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  margin-bottom: 90px;
+}
+
+.shop-now-btn:hover {
+  background-color: #4A9E9E;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 158, 158, 0.3);
+}
+
+
+
+.slide-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 10px;
+  width: 100%;
+}
+
+.slide-text {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; 
+}
+
+.slide-image {
+  width: 20px; 
+  height: 20px;
+  flex-shrink: 0; 
+}
+
+.slide-text h3 {
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: left;
+  margin: 0;
+}
+

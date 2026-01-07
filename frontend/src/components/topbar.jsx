@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import '../styles/topbar.css'
 import { FaSearch, FaPlus, FaChevronDown } from 'react-icons/fa'
@@ -10,6 +10,20 @@ export default function Topbar() {
   const [searchFocused, setSearchFocused] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
   const [productsHover, setProductsHover] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -52,7 +66,7 @@ export default function Topbar() {
     <div className="topbar-wrapper">
         {/* Utility Bar */}
         <div className="utility-bar">
-            <div className="utility-bar-top">
+            <div className={`utility-bar-top ${isScrolled ? 'hidden' : ''}`}>
                 <p>Welcome to Powermed</p>
             </div>
             <div className="utility-bar-bottom">
@@ -153,7 +167,7 @@ export default function Topbar() {
         onClick={toggleSearch}
       />
       
-      <div className={`search-bar-expanded ${searchOpen ? 'active' : ''} ${searchFocused ? 'focused' : ''}`}>
+      <div className={`search-bar-expanded ${searchOpen ? 'active' : ''} ${searchFocused ? 'focused' : ''} ${isScrolled ? 'scrolled' : ''}`}>
         <input
           type="text"
           placeholder="Search"
