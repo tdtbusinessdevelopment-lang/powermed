@@ -1,16 +1,83 @@
-# React + Vite
+# PowerMed Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for PowerMed e-commerce platform built with React and Vite.
 
-Currently, two official plugins are available:
+## Setup Instructions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Install Dependencies
 
-## React Compiler
+```bash
+npm install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 2. Environment Variables (Optional)
 
-## Expanding the ESLint configuration
+Create a `.env` file in the `frontend` directory:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```env
+# Backend API URL
+VITE_API_URL=http://localhost:5001/api
+```
+
+**Important Notes:**
+- In Vite, environment variables must be prefixed with `VITE_` to be accessible in client-side code
+- If you don't create this file, the app will use the default: `http://localhost:5001/api`
+- For production, update `VITE_API_URL` to your production API URL
+- After creating/updating `.env`, restart the dev server
+
+### 3. Start Development Server
+
+```bash
+npm run dev
+```
+
+The application will run on `http://localhost:5173` (or the next available port).
+
+### 4. Build for Production
+
+```bash
+npm run build
+```
+
+The production build will be in the `dist` directory.
+
+## API Integration
+
+The frontend uses the API utility functions located in `src/utils/api.js`:
+
+```javascript
+import { categoryAPI, productAPI } from './utils/api';
+
+// Get all categories
+const categories = await categoryAPI.getAll();
+
+// Get all products
+const products = await productAPI.getAll();
+
+// Get products by category
+const products = await productAPI.getAll({ category: 'category_id' });
+
+// Create a product
+const newProduct = await productAPI.create(productData, imageFile);
+```
+
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/      # Reusable components
+│   ├── pages/          # Page components
+│   ├── styles/         # CSS files
+│   ├── utils/          # Utility functions (API, helpers)
+│   └── assets/         # Static assets (images, fonts)
+├── public/             # Public assets
+└── package.json
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint

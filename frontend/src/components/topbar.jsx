@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import '../styles/topbar.css'
 import { FaSearch, FaPlus, FaChevronDown } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
+import { categoryAPI } from '../utils/api'
 
 export default function Topbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -10,6 +11,7 @@ export default function Topbar() {
   const [searchFocused, setSearchFocused] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
   const [productsHover, setProductsHover] = useState(false)
+<<<<<<< Updated upstream
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -24,6 +26,25 @@ export default function Topbar() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+=======
+  const [productCategories, setProductCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+
+  const fetchCategories = async () => {
+    try {
+      const categories = await categoryAPI.getAll()
+      setProductCategories(categories)
+    } catch (error) {
+      console.error('Failed to load categories:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+>>>>>>> Stashed changes
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -49,18 +70,10 @@ export default function Topbar() {
     setProductsOpen(!productsOpen)
   }
 
-  const productCategories = [
-    "Weight Management & Metabolic Support Peptides",
-    "Regenerative, Repair & Anti-Aging Peptides",
-    "Growth Hormone–Modulating Peptides",
-    "Cognitive, Mood & Stress Support Peptides",
-    "Skin, Beauty & Cosmetic Peptides",
-    "Sexual Wellness Peptides",
-    "Fat Burner Injectables (Not Peptides)",
-    "Hormones & Growth Factors (Not Peptides)",
-    "Vitamins, Cofactors & Others",
-    "Injectable Pens"
-  ]
+  // Function to convert category name to slug
+  const categoryToSlug = (categoryName) => {
+    return categoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+  }
 
   return (
     <div className="topbar-wrapper">
@@ -143,19 +156,25 @@ export default function Topbar() {
         {productsOpen && (
           <div className="products-dropdown">
             <div className="dropdown-content">
-              {productCategories.map((category, index) => {
-                const categorySlug = category.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-                return (
-                  <Link 
-                    key={index} 
-                    to={`/products?category=${categorySlug}`}
-                    className="dropdown-item"
-                    onClick={() => setProductsOpen(false)}
-                  >
-                    {category}
-                  </Link>
-                )
-              })}
+              {loading ? (
+                <div className="dropdown-item">Loading categories...</div>
+              ) : productCategories.length === 0 ? (
+                <div className="dropdown-item">No categories available</div>
+              ) : (
+                productCategories.map((category) => {
+                  const categorySlug = categoryToSlug(category.name)
+                  return (
+                    <Link 
+                      key={category._id} 
+                      to={`/products?category=${categorySlug}`}
+                      className="dropdown-item"
+                      onClick={() => setProductsOpen(false)}
+                    >
+                      {category.name}
+                    </Link>
+                  )
+                })
+              )}
             </div>
           </div>
         )}
