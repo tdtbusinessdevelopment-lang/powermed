@@ -12,6 +12,7 @@ export default function Topbar() {
   const [productsOpen, setProductsOpen] = useState(false)
   const [productsHover, setProductsHover] = useState(false)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -27,6 +28,8 @@ export default function Topbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 =======
+=======
+>>>>>>> Stashed changes
   const [productCategories, setProductCategories] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -44,6 +47,9 @@ export default function Topbar() {
       setLoading(false)
     }
   }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
   const toggleMobileMenu = () => {
