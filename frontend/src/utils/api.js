@@ -10,19 +10,32 @@ const getToken = () => {
 // Helper function for API calls
 const apiCall = async (endpoint, options = {}) => {
   const token = getToken();
-  const headers = {
-    'Content-Type': 'application/json',
-    ...options.headers,
-  };
-
+  
+  // Build headers - don't set Content-Type for FormData (browser will set it with boundary)
+  const headers = {};
+  
+  // Only set Content-Type if not using FormData
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json';
+  }
+  
+  // Merge any custom headers from options
+  if (options.headers) {
+    Object.assign(headers, options.headers);
+  }
+  
+  // Always add Authorization if token exists
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
+  // Remove headers from options to avoid override
+  const { headers: _, ...fetchOptions } = options;
+
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      ...fetchOptions,
       headers,
-      ...options,
     });
 
     if (!response.ok) {
@@ -109,7 +122,6 @@ export const productAPI = {
 
     return apiCall('/products', {
       method: 'POST',
-      headers: {}, // Let browser set Content-Type with boundary for FormData
       body: formData,
     });
   },
@@ -132,7 +144,6 @@ export const productAPI = {
 
     return apiCall(`/products/${id}`, {
       method: 'PUT',
-      headers: {}, // Let browser set Content-Type with boundary for FormData
       body: formData,
     });
   },

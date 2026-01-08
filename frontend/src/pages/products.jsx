@@ -299,7 +299,7 @@ export default function Products() {
                       style={{ display: product.image ? 'none' : 'block' }}
                     ></div>
                     <div className="product-brand">{product.brand || 'PowerMed'}</div>
-                    <div className="product-price">starts at ${formatPrice(product.price)}</div>
+                    <div className="product-price">starts at ₱{formatPrice(product.price)}</div>
                     <h4 className="product-title">{product.name}</h4>
                     <p className="product-category-type">{product.categoryType || ''}</p>
                     <p className="product-description">{product.description || ''}</p>
