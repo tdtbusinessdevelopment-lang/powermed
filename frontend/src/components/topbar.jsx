@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import '../styles/topbar.css'
 import { FaSearch, FaPlus, FaChevronDown } from 'react-icons/fa'
+import { BsBag } from 'react-icons/bs'
 import { IoClose } from 'react-icons/io5'
 import { categoryAPI } from '../utils/api'
 
@@ -12,8 +13,8 @@ export default function Topbar() {
   const [productsOpen, setProductsOpen] = useState(false)
   const [productsHover, setProductsHover] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [productCategories, setProductCategories] = useState([])
+  const [productCategories, setProductCategories] = useState([]) // Add this
+  const [loading, setLoading] = useState(false) // Add this
 
   // Track scroll position
   useEffect(() => {
@@ -86,7 +87,9 @@ export default function Topbar() {
 
         {/* Logo */}
         <div className="logo">
+          <Link to="/">
             <img src="https://figmage.com/images/FT6UQOqUgEyM0ZPmMvU6W.png" alt="powermed logo" />
+          </Link>
         </div>
 
         {/* Header with Dropdown */}
@@ -145,10 +148,13 @@ export default function Topbar() {
                       </button>
                   </div>
 
-                  <Link to="/products">
-                    <button className="view-btn">View Products</button>
+                  <button className="view-btn">View Products</button>
+
+                  <Link to="/cart" className="cart-btn">
+                    <BsBag />
                   </Link>
               </div>
+              
         </header>
 
         {/* Products Dropdown Menu - MOVED INSIDE header-container */}

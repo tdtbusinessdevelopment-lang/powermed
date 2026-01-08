@@ -143,6 +143,8 @@
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   margin-top: 10px;
+  max-height: 80vh; /* Use viewport height - will fit any screen */
+  overflow-y: auto; /* Scroll if needed */
 }
 
 @keyframes slideDown {
@@ -312,10 +314,81 @@
   transform: translateY(0);
 }
 
+/* Cart Button Styles */
+.cart-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.cart-btn:hover {
+  color: var(--green);
+}
+
+.cart-btn svg {
+  font-size: 24px;
+  stroke-width: 0.5px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: var(--red);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-family: 'Plus Jakarta Sans';
+}
+
+/* Adjust header-right spacing */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+
+
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .dropdown-content {
     grid-template-columns: 1fr;
     padding: 20px 30px;
+  }
+  .cart-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cart-btn svg {
+    font-size: 22px;
+  }
+
+  .cart-badge {
+    font-size: 10px;
+    min-width: 16px;
+    height: 16px;
+    padding: 2px 5px;
   }
 }
