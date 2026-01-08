@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
@@ -120,7 +121,9 @@ export default function landingpage() {
               </div>
             </h1>
             <p>We combine quality, innovation, and safety to bring you products you can trust. From daily health essentials to advanced wellness solutions, PowerMed is committed to helping you feel confident, comfortable, and in control of your well-being.</p>
-            <button className="shop-now-btn">SHOP NOW</button>
+            <Link to="/products">
+              <button className="shop-now-btn">SHOP NOW</button>
+            </Link>
           </div>
         </div>
 

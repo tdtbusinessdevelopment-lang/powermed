@@ -11,52 +11,37 @@ export default function Topbar() {
   const [searchFocused, setSearchFocused] = useState(false)
   const [productsOpen, setProductsOpen] = useState(false)
   const [productsHover, setProductsHover] = useState(false)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
   const [isScrolled, setIsScrolled] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [productCategories, setProductCategories] = useState([])
 
+  // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
+      setIsScrolled(window.scrollY > 0)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-  const [productCategories, setProductCategories] = useState([])
-  const [loading, setLoading] = useState(true)
 
+  // Fetch categories when products dropdown opens
   useEffect(() => {
-    fetchCategories()
-  }, [])
-
-  const fetchCategories = async () => {
-    try {
-      const categories = await categoryAPI.getAll()
-      setProductCategories(categories)
-    } catch (error) {
-      console.error('Failed to load categories:', error)
-    } finally {
-      setLoading(false)
+    if (productsOpen && productCategories.length === 0) {
+      setLoading(true)
+      categoryAPI.getAll()
+        .then(data => {
+          setProductCategories(data.categories || data || [])
+        })
+        .catch(error => {
+          console.error('Error fetching categories:', error)
+          setProductCategories([])
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
-  }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+  }, [productsOpen, productCategories.length])
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -160,7 +145,9 @@ export default function Topbar() {
                       </button>
                   </div>
 
-                  <button className="view-btn">View Products</button>
+                  <Link to="/products">
+                    <button className="view-btn">View Products</button>
+                  </Link>
               </div>
         </header>
 
