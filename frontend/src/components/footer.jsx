@@ -1,17 +1,24 @@
 import React from 'react'
 import '../styles/footer.css'
 
-
 export default function footer() {
   return (
     <div className="footer">
         <div className="footer-content">
             <div className="footer-first-section">
                 <div className="footer-img">
-                    <img src="https://figmage.com/images/iMa9rM-IVDGz6AHEzuP_s.png" alt="" />
+                    <img src="https://figmage.com/images/pTTH1sn8Q28B5GUZOtSSl.png" alt="Nuthera Logo" />
                 </div>
                 <div className="footer-button">
                     <button>Explore Powermed Products</button>
+                </div>
+                <div className="social-icons">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                        <img src="https://figmage.com/images/Or9PvjghGnn-L7Wkcde3m.png" alt="Facebook" />
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                        <img src="https://figmage.com/images/kUoQEcp4dpYomWOIrsWtR.png" alt="Instagram" />
+                    </a>
                 </div>
             </div>
             <div className="footer-second-section">
@@ -38,6 +45,20 @@ export default function footer() {
                     <p><span>Be the first to know.</span> Join the Nuthera community for menu drops, chef notes, and wellness tips tailored to your routine</p>
                     <input className="email-input" type="email" placeholder="Enter your email" />
                     <button className="email-button">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        
+        {/* Footer Bottom Section */}
+        <div className="footer-bottom">
+            <div className="footer-bottom-content">
+                <p className="copyright">© {new Date().getFullYear()} PowerMed</p>
+                <div className="footer-links">
+                    <a href="/terms">TERMS AND CONDITIONS</a>
+                    <span className="divider">|</span>
+                    <a href="/privacy">PRIVACY POLICY</a>
+                    <span className="divider">|</span>
+                    <a href="/nutritional">RESEARCH USE ONLY DISCLAIMER</a>
                 </div>
             </div>
         </div>
