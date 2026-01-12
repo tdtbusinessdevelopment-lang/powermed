@@ -9,6 +9,8 @@ import AdminDashboard from './pages/admin/Dashboard.jsx'
 import AdminCategories from './pages/admin/Categories.jsx'
 import AdminProducts from './pages/admin/Products.jsx'
 import ChangePassword from './pages/admin/ChangePassword.jsx'
+import About from './pages/about.jsx';  
+import Contact from './pages/contact.jsx';
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
+            <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/contact" element={<Contact />} />
             
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
