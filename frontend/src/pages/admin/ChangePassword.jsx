@@ -5,7 +5,7 @@ import { authAPI } from '../../utils/api';
 import AdminSidebar from '../../components/AdminSidebar';
 import '../../styles/admin.css';
 
-export default function ChangePassword() {
+export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -26,6 +26,20 @@ export default function ChangePassword() {
     if (error) setError('');
     if (success) setSuccess('');
   };
+
+  // Parse name into first and last name
+  const getNameParts = () => {
+    if (!user?.name) return { firstName: '', lastName: '' };
+    const nameParts = user.name.split(' ');
+    if (nameParts.length === 1) {
+      return { firstName: nameParts[0], lastName: '' };
+    }
+    const lastName = nameParts.pop();
+    const firstName = nameParts.join(' ');
+    return { firstName, lastName };
+  };
+
+  const { firstName, lastName } = getNameParts();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,8 +78,8 @@ export default function ChangePassword() {
       
       // Log out and redirect to login page after 2 seconds
       setTimeout(() => {
-        logout();
         navigate('/admin/login');
+        window.location.reload(); // Force reload to clear session
       }, 2000);
       
       setFormData({
@@ -86,64 +100,85 @@ export default function ChangePassword() {
 
       <div className="admin-content">
         <div className="admin-header">
-          <h1>Change Password</h1>
+          <h1>Profile</h1>
         </div>
 
-        <div className="welcome-section">
-          <form onSubmit={handleSubmit}>
-            {error && <div className="alert alert-error">{error}</div>}
-            {success && <div className="alert alert-success">{success}</div>}
-
-            <div className="form-group">
-              <label htmlFor="currentPassword">Current Password</label>
-              <input
-                type="password"
-                id="currentPassword"
-                name="currentPassword"
-                value={formData.currentPassword}
-                onChange={handleChange}
-                required
-                placeholder="Enter your current password"
-              />
+        <div className="profile-container">
+          <div className="profile-info-section">
+            <h2>Account Information</h2>
+            <div className="info-group">
+              <div className="info-item">
+                <label>First Name:</label>
+                <span className="info-value">{firstName || '-'}</span>
+              </div>
+              <div className="info-item">
+                <label>Last Name:</label>
+                <span className="info-value">{lastName || '-'}</span>
+              </div>
+              <div className="info-item">
+                <label>Email:</label>
+                <span className="info-value">{user?.email || '-'}</span>
+              </div>
             </div>
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="newPassword">New Password</label>
-              <input
-                type="password"
-                id="newPassword"
-                name="newPassword"
-                value={formData.newPassword}
-                onChange={handleChange}
-                required
-                placeholder="Enter your new password (min 6 characters)"
-                minLength={6}
-              />
-            </div>
+          <div className="password-section">
+            <h2>Change Password</h2>
+            <form onSubmit={handleSubmit}>
+              {error && <div className="alert alert-error">{error}</div>}
+              {success && <div className="alert alert-success">{success}</div>}
 
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm New Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                placeholder="Confirm your new password"
-                minLength={6}
-              />
-            </div>
+              <div className="form-group form-group-left">
+                <label htmlFor="currentPassword">Current Password</label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  name="currentPassword"
+                  value={formData.currentPassword}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your current password"
+                />
+              </div>
 
-            <div className="modal-actions">
-              <button type="button" className="btn-secondary" onClick={() => window.history.back()}>
-                Cancel
-              </button>
-              <button type="submit" className="btn-primary" disabled={loading}>
-                {loading ? 'Changing Password...' : 'Change Password'}
-              </button>
-            </div>
-          </form>
+              <div className="form-group form-group-left">
+                <label htmlFor="newPassword">New Password</label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  value={formData.newPassword}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your new password (min 6 characters)"
+                  minLength={6}
+                />
+              </div>
+
+              <div className="form-group form-group-left">
+                <label htmlFor="confirmPassword">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  placeholder="Confirm your new password"
+                  minLength={6}
+                />
+              </div>
+
+              <div className="modal-actions">
+                <button type="button" className="btn-secondary" onClick={() => window.history.back()}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn-primary" disabled={loading}>
+                  {loading ? 'Changing Password...' : 'Change Password'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

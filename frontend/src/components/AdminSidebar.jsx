@@ -30,8 +30,10 @@ export default function AdminSidebar() {
         </Link>
       </nav>
       <div className="admin-footer">
+        <div className="welcome-greeting">
+          <p>Welcome, {user?.name}!</p>
+        </div>
         <div className="user-info">
-          <p>{user?.name}</p>
           <p className="user-email">{user?.email}</p>
         </div>
         <button onClick={logout} className="logout-button">
