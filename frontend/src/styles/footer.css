@@ -221,20 +221,25 @@
 
 .admin-access-link {
     position: absolute;
-    bottom: 5px;
-    right: 20px;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.3);
+    bottom: 8px;
+    right: 40px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
+    opacity: 0.5;
+    transition: all 0.3s ease;
     cursor: pointer;
-    font-weight: 300;
+    font-weight: 400;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.05);
+    z-index: 10;
 }
 
 .admin-access-link:hover {
-    opacity: 0.6;
-    color: rgba(255, 255, 255, 0.5);
+    opacity: 0.8;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Responsive Design */
