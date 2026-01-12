@@ -15,6 +15,7 @@ export default function Topbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [productCategories, setProductCategories] = useState([]) // Add this
   const [loading, setLoading] = useState(false) // Add this
+  const [cartOpen, setCartOpen] = useState(false)
 
   // Track scroll position
   useEffect(() => {
@@ -44,6 +45,28 @@ export default function Topbar() {
     }
   }, [productsOpen, productCategories.length])
 
+  // Prevent body scroll when cart is open
+  useEffect(() => {
+    if (cartOpen) {
+      // Save the current scroll position
+      const scrollY = window.scrollY
+      // Apply styles to prevent scrolling
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflow = 'hidden'
+      
+      return () => {
+        // Restore scroll position when cart closes
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        document.body.style.overflow = ''
+        window.scrollTo(0, scrollY)
+      }
+    }
+  }, [cartOpen])
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
@@ -66,6 +89,15 @@ export default function Topbar() {
   const toggleProducts = (e) => {
     e.preventDefault()
     setProductsOpen(!productsOpen)
+  }
+
+  const toggleCart = (e) => {
+    e.preventDefault()
+    setCartOpen(!cartOpen)
+  }
+
+  const closeCart = () => {
+    setCartOpen(false)
   }
 
   // Function to convert category name to slug
@@ -148,11 +180,11 @@ export default function Topbar() {
                       </button>
                   </div>
 
-                  <button className="view-btn">View Products</button>
+                  <Link to="/products" className="view-btn">View Products</Link>
 
-                  <Link to="/cart" className="cart-btn">
+                  <button className="cart-btn" onClick={toggleCart}>
                     <BsBag />
-                  </Link>
+                  </button>
               </div>
               
         </header>
@@ -201,6 +233,29 @@ export default function Topbar() {
         <button className="search-close-btn" onClick={toggleSearch}>
           <IoClose />
         </button>
+      </div>
+
+      {/* Cart Overlay */}
+      <div 
+        className={`cart-overlay ${cartOpen ? 'active' : ''}`}
+        onClick={closeCart}
+      />
+
+      {/* Cart Sidebar */}
+      <div className={`cart-sidebar ${cartOpen ? 'active' : ''}`}>
+        <div className="cart-sidebar-header">
+          <BsBag className="cart-header-icon" />
+          <h2 className="cart-header-title">Cart</h2>
+          <button className="cart-close-btn" onClick={closeCart}>
+            <IoClose />
+          </button>
+        </div>
+        <div className="cart-sidebar-content">
+          <div className="cart-empty">
+            <BsBag className="cart-empty-icon" />
+            <p className="cart-empty-text">Your cart is empty</p>
+          </div>
+        </div>
       </div>
     </div>
   )
