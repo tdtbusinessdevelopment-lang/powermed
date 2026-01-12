@@ -3,9 +3,18 @@ import bcrypt from 'bcryptjs';
 
 const adminSchema = new mongoose.Schema(
   {
+    firstName: {
+      type: String,
+      required: [true, 'First name is required'],
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, 'Last name is required'],
+      trim: true,
+    },
     name: {
       type: String,
-      required: [true, 'Name is required'],
       trim: true,
     },
     email: {
@@ -30,6 +39,14 @@ const adminSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Generate full name from firstName and lastName before saving
+adminSchema.pre('save', function (next) {
+  if ((this.isModified('firstName') || this.isModified('lastName') || this.isNew) && this.firstName && this.lastName) {
+    this.name = `${this.firstName} ${this.lastName}`.trim();
+  }
+  next();
+});
 
 // Hash password before saving
 adminSchema.pre('save', function (next) {

@@ -22,7 +22,8 @@ const seedAdmin = async () => {
 
     // Create admin using model (password will be hashed by pre-save hook)
     const admin = await Admin.create({
-      name: 'Admin User',
+      firstName: 'Admin',
+      lastName: 'User',
       email: 'admin@powermed.com',
       password: 'admin123', // Will be hashed by pre-save hook
       isActive: true,

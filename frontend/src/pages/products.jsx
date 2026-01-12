@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
+import Footer from '../components/footer.jsx'
+
 import { categoryAPI, productAPI } from '../utils/api'
 import '../styles/products.css'
 
@@ -338,6 +340,7 @@ export default function Products() {
           <button className="view-all-faqs-btn">VIEW ALL FAQS</button>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

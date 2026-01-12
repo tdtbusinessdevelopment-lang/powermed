@@ -27,19 +27,9 @@ export default function Profile() {
     if (success) setSuccess('');
   };
 
-  // Parse name into first and last name
-  const getNameParts = () => {
-    if (!user?.name) return { firstName: '', lastName: '' };
-    const nameParts = user.name.split(' ');
-    if (nameParts.length === 1) {
-      return { firstName: nameParts[0], lastName: '' };
-    }
-    const lastName = nameParts.pop();
-    const firstName = nameParts.join(' ');
-    return { firstName, lastName };
-  };
-
-  const { firstName, lastName } = getNameParts();
+  // Get firstName and lastName directly from user object
+  const firstName = user?.firstName || '';
+  const lastName = user?.lastName || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -63,8 +63,14 @@ app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+// Export for Vercel serverless functions
+export default app;
+
+// Only listen on port if not in Vercel environment
+if (process.env.VERCEL !== '1') {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  });
+}

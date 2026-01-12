@@ -186,6 +186,7 @@
     gap: 20px;
 }
 
+<<<<<<< Updated upstream
 .copyright {
     color: white;
     font-size: 13px;
@@ -258,3 +259,31 @@
         justify-content: center;
     }
 }
+=======
+.footer-bottom {
+    position: relative;
+    width: 100%;
+    padding: 10px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+}
+
+.admin-access-link {
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    font-weight: 300;
+}
+
+.admin-access-link:hover {
+    opacity: 0.6;
+    color: rgba(255, 255, 255, 0.5);
+}
+>>>>>>> Stashed changes

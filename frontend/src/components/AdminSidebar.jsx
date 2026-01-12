@@ -13,7 +13,7 @@ export default function AdminSidebar() {
   return (
     <div className="admin-sidebar">
       <div className="admin-logo">
-        <img src="https://figmage.com/images/FT6UQOqUgEyM0ZPmMvU6W.png" alt="PowerMed Logo" />
+        <img src="https://figmage.com/images/iMa9rM-IVDGz6AHEzuP_s.png" alt="PowerMed Logo" />
       </div>
       <nav className="admin-nav">
         <Link to="/admin/dashboard" className={`nav-item ${isActive('/admin/dashboard')}`}>
@@ -31,7 +31,7 @@ export default function AdminSidebar() {
       </nav>
       <div className="admin-footer">
         <div className="welcome-greeting">
-          <p>Welcome, {user?.name}!</p>
+          <p>Welcome, {user?.firstName || user?.name || 'Admin'}!</p>
         </div>
         <div className="user-info">
           <p className="user-email">{user?.email}</p>
