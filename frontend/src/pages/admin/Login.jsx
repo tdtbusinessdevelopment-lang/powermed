@@ -40,6 +40,9 @@ export default function AdminLogin() {
   return (
     <div className="admin-login-container">
       <div className="admin-login-box">
+        <div className="admin-login-logo">
+          <img src="https://figmage.com/images/FT6UQOqUgEyM0ZPmMvU6W.png" alt="powermed logo" />
+        </div>
         <h1>PowerMed Admin</h1>
         <p>Sign in to access the admin panel</p>
         
@@ -54,7 +57,7 @@ export default function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="admin@powermed.com"
+              placeholder="Enter your email"
             />
           </div>
           
@@ -74,13 +77,6 @@ export default function AdminLogin() {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-        
-        <div className="login-info">
-          <p><strong>Default Admin Credentials:</strong></p>
-          <p>Email: admin@powermed.com</p>
-          <p>Password: admin123</p>
-          <p className="warning">⚠️ Change password after first login!</p>
-        </div>
       </div>
     </div>
   );

@@ -27,7 +27,8 @@ export const AuthProvider = ({ children }) => {
   const fetchUser = async () => {
     try {
       const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
-      const response = await fetch(`${API_BASE_URL}/auth/me`, {
+      // Use admin me route (admins collection)
+      const response = await fetch(`${API_BASE_URL}/admin/me`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -35,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const userData = await response.json();
-        setUser(userData);
+        setUser({ ...userData, role: 'admin' });
       } else {
         // Token invalid, clear it
         logout();
@@ -51,7 +52,8 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      // Use admin login route (admins collection)
+      const response = await fetch(`${API_BASE_URL}/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         setToken(data.token);
         setUser(data);
         localStorage.setItem('token', data.token);
-        return { success: true };
+        return { success: true, user: data };
       } else {
         return { success: false, message: data.message || 'Login failed' };
       }

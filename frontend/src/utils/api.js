@@ -156,7 +156,19 @@ export const productAPI = {
   },
 };
 
+// Auth API functions
+export const authAPI = {
+  // Change password
+  changePassword: async (currentPassword, newPassword) => {
+    return apiCall('/admin/change-password', {
+      method: 'PUT',
+      body: JSON.stringify({ currentPassword, newPassword }),
+    });
+  },
+};
+
 export default {
   categoryAPI,
   productAPI,
+  authAPI,
 };

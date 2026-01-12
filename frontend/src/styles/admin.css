@@ -1,11 +1,16 @@
 /* Admin Panel Styles */
+:root {
+  --red: #FF3233;
+  --green: #02989E;
+  --white: #ffffff;
+}
 
 .admin-login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--white);
   padding: 20px;
 }
 
@@ -16,6 +21,16 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 400px;
+}
+
+.admin-login-logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-login-logo img {
+  max-width: 150px;
+  height: auto;
 }
 
 .admin-login-box h1 {
@@ -31,12 +46,12 @@
 }
 
 .error-message {
-  background: #fee;
-  color: #c33;
+  background: rgba(255, 50, 51, 0.1);
+  color: var(--red);
   padding: 12px;
   border-radius: 5px;
   margin-bottom: 20px;
-  border: 1px solid #fcc;
+  border: 1px solid rgba(255, 50, 51, 0.3);
 }
 
 .login-info {
@@ -53,9 +68,32 @@
 }
 
 .warning {
-  color: #d9534f;
+  color: var(--red);
   font-weight: bold;
   margin-top: 10px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #027678;
+}
+
+.login-button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* Admin Layout */
@@ -67,7 +105,7 @@
 
 .admin-sidebar {
   width: 250px;
-  background: #2c3e50;
+  background: var(--green);
   color: white;
   display: flex;
   flex-direction: column;
@@ -78,7 +116,15 @@
 
 .admin-logo {
   padding: 20px;
-  border-bottom: 1px solid #34495e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-logo img {
+  max-width: 150px;
+  height: auto;
 }
 
 .admin-logo h2 {
@@ -94,23 +140,24 @@
 .nav-item {
   display: block;
   padding: 12px 20px;
-  color: #ecf0f1;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   transition: background 0.3s;
 }
 
 .nav-item:hover {
-  background: #34495e;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .nav-item.active {
-  background: #3498db;
+  background: rgba(255, 255, 255, 0.2);
   color: white;
+  font-weight: 600;
 }
 
 .admin-footer {
   padding: 20px;
-  border-top: 1px solid #34495e;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .user-info {
@@ -119,29 +166,31 @@
 }
 
 .user-email {
-  color: #95a5a6;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
 }
 
 .logout-button {
   width: 100%;
   padding: 10px;
-  background: #e74c3c;
+  background: var(--red);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.3s ease;
 }
 
 .logout-button:hover {
-  background: #c0392b;
+  background: #CC2627;
 }
 
 .admin-content {
   flex: 1;
   margin-left: 250px;
   padding: 30px;
+  background: var(--white);
 }
 
 .admin-header {
@@ -153,22 +202,23 @@
 
 .admin-header h1 {
   margin: 0;
-  color: #2c3e50;
+  color: var(--green);
 }
 
 /* Buttons */
 .btn-primary {
-  background: #3498db;
+  background: var(--green);
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.3s ease;
 }
 
 .btn-primary:hover {
-  background: #2980b9;
+  background: #027678;
 }
 
 .btn-secondary {
@@ -201,17 +251,18 @@
 }
 
 .btn-delete {
-  background: #e74c3c;
+  background: var(--red);
   color: white;
   padding: 5px 10px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   font-size: 12px;
+  transition: background 0.3s ease;
 }
 
 .btn-delete:hover {
-  background: #c0392b;
+  background: #CC2627;
 }
 
 /* Dashboard */
@@ -231,7 +282,7 @@
 
 .dashboard-card h3 {
   margin: 0 0 10px 0;
-  color: #2c3e50;
+  color: var(--green);
 }
 
 .dashboard-card p {
@@ -240,7 +291,7 @@
 }
 
 .card-link {
-  color: #3498db;
+  color: var(--green);
   text-decoration: none;
   font-weight: 500;
 }
@@ -258,7 +309,7 @@
 
 .welcome-section h2 {
   margin: 0 0 10px 0;
-  color: #2c3e50;
+  color: var(--green);
 }
 
 /* Tables */
@@ -275,7 +326,7 @@
 }
 
 .admin-table thead {
-  background: #34495e;
+  background: var(--green);
   color: white;
 }
 
@@ -361,7 +412,7 @@
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: var(--green);
 }
 
 .form-row {
@@ -429,15 +480,15 @@
 }
 
 .alert-error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background: rgba(255, 50, 51, 0.1);
+  color: var(--red);
+  border: 1px solid rgba(255, 50, 51, 0.3);
 }
 
 .alert-success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background: rgba(2, 152, 158, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(2, 152, 158, 0.3);
 }
 
 .loading {

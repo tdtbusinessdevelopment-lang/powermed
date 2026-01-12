@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { productAPI, categoryAPI } from '../../utils/api';
+import AdminSidebar from '../../components/AdminSidebar';
 import '../../styles/admin.css';
 
 export default function AdminProducts() {
-  const { token, logout } = useAuth();
+  const { token } = useAuth();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -149,19 +149,7 @@ export default function AdminProducts() {
 
   return (
     <div className="admin-container">
-      <div className="admin-sidebar">
-        <div className="admin-logo">
-          <h2>PowerMed Admin</h2>
-        </div>
-        <nav className="admin-nav">
-          <Link to="/admin/dashboard" className="nav-item">Dashboard</Link>
-          <Link to="/admin/categories" className="nav-item">Categories</Link>
-          <Link to="/admin/products" className="nav-item active">Products</Link>
-        </nav>
-        <div className="admin-footer">
-          <button onClick={logout} className="logout-button">Logout</button>
-        </div>
-      </div>
+      <AdminSidebar />
 
       <div className="admin-content">
         <div className="admin-header">

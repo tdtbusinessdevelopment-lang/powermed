@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
+import Admin from '../models/Admin.js';
 import connectDB from '../config/db.js';
 
 dotenv.config();
@@ -11,31 +11,24 @@ const seedAdmin = async () => {
     await connectDB();
 
     // Check if admin already exists
-    const adminExists = await User.findOne({ email: 'admin@powermed.com' });
+    const adminExists = await Admin.findOne({ email: 'admin@powermed.com' });
     
     if (adminExists) {
-      console.log('✅ Admin user already exists');
+      console.log('✅ Admin already exists');
       console.log('Email: admin@powermed.com');
       console.log('Password: (the one you set previously)');
       process.exit(0);
     }
 
-    // Hash password manually
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('admin123', salt);
-
-    // Insert directly to bypass pre-save hook
-    await User.collection.insertOne({
+    // Create admin using model (password will be hashed by pre-save hook)
+    const admin = await Admin.create({
       name: 'Admin User',
       email: 'admin@powermed.com',
-      password: hashedPassword,
-      role: 'admin',
+      password: 'admin123', // Will be hashed by pre-save hook
       isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
-    console.log('✅ Admin user created successfully!');
+    console.log('✅ Admin created successfully!');
     console.log('\n📋 Login Credentials:');
     console.log('Email: admin@powermed.com');
     console.log('Password: admin123');

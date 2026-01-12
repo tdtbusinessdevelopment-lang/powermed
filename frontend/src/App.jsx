@@ -8,6 +8,7 @@ import AdminLogin from './pages/admin/Login.jsx'
 import AdminDashboard from './pages/admin/Dashboard.jsx'
 import AdminCategories from './pages/admin/Categories.jsx'
 import AdminProducts from './pages/admin/Products.jsx'
+import ChangePassword from './pages/admin/ChangePassword.jsx'
 
 function App() {
   return (
@@ -42,6 +43,14 @@ function App() {
               element={
                 <ProtectedRoute requireAdmin={true}>
                   <AdminProducts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/change-password"
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <ChangePassword />
                 </ProtectedRoute>
               }
             />
