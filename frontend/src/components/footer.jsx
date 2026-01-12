@@ -49,7 +49,6 @@ export default function footer() {
                 </div>
             </div>
         </div>
-<<<<<<< Updated upstream
         
         {/* Footer Bottom Section */}
         <div className="footer-bottom">
@@ -63,10 +62,7 @@ export default function footer() {
                     <a href="/nutritional">RESEARCH USE ONLY DISCLAIMER</a>
                 </div>
             </div>
-=======
-        <div className="footer-bottom">
             <Link to="/admin/login" className="admin-access-link">Admin</Link>
->>>>>>> Stashed changes
         </div>
     </div>
   )
