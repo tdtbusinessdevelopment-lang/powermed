@@ -26,7 +26,7 @@ export default function footer() {
                 <div className="learn">
                     <h3>LEARN</h3>
                     <p>FAQs</p>
-                    <p>Menu</p>
+                    <p>Products</p>
                     <p>Pricing</p>
                     <p>My Account</p>
                 </div>
