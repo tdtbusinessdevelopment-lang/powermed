@@ -49,7 +49,6 @@ export default function footer() {
                 </div>
             </div>
         </div>
-        
         {/* Footer Bottom Section */}
         <div className="footer-bottom">
             <div className="footer-bottom-content">
