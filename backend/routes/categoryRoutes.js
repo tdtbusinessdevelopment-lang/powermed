@@ -1,6 +1,6 @@
 import express from 'express';
 import Category from '../models/Category.js';
-import { protect, admin } from '../middleware/auth.js';
+import { protectAdmin, admin } from '../middleware/auth.js';
 import { upload, uploadToCloudinary } from '../config/cloudinary.js';
 
 const router = express.Router();
@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
 // @route   POST /api/categories
 // @desc    Create a new category
 // @access  Private (Admin)
-router.post('/', protect, admin, upload.single('image'), async (req, res) => {
+router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
     const { name, description } = req.body;
 
@@ -88,7 +88,7 @@ router.post('/', protect, admin, upload.single('image'), async (req, res) => {
 // @route   PUT /api/categories/:id
 // @desc    Update a category
 // @access  Private (Admin)
-router.put('/:id', protect, admin, upload.single('image'), async (req, res) => {
+router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
     const { name, description, isActive } = req.body;
     console.log('Update request body:', { name, description, isActive, hasFile: !!req.file });
@@ -152,7 +152,7 @@ router.put('/:id', protect, admin, upload.single('image'), async (req, res) => {
 // @route   DELETE /api/categories/:id
 // @desc    Delete a category (hard delete - permanently removes from database)
 // @access  Private (Admin)
-router.delete('/:id', protect, admin, async (req, res) => {
+router.delete('/:id', protectAdmin, admin, async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
     if (!category) {

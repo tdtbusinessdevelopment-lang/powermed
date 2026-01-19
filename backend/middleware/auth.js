@@ -60,7 +60,8 @@ export const protectAdmin = async (req, res, next) => {
 
 // Admin only middleware (for backward compatibility)
 export const admin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
+  // Allow access if request is authenticated as a User with role 'admin' OR as an Admin (req.admin)
+  if ((req.user && req.user.role === 'admin') || req.admin) {
     next();
   } else {
     res.status(403).json({ message: 'Access denied. Admin only.' });

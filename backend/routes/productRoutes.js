@@ -2,7 +2,7 @@ import express from 'express';
 import Product from '../models/Product.js';
 import Category from '../models/Category.js';
 import { upload, uploadToCloudinary } from '../config/cloudinary.js';
-import { protect, admin } from '../middleware/auth.js';
+import { protectAdmin, admin } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -54,7 +54,7 @@ router.get('/:id', async (req, res) => {
 // @route   POST /api/products
 // @desc    Create a new product
 // @access  Private (Admin)
-router.post('/', protect, admin, upload.single('image'), async (req, res) => {
+router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
     const { name, brand, price, category, categoryType, description, stock } = req.body;
 
@@ -108,7 +108,7 @@ router.post('/', protect, admin, upload.single('image'), async (req, res) => {
 // @route   PUT /api/products/:id
 // @desc    Update a product
 // @access  Private (Admin)
-router.put('/:id', protect, admin, upload.single('image'), async (req, res) => {
+router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
     const { name, brand, price, category, categoryType, description, stock, isActive } = req.body;
 
@@ -160,7 +160,7 @@ router.put('/:id', protect, admin, upload.single('image'), async (req, res) => {
 // @route   DELETE /api/products/:id
 // @desc    Delete a product (hard delete - permanently removes from database)
 // @access  Private (Admin)
-router.delete('/:id', protect, admin, async (req, res) => {
+router.delete('/:id', protectAdmin, admin, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
