@@ -560,6 +560,12 @@
 
 /* Tablets (768px and below) */
 @media (max-width: 768px) {
+
+  .landingpage-content,
+  .html{
+    width: 100%;
+  }
+
   .hero-content {
     min-height: 400px;
     position: relative;
@@ -677,39 +683,90 @@
     font-size: 14px;
   }
 
-  .slide-text h3 {
-    font-size: 0.9rem;
-  }
-  
+.slide-text h3 {
+  font-size: 0.9rem;
+}
+
 /* Carousel Section */
-
 .carousel-section {
-    width: 100%;
-    overflow: hidden;
-  }
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
 
-  .carousel-section .slick-list {
-    overflow: hidden;
-  }
+/* Fix for slick-track */
+.carousel-section .slick-track {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+}
 
-  .carousel-section .slick-track {
-    display: flex !important;
-    transform: translate3d(0, 0, 0) !important;
-  }
+.carousel-section .slick-slider {
+  overflow: hidden;
+}
 
-  .carousel-section .slick-slide {
-    width: 100% !important;
-    display: flex !important;
-  }
+.carousel-section .slick-list {
+  overflow: hidden;
+  margin: 0;
+}
 
-  .carousel-section .slick-slide > div {
-    width: 100% !important;
-  }
+.carousel-section .slick-slide {
+  height: auto;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100% !important;
+}
 
-  .slide-item,
-  .slide-content {
-    width: 100% !important;
-  }
+.carousel-section .slick-slide > div {
+  height: 100%;
+  width: 100%;
+}
+
+.slide-item {
+  height: 100%;
+  width: 100%;
+}
+
+.slide-content {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 120px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.slide-text {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px; 
+}
+
+.slide-image {
+  width: 28px; 
+  height: 28px;
+  flex-shrink: 0; 
+  filter: brightness(0) invert(1);
+}
+
+.slide-text h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
 
 }
 
