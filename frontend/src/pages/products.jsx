@@ -328,11 +328,9 @@ export default function Products() {
                   <span className="faq-question">{faq.question}</span>
                   <span className="faq-icon">{expandedFaq === index ? '−' : '+'}</span>
                 </div>
-                {expandedFaq === index && (
-                  <div className="faq-answer">
-                    {faq.answer}
-                  </div>
-                )}
+                <div className={`faq-answer ${expandedFaq === index ? 'expanded' : ''}`}>
+                  <div className="faq-answer-inner">{faq.answer}</div>
+                </div>
               </div>
             ))}
             <div className="faq-separator"></div>
