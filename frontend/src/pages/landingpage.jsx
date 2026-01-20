@@ -12,31 +12,35 @@ import model from '../assets/images/landingpage-model.png'
 
 export default function landingpage() {
   const settings = {
-    dots: false, 
-    arrows: false, 
+    dots: false,
+    arrows: false,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-
-    speed: 12000,      
-    autoplaySpeed: 0, 
-    cssEase: 'linear', 
-    pauseOnHover: false, 
+    speed: 12000,
+    autoplaySpeed: 0,
+    cssEase: 'linear',
+    pauseOnHover: false,
 
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
+          slidesToShow: 2
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+
+          // 🔥 MOBILE FIX
+          speed: 500,
+          autoplaySpeed: 3000,
+          cssEase: 'ease',
+          variableWidth: false
         }
       }
     ]
@@ -157,7 +161,7 @@ export default function landingpage() {
         {/* Carousel Section */}
         <div className="carousel-section">
           <Slider {...settings}>
-            {slides.map((slide) => (
+            {slides.map(slide => (
               <div key={slide.id} className="slide-item">
                 <div
                   className="slide-content"
