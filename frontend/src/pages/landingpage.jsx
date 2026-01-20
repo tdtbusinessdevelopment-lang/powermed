@@ -18,11 +18,14 @@ export default function landingpage() {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-
-    speed: 12000,      
+    speed: 10000,      
     autoplaySpeed: 0, 
     cssEase: 'linear', 
-    pauseOnHover: false, 
+    pauseOnHover: false,
+    variableWidth: false,
+    swipe: true,
+    touchMove: true,
+    draggable: true,
 
     responsive: [
       {
@@ -30,13 +33,35 @@ export default function landingpage() {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          swipe: true,
+          touchMove: true,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          swipe: true,
+          touchMove: true,
         }
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+          swipe: true,
+          touchMove: true,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          swipe: true,
+          touchMove: true,
         }
       }
     ]
