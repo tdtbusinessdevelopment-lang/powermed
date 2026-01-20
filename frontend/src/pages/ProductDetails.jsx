@@ -67,13 +67,6 @@ export default function ProductDetails() {
             </div>
 
             <p className="product-short-desc">{product.description}</p>
-
-            <ul className="product-highlights">
-              <li>Formulated in FDA-regulated pharmacies</li>
-              <li>Free consultation with licensed providers</li>
-              <li>Unlimited complementary follow-ups</li>
-              <li>100% online, hassle-free, and convenient</li>
-            </ul>
             
 
             <div className="product-faqs">
@@ -85,13 +78,18 @@ export default function ProductDetails() {
 
               {(product.faqs || []).map((faq, index) => (
                 <div key={index} className="faq-item">
-                  <div className="faq-question" onClick={() => toggleFaq(index)}>
+                  <div
+                    className={`faq-question ${expandedFaq === index ? 'open' : ''}`}
+                    onClick={() => toggleFaq(index)}
+                    role="button"
+                    aria-expanded={expandedFaq === index}
+                  >
                     <span>{faq.question}</span>
-                    <span className="faq-toggle">{expandedFaq === index ? '−' : '+'}</span>
+                    <span className={`faq-toggle ${expandedFaq === index ? 'expanded' : ''}`}>{expandedFaq === index ? '−' : '+'}</span>
                   </div>
-                  {expandedFaq === index && (
-                    <div className="faq-answer">{faq.answer}</div>
-                  )}
+                  <div className={`faq-answer ${expandedFaq === index ? 'expanded' : ''}`}>
+                    <div className="faq-answer-inner">{faq.answer}</div>
+                  </div>
                 </div>
               ))}
             </div>
