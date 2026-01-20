@@ -362,6 +362,15 @@
   transition: background-color 0.2s ease;
 }
 
+/* Remove underline for link-styled buttons */
+.view-product-btn,
+.view-product-btn:link,
+.view-product-btn:visited,
+.view-product-btn:hover,
+.view-product-btn:active {
+  text-decoration: none;
+}
+
 .view-product-btn:hover {
   background-color: #027678;
 }
