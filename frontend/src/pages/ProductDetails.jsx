@@ -74,9 +74,11 @@ export default function ProductDetails() {
               <li>Unlimited complementary follow-ups</li>
               <li>100% online, hassle-free, and convenient</li>
             </ul>
+            
 
             <div className="product-faqs">
-              <h3>Frequently Asked Questions</h3>
+                
+              
               {(product.faqs || []).length === 0 && (
                 <p>No FAQs available for this product.</p>
               )}
@@ -96,6 +98,8 @@ export default function ProductDetails() {
 
             <p className="product-disclaimer">
               This product is compounded in an FDA-regulated pharmacy and available if prescribed after an online consultation with a provider.
+              <br></br>
+              <br></br>
               <strong>Please note:</strong> The FDA does not verify the safety or effectiveness of compounded medications.
             </p>
           </div>
