@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
 import Footer from '../components/footer.jsx'
 import { productAPI } from '../utils/api'
-import '../styles/products.css'
+import '../styles/product_details.css'
 
 export default function ProductDetails() {
   const { id } = useParams()
