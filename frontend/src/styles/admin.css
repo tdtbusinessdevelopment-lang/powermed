@@ -487,7 +487,7 @@
 }
 .admin-table td:nth-child(3),
 .admin-table td:nth-child(5) {
-  text-align: left; /* brand, category */
+  text-align: center; /* brand, category */
 }
 .admin-table td:nth-child(4),
 .admin-table td:nth-child(6),

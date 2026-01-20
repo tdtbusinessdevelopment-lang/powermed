@@ -606,7 +606,7 @@
 .product-meta { display:flex; align-items:center; gap:12px }
 .product-prescription { color: var(--green, #02989E); font-weight:700; font-size:18px }
 .product-title { font-size:34px; color: var(--green, #02989E); margin:6px 0 12px }
-.product-short-desc { color:#2b2b2b; font-size:16px; margin-bottom:18px }
+.product-short-desc { color:#2b2b2b; font-size:16px; margin-bottom:18px; text-align: left; }
 
 .product-highlights { list-style:none; padding:0; margin:0 0 18px; display:flex; flex-direction:column; gap:10px }
 .product-highlights li { display:flex; align-items:center; gap:10px; color:#3b524b }
@@ -620,7 +620,7 @@
 .faq-item { border-top:1px solid rgba(0,0,0,0.06); padding:12px 0 }
 .faq-question { display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:600; color: var(--dark-green, #027678) }
 .faq-toggle { font-size:20px; margin-left:12px }
-.faq-answer { margin-top:8px; color:#333 }
+.faq-answer { margin-top:8px; color:#333; text-align: left; }
 
 .product-disclaimer { margin-top:20px; font-size:13px; color:#666; text-align: left; }
 
