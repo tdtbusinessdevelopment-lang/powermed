@@ -241,7 +241,7 @@
 
 .products-grid-container {
   overflow-y: auto;
-  max-height: calc(110vh - 400px);
+  max-height: calc(110vh - 275px);
   padding-right: 10px;
 }
 
