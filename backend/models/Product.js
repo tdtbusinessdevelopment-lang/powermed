@@ -34,6 +34,18 @@ const productSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    faqs: [
+      {
+        question: {
+          type: String,
+          trim: true,
+        },
+        answer: {
+          type: String,
+          trim: true,
+        },
+      },
+    ],
     isActive: {
       type: Boolean,
       default: true,

@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import './App.css'
 import LandingPage from './pages/landingpage.jsx'
 import Products from './pages/products.jsx'
+import ProductDetails from './pages/ProductDetails.jsx'
 import AdminLogin from './pages/admin/Login.jsx'
 import AdminDashboard from './pages/admin/Dashboard.jsx'
 import AdminCategories from './pages/admin/Categories.jsx'
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/contact" element={<Contact />} />
             
             {/* Admin Routes */}

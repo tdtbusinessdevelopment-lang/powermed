@@ -564,3 +564,85 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Product Details Page */
+.product-details-page {
+  width: 100%;
+  padding: 40px 20px 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.product-details-container {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.product-image-column {
+  background: linear-gradient(180deg, rgba(2,152,158,0.06) 0%, rgba(2,152,158,0.03) 100%);
+  border-radius: 20px;
+  padding: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(3,79,75,0.08);
+}
+
+.product-detail-image {
+  max-width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.product-info-column {
+  padding: 8px 4px;
+}
+
+.product-meta { display:flex; align-items:center; gap:12px }
+.product-prescription { color: var(--green, #02989E); font-weight:700; font-size:18px }
+.product-title { font-size:34px; color: var(--green, #02989E); margin:6px 0 12px }
+.product-short-desc { color:#2b2b2b; font-size:16px; margin-bottom:18px }
+
+.product-highlights { list-style:none; padding:0; margin:0 0 18px; display:flex; flex-direction:column; gap:10px }
+.product-highlights li { display:flex; align-items:center; gap:10px; color:#3b524b }
+.product-highlights li:before { content:''; display:inline-block; width:12px; height:12px; background: var(--green, #02989E); border-radius:50% }
+
+.book-consult-btn { display:inline-block; background: var(--green, #02989E); color:#fff; padding:14px 28px; border-radius:28px; margin:12px 0 24px; border:none; cursor:pointer; box-shadow: 0 6px 18px rgba(2,152,158,0.14) }
+.book-consult-btn:hover { background: var(--dark-green, #027678) }
+
+.product-faqs { margin-top:20px }
+.product-faqs h3 { margin-bottom:12px; font-size:20px }
+.faq-item { border-top:1px solid rgba(0,0,0,0.06); padding:12px 0 }
+.faq-question { display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:600; color: var(--dark-green, #027678) }
+.faq-toggle { font-size:20px; margin-left:12px }
+.faq-answer { margin-top:8px; color:#333 }
+
+.product-disclaimer { margin-top:20px; font-size:13px; color:#666 }
+
+@media (max-width: 900px) {
+  .product-details-container { grid-template-columns: 1fr; padding: 0 12px; gap: 28px }
+  .product-image-column { padding: 18px }
+  .product-detail-image { max-height: 360px }
+  .product-info-column { padding: 0 }
+  .book-consult-btn { width: 100%; text-align: center }
+  .product-title { font-size: 28px }
+  .product-prescription { font-size: 16px }
+}
+
+@media (max-width: 480px) {
+  .product-details-page { padding: 24px 12px 48px }
+  .product-image-column { padding: 12px }
+  .product-detail-image { max-height: 300px }
+  .product-title { font-size: 22px }
+  .product-short-desc { font-size: 14px }
+  .product-highlights { gap: 8px }
+  .product-highlights li { font-size: 14px }
+  .faq-question { font-size: 15px }
+  .faq-answer { font-size: 14px }
+  .book-consult-btn { padding: 12px 18px }
+}

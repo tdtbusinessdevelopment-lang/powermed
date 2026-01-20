@@ -85,6 +85,17 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
       });
     }
 
+    // Parse FAQs if provided (expected as JSON string in multipart form)
+    let faqs = [];
+    if (req.body.faqs) {
+      try {
+        faqs = JSON.parse(req.body.faqs);
+        if (!Array.isArray(faqs)) faqs = [];
+      } catch (e) {
+        return res.status(400).json({ message: 'Invalid faqs format. Expecting JSON array.' });
+      }
+    }
+
     const product = new Product({
       name,
       brand: brand || 'PowerMed',
@@ -94,6 +105,7 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
       description,
       image: imageUrl,
       stock: stock ? parseInt(stock) : 0,
+      faqs,
     });
 
     const savedProduct = await product.save();
@@ -136,6 +148,16 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
         return res.status(500).json({ 
           message: uploadError.message || 'Failed to upload image to Cloudinary. Please check your internet connection and Cloudinary credentials.' 
         });
+      }
+    }
+
+    // Parse FAQs if provided (expected as JSON string in multipart form)
+    if (req.body.faqs !== undefined) {
+      try {
+        const parsedFaqs = JSON.parse(req.body.faqs);
+        product.faqs = Array.isArray(parsedFaqs) ? parsedFaqs : [];
+      } catch (e) {
+        return res.status(400).json({ message: 'Invalid faqs format. Expecting JSON array.' });
       }
     }
 

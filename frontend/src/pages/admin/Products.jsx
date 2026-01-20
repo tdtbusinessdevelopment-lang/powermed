@@ -19,6 +19,7 @@ export default function AdminProducts() {
     categoryType: '',
     description: '',
     stock: '0',
+    faqs: [],
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
@@ -71,7 +72,8 @@ export default function AdminProducts() {
     try {
       if (editingProduct) {
         // Update product
-        const result = await productAPI.update(editingProduct._id, formData, imageFile);
+        const payload = { ...formData, faqs: JSON.stringify(formData.faqs) };
+        const result = await productAPI.update(editingProduct._id, payload, imageFile);
         if (result) {
           setSuccess('Product updated successfully!');
           setShowModal(false);
@@ -84,7 +86,8 @@ export default function AdminProducts() {
           setError('Product image is required');
           return;
         }
-        const result = await productAPI.create(formData, imageFile);
+        const payload = { ...formData, faqs: JSON.stringify(formData.faqs) };
+        const result = await productAPI.create(payload, imageFile);
         if (result) {
           setSuccess('Product created successfully!');
           setShowModal(false);
@@ -107,6 +110,7 @@ export default function AdminProducts() {
       categoryType: product.categoryType || '',
       description: product.description || '',
       stock: product.stock?.toString() || '0',
+      faqs: product.faqs || [],
     });
     setImagePreview(product.image || '');
     setImageFile(null);
@@ -136,10 +140,27 @@ export default function AdminProducts() {
       categoryType: '',
       description: '',
       stock: '0',
+      faqs: [],
     });
     setImageFile(null);
     setImagePreview('');
     setEditingProduct(null);
+  };
+
+  const addFaq = () => {
+    setFormData(prev => ({ ...prev, faqs: [...(prev.faqs || []), { question: '', answer: '' }] }));
+  };
+
+  const removeFaq = (index) => {
+    setFormData(prev => ({ ...prev, faqs: prev.faqs.filter((_, i) => i !== index) }));
+  };
+
+  const handleFaqChange = (index, field, value) => {
+    setFormData(prev => {
+      const newFaqs = [...(prev.faqs || [])];
+      newFaqs[index] = { ...newFaqs[index], [field]: value };
+      return { ...prev, faqs: newFaqs };
+    });
   };
 
   const openModal = () => {
@@ -293,6 +314,34 @@ export default function AdminProducts() {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     rows="3"
                   />
+                </div>
+
+                <div className="form-group">
+                  <label>FAQs</label>
+                  {(formData.faqs || []).map((faq, idx) => (
+                    <div key={idx} className="faq-row">
+                      <input
+                        type="text"
+                        placeholder="Question"
+                        value={faq.question}
+                        onChange={(e) => handleFaqChange(idx, 'question', e.target.value)}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Answer"
+                        value={faq.answer}
+                        onChange={(e) => handleFaqChange(idx, 'answer', e.target.value)}
+                      />
+                      <button type="button" className="btn-secondary" onClick={() => removeFaq(idx)}>
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                  <div style={{ marginTop: 8 }}>
+                    <button type="button" className="btn-primary" onClick={addFaq}>
+                      + Add FAQ
+                    </button>
+                  </div>
                 </div>
 
                 <div className="form-group">

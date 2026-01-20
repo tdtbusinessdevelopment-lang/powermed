@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
 import Footer from '../components/footer.jsx'
 
@@ -305,10 +305,10 @@ export default function Products() {
                     <h4 className="product-title">{product.name}</h4>
                     <p className="product-category-type">{product.categoryType || ''}</p>
                     <p className="product-description">{product.description || ''}</p>
-                  <button className="view-product-btn">
+                  <Link to={`/product/${product._id}`} className="view-product-btn">
                     VIEW PRODUCT
                     <span className="arrow">→</span>
-                  </button>
+                  </Link>
                 </div>
               ))}
             </div>
