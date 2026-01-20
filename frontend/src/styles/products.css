@@ -629,7 +629,6 @@
   .product-image-column { padding: 18px }
   .product-detail-image { max-height: 360px }
   .product-info-column { padding: 0 }
-  .book-consult-btn { width: 100%; text-align: center }
   .product-title { font-size: 28px }
   .product-prescription { font-size: 16px }
 }
@@ -644,5 +643,4 @@
   .product-highlights li { font-size: 14px }
   .faq-question { font-size: 15px }
   .faq-answer { font-size: 14px }
-  .book-consult-btn { padding: 12px 18px }
 }

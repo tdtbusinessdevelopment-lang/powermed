@@ -440,14 +440,60 @@
 }
 
 .admin-table th {
-  padding: 15px;
-  text-align: left;
+  padding: 12px 14px;
+  text-align: center;
   font-weight: 600;
 }
 
+/* Align header columns to match body cells */
+.admin-table th:nth-child(1) {
+  text-align: center;
+  width: 72px;
+  padding-left: 18px;
+  padding-right: 8px;
+}
+.admin-table th:nth-child(2) {
+  text-align: center;
+  padding-left: 6px;
+}
+.admin-table th:nth-child(3),
+.admin-table th:nth-child(5) {
+  text-align: center;
+}
+.admin-table th:nth-child(4),
+.admin-table th:nth-child(6),
+.admin-table th:nth-child(7),
+.admin-table th:nth-child(8) {
+  text-align: center;
+}
+
 .admin-table td {
-  padding: 15px;
+  padding: 12px 14px;
   border-bottom: 1px solid #ecf0f1;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Column-specific alignment: keep image centered, names left-aligned */
+.admin-table td:nth-child(1) {
+  text-align: center; /* image */
+  width: 72px;
+  padding-left: 18px;
+  padding-right: 8px;
+}
+.admin-table td:nth-child(2) {
+  text-align: center; /* name */
+  padding-left: 6px;
+}
+.admin-table td:nth-child(3),
+.admin-table td:nth-child(5) {
+  text-align: left; /* brand, category */
+}
+.admin-table td:nth-child(4),
+.admin-table td:nth-child(6),
+.admin-table td:nth-child(7),
+.admin-table td:nth-child(8) {
+  text-align: center; /* price, stock, status, actions */
 }
 
 .admin-table tbody tr:hover {
@@ -463,6 +509,8 @@
   height: 50px;
   object-fit: cover;
   border-radius: 5px;
+  display: block;
+  margin: 0 auto;
 }
 
 .product-thumb-placeholder {

@@ -215,7 +215,7 @@ export default function AdminProducts() {
                       </td>
                       <td>{product.name}</td>
                       <td>{product.brand}</td>
-                      <td>${parseFloat(product.price).toFixed(2)}</td>
+                      <td>₱{parseFloat(product.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       <td>{product.category?.name || '-'}</td>
                       <td>{product.stock || 0}</td>
                       <td>
