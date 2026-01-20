@@ -13,8 +13,8 @@ export default function Topbar() {
   const [productsOpen, setProductsOpen] = useState(false)
   const [productsHover, setProductsHover] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [productCategories, setProductCategories] = useState([]) // Add this
-  const [loading, setLoading] = useState(false) // Add this
+  const [productCategories, setProductCategories] = useState([])
+  const [loading, setLoading] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
 
   // Track scroll position
@@ -48,16 +48,13 @@ export default function Topbar() {
   // Prevent body scroll when cart is open
   useEffect(() => {
     if (cartOpen) {
-      // Save the current scroll position
       const scrollY = window.scrollY
-      // Apply styles to prevent scrolling
       document.body.style.position = 'fixed'
       document.body.style.top = `-${scrollY}px`
       document.body.style.width = '100%'
       document.body.style.overflow = 'hidden'
       
       return () => {
-        // Restore scroll position when cart closes
         document.body.style.position = ''
         document.body.style.top = ''
         document.body.style.width = ''
@@ -73,6 +70,7 @@ export default function Topbar() {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false)
+    setProductsOpen(false)
   }
 
   const toggleSearch = () => {
@@ -127,13 +125,18 @@ export default function Topbar() {
         {/* Header with Dropdown */}
         <div className="header-container">
           <header className="header">
-              {/* Nav */}
-              <div className="header-left">
-                  <nav className={`header-nav ${mobileMenuOpen ? 'active' : ''}`}>
-                  <button className="mobile-menu-close" onClick={closeMobileMenu}>
-                      ×
-                  </button>
+              {/* Mobile Menu Toggle - moved before nav */}
+              <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+                ☰
+              </button>
 
+              {/* Nav - removed header-left wrapper */}
+              <nav className={`header-nav ${mobileMenuOpen ? 'active' : ''}`}>
+                <button className="mobile-menu-close" onClick={closeMobileMenu}>
+                    ×
+                </button>
+
+                <div className="nav-link-wrapper">
                   <NavLink 
                       to="/products" 
                       className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
@@ -147,30 +150,54 @@ export default function Topbar() {
                         <FaPlus className={`dropdown-icon plus ${productsHover || productsOpen ? 'show' : ''}`} />
                       </span>
                   </NavLink>
-                  <NavLink 
-                      to="/about" 
-                      className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-                      onClick={closeMobileMenu}
-                  >
-                      ABOUT US
-                  </NavLink>
-                  <NavLink 
-                      to="/contact" 
-                      className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-                      onClick={closeMobileMenu}
-                  >
-                      CONTACT US
-                  </NavLink>
-                  </nav>
-              </div>
+                  
+                  {/* Products Dropdown - Inside mobile menu */}
+                  {productsOpen && (
+                    <div className="products-dropdown mobile-dropdown">
+                      <div className="dropdown-content">
+                        {loading ? (
+                          <div className="dropdown-item">Loading categories...</div>
+                        ) : productCategories.length === 0 ? (
+                          <div className="dropdown-item">No categories available</div>
+                        ) : (
+                          productCategories.map((category) => {
+                            const categorySlug = categoryToSlug(category.name)
+                            return (
+                              <Link 
+                                key={category._id} 
+                                to={`/products?category=${categorySlug}`}
+                                className="dropdown-item"
+                                onClick={closeMobileMenu}
+                              >
+                                {category.name}
+                              </Link>
+                            )
+                          })
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
 
-              <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
-              ☰
-              </button>
+                <NavLink 
+                    to="/about" 
+                    className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                    onClick={closeMobileMenu}
+                >
+                    ABOUT US
+                </NavLink>
+                <NavLink 
+                    to="/contact" 
+                    className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                    onClick={closeMobileMenu}
+                >
+                    CONTACT US
+                </NavLink>
+              </nav>
 
               <div 
-              className={`mobile-overlay ${mobileMenuOpen ? 'active' : ''}`}
-              onClick={closeMobileMenu}
+                className={`mobile-overlay ${mobileMenuOpen ? 'active' : ''}`}
+                onClick={closeMobileMenu}
               ></div>
 
               <div className="header-right">
@@ -189,9 +216,9 @@ export default function Topbar() {
               
         </header>
 
-        {/* Products Dropdown Menu - MOVED INSIDE header-container */}
+        {/* Products Dropdown Menu - Desktop only */}
         {productsOpen && (
-          <div className="products-dropdown">
+          <div className="products-dropdown desktop-dropdown">
             <div className="dropdown-content">
               {loading ? (
                 <div className="dropdown-item">Loading categories...</div>
