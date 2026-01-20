@@ -46,61 +46,61 @@ export default function landingpage() {
     {
       id: 1,
       title: 'Weight Management & Metabolic Support Peptides',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/puRiWO2Z6MBtD1teOhC48.png',
       bgColor: '#c0c0c0'
     },
     {
       id: 2,
       title: 'Regenerative, Repair & Anti-Aging Peptides',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/XDecqGJAAJav0VJY_fXO5.png',
       bgColor: '#b72b1f'
     },
     {
       id: 3,
       title: 'Growth Hormone–Modulating Peptides',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/rxKLzrCBAm1jKlR75BTxV.png',
       bgColor: '#000000'
     },
     {
       id: 4,
       title: 'Cognitive, Mood & Stress Support Peptides',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/LfTurMlKN905xgbPlI6Ep.png',
       bgColor: '#c0c0c0'
     },
     {
       id: 5,
       title: 'Skin, Beauty & Cosmetic Peptides',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/sOsMv7TTRaVrKDpd_7IvI.png',
       bgColor: '#b72b1f'
     },
     {
       id: 6,
       title: 'Sexual Wellness Peptides',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/8eTV3sYYcirmsV22U2F_2.png',
       bgColor: '#f1c40f'
     },
     {
       id: 7,
       title: 'Fat Burner Injectables (Not Peptides)',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/NlWdD5i3UFKL9xgi6BWOe.png',
       bgColor: '#c0c0c0'
     },
     {
       id: 8,
       title: 'Hormones & Growth Factors (Not Peptides)',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/mzW3hIwGW8b1x1SLv4P2F.png',
       bgColor: '#b72b1f'
     },
     {
       id: 9,
-      title: 'Vitamins, Cofactors & Others"',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      title: 'Vitamins, Cofactors & Others',
+      image: 'https://figmage.com/images/rW9JTYeLDI1_8F22Y54Co.png',
       bgColor: '#000000'
     },
     {
       id: 10,
       title: 'Injectable Pens',
-      image: 'https://figmage.com/images/gNZcqExlrP_owjc3QubrA.png',
+      image: 'https://figmage.com/images/WiIA4wRF4bvNEuEPplWrB.png',
       bgColor: '#f1c40f'
     },
   ]

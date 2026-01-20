@@ -16,6 +16,12 @@ export default function Topbar() {
   const [productCategories, setProductCategories] = useState([])
   const [loading, setLoading] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
+
+  const utilityTexts = [
+    "Introducing PowerMed — Advanced Peptide Solutions for Modern Wellness. Science-Driven. Results-Focused.",
+    "Start strong. Stay consistent. Save up to 25%"
+  ]
 
   // Track scroll position
   useEffect(() => {
@@ -25,6 +31,15 @@ export default function Topbar() {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Text rotation effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % utilityTexts.length)
+    }, 10000) 
+
+    return () => clearInterval(interval)
   }, [])
 
   // Fetch categories when products dropdown opens
@@ -108,10 +123,19 @@ export default function Topbar() {
         {/* Utility Bar */}
         <div className="utility-bar">
             <div className={`utility-bar-top ${isScrolled ? 'hidden' : ''}`}>
-                <p>Welcome to Powermed</p>
+                <div className="utility-text-container">
+                  {utilityTexts.map((text, index) => (
+                    <p 
+                      key={index}
+                      className={`utility-text ${index === currentTextIndex ? 'active' : ''}`}
+                    >
+                      {text}
+                    </p>
+                  ))}
+                </div>
             </div>
             <div className="utility-bar-bottom">
-                <p>Welcome to Powermed</p>
+                <p>We deliver between 3–9 PM on the night before your selected date</p>
             </div>
         </div>
 
