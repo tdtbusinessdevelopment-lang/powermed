@@ -62,7 +62,7 @@ export default function ProductDetails() {
 
           <div className="product-info-column">
             <div className="product-meta">
-              <h1 className="product-title">{product.name}</h1>
+              <h1 className="product_title">{product.name}</h1>
             </div>
 
             <p className="product-short-desc">{product.description}</p>
