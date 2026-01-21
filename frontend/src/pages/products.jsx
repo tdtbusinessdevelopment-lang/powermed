@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
 import Footer from '../components/footer.jsx'
+import '../styles/products.css'
+
 
 import { categoryAPI, productAPI } from '../utils/api'
-import '../styles/products.css'
+
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams()
