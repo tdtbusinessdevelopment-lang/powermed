@@ -84,7 +84,7 @@ export default function ProductDetails() {
                     aria-expanded={expandedFaq === index}
                   >
                     <span>{faq.question}</span>
-                    <span className={`faq-toggle ${expandedFaq === index ? 'expanded' : ''}`}>{expandedFaq === index ? '|' : '+'}</span>
+                    <span className={`faq-toggle ${expandedFaq === index ? 'expanded' : ''}`}>{expandedFaq === index ? '-' : '+'}</span>
                   </div>
                   <div className={`faq-answer ${expandedFaq === index ? 'expanded' : ''}`}>
                     <div className="faq-answer-inner">{faq.answer}</div>

@@ -37,14 +37,14 @@
 }
 
 .product-meta { display:flex; align-items:center; gap:12px }
-.product-title { font-size:50px; color: var(--green, #02989E); margin:6px 0 12px }
+.product-title { font-size:50px; color: var(--green, #02989E); text-align: left; }
 .product-short-desc { color:#2b2b2b; font-size:16px; margin-bottom:18px; text-align: left; }
 
 .book-consult-btn { display:inline-block; background: var(--green, #02989E); color:#fff; padding:14px 28px; border-radius:28px; margin:12px 0 24px; border:none; cursor:pointer; box-shadow: 0 6px 18px rgba(2,152,158,0.14) }
 .book-consult-btn:hover { background: var(--dark-green, #027678) }
 
-.product-faqs { margin-top:40px }
-.product-faqs h3 { margin-bottom:12px; font-size:20px }
+.product-faqs { margin-top:20px }
+.product-faqs h3 { margin-bottom:10px; font-size:20px }
 .faq-item { border-top:1px solid rgba(0,0,0,0.06); padding:12px 0 }
 .faq-question { display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:600; color: var(--dark-green, #000000) }
 .faq-toggle { font-size:20px; margin-left:12px }
@@ -76,7 +76,7 @@
 .product-details-page .faq-toggle,
 .faq-section .faq-toggle { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
 .product-details-page .faq-toggle.expanded,
-.faq-section .faq-toggle.expanded { transform: rotate(90deg); color: #01686b }
+.faq-section .faq-toggle.expanded { transform: rotate(0deg); color: #01686b }
 
 /* Also style the small plus icon used in the general FAQ list */
 .faq-section .faq-icon { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
