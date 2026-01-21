@@ -47,7 +47,7 @@
 .product-faqs { margin-top:20px }
 .product-faqs h3 { margin-bottom:12px; font-size:20px }
 .faq-item { border-top:1px solid rgba(0,0,0,0.06); padding:12px 0 }
-.faq-question { display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:600; color: #000000; font-size: 25px; }
+.faq-question { display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:600; color: #000000; font-size: 20px; text-align: left; }
 .faq-toggle { font-size:20px; margin-left:12px }
 .faq-answer { margin-top:8px; color:#333; text-align: left; }
 
