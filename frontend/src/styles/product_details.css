@@ -73,11 +73,11 @@
 .product-details-page .faq-question,
 .faq-section .faq-question { transition: color 180ms ease, transform 220ms ease; }
 .product-details-page .faq-question.open,
-.faq-section .faq-question.open { color: #000000; }
+.faq-section .faq-question.open { color: #01686b; }
 .product-details-page .faq-toggle,
 .faq-section .faq-toggle { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
 .product-details-page .faq-toggle.expanded,
-.faq-section .faq-toggle.expanded { transform: rotate(90deg); color: #01686b }
+.faq-section .faq-toggle.expanded { transform: rotate(90deg); color: #000000 }
 
 /* Also style the small plus icon used in the general FAQ list */
 .faq-section .faq-icon { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
