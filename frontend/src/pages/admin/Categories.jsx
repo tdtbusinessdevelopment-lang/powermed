@@ -152,7 +152,7 @@ export default function AdminCategories() {
                 <tr>
                   <th>Name</th>
                   <th>Description</th>
-                  <th>Slug</th>
+                 
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -167,7 +167,7 @@ export default function AdminCategories() {
                     <tr key={category._id}>
                       <td>{category.name}</td>
                       <td>{category.description || '-'}</td>
-                      <td>{category.slug}</td>
+                   
                       <td>
                         <span className={`badge ${category.isActive ? 'badge-success' : 'badge-danger'}`}>
                           {category.isActive ? 'Active' : 'Inactive'}
