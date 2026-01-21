@@ -77,7 +77,7 @@
 .product-details-page .faq-toggle,
 .faq-section .faq-toggle { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
 .product-details-page .faq-toggle.expanded,
-.faq-section .faq-toggle.expanded { transform: rotate(90deg); color: #000000 }
+.faq-section .faq-toggle.expanded { transform: rotate(90deg); color: #01686b }
 
 /* Also style the small plus icon used in the general FAQ list */
 .faq-section .faq-icon { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
@@ -101,6 +101,6 @@
   .product-title { font-size: 22px }
   .product-short-desc { font-size: 14px }
 
-  .faq-question { font-size: 17px }
+  .faq-question { font-size: 18px ; color: #000;}
   .faq-answer { font-size: 14px }
 }
