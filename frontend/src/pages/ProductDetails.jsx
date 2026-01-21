@@ -62,7 +62,6 @@ export default function ProductDetails() {
 
           <div className="product-info-column">
             <div className="product-meta">
-              <div className="product-prescription">Rx</div>
               <h1 className="product-title">{product.name}</h1>
             </div>
 
@@ -85,7 +84,7 @@ export default function ProductDetails() {
                     aria-expanded={expandedFaq === index}
                   >
                     <span>{faq.question}</span>
-                    <span className={`faq-toggle ${expandedFaq === index ? 'expanded' : ''}`}>{expandedFaq === index ? '−' : '+'}</span>
+                    <span className={`faq-toggle ${expandedFaq === index ? 'expanded' : ''}`}>{expandedFaq === index ? '|' : '+'}</span>
                   </div>
                   <div className={`faq-answer ${expandedFaq === index ? 'expanded' : ''}`}>
                     <div className="faq-answer-inner">{faq.answer}</div>
