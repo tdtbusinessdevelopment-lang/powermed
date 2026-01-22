@@ -268,7 +268,7 @@ export default function landingpage() {
         <div className="second-info-section">
           <div className="second-info-text">
             <h1 className="second-info-title">Why Powermed?</h1>
-            <p>Lorem ipsum dolor sit amet. Vel debitis quis in pariatur natus aut rerum assumenda rem quos Quis! A obcaecati voluptatem est obcaecati assumenda ut quidem nemo non quibusdam tempora ea eligendi assumenda et quibusdam impedit. Id tempore necessitatibus vel velit architecto eos fugit officia rem veritatis distinctio! Aut dignissimos ducimus et sequi voluptatibus aut quaerat velit ut consequatur optio.</p>
+            <p>PowerMed is more than a provider of wellness solutions — it is a partner in informed, responsible, and sustainable health, committed to empowering individuals and organizations to achieve lasting results.</p>
           </div>
         </div>
 

@@ -380,6 +380,7 @@
   line-height: 1.6;
   max-width: 1000px;
   margin: 0 auto;
+  width: 700px;
 }
 
 /* FAQ Section */
@@ -669,6 +670,7 @@
 
   .second-info-text p {
     font-size: 15px;
+    width: 350px;
   }
 
   .landing-faq-heading {
