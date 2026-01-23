@@ -14,10 +14,10 @@ export default function footer() {
             <button>Explore Powermed Products</button>
           </div>
           <div className="social-icons">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/profile.php?id=61586383577691" target="_blank" rel="noopener noreferrer">
               <img src="https://figmage.com/images/Or9PvjghGnn-L7Wkcde3m.png" alt="Facebook" />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/powermed.ph" target="_blank" rel="noopener noreferrer">
               <img src="https://figmage.com/images/kUoQEcp4dpYomWOIrsWtR.png" alt="Instagram" />
             </a>
           </div>

@@ -93,6 +93,7 @@
     letter-spacing: 1px;
     margin-bottom: 20px;
     color: white;
+    font-family: var(--jakarta);
 }
 
 .learn p,
@@ -103,6 +104,7 @@
     color: white;
     font-weight: 400;
     transition: opacity 0.3s;
+    font-family: var(--jakarta);
 }
 
 .learn p:hover,
@@ -120,17 +122,20 @@
     font-weight: 700;
     letter-spacing: 1px;
     margin-bottom: 15px;
+    font-family: var(--jakarta);
 }
 
 .send.email p {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.6;
     margin-bottom: 20px;
     color: white;
+    font-family: var(--jakarta);
 }
 
 .send.email p span {
     font-weight: 600;
+    font-family: var(--jakarta);
 }
 
 .email-input {
@@ -161,6 +166,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: background-color 0.3s;
+    font-family: var(--jakarta);
 }
 
 .email-button:hover {
