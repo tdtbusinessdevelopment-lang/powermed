@@ -193,7 +193,7 @@ export default function Products() {
         {loading ? (
           <div className="categories-scroll-container">
             <div className="categories-scroll">
-              <div className="loading-text">Loading categories...</div>
+              <div className="loading-text">Loading Products...</div>
             </div>
           </div>
         ) : (

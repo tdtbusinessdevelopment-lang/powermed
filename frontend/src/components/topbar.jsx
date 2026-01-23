@@ -180,7 +180,7 @@ export default function Topbar() {
                     <div className="products-dropdown mobile-dropdown">
                       <div className="dropdown-content">
                         {loading ? (
-                          <div className="dropdown-item">Loading categories...</div>
+                          <div className="dropdown-item">Loading Products...</div>
                         ) : productCategories.length === 0 ? (
                           <div className="dropdown-item">No categories available</div>
                         ) : (
@@ -245,7 +245,7 @@ export default function Topbar() {
           <div className="products-dropdown desktop-dropdown">
             <div className="dropdown-content">
               {loading ? (
-                <div className="dropdown-item">Loading categories...</div>
+                <div className="dropdown-item">Loading Products...</div>
               ) : productCategories.length === 0 ? (
                 <div className="dropdown-item">No categories available</div>
               ) : (
