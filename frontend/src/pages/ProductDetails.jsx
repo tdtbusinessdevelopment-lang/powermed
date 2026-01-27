@@ -93,12 +93,7 @@ export default function ProductDetails() {
               ))}
             </div>
 
-            <p className="product-disclaimer">
-              This product is compounded in an FDA-regulated pharmacy and available if prescribed after an online consultation with a provider.
-              <br></br>
-              <br></br>
-              <strong>Please note:</strong> The FDA does not verify the safety or effectiveness of compounded medications.
-            </p>
+
           </div>
         </div>
       </div>
