@@ -95,7 +95,7 @@ export default function ProductDetails() {
 
             <p className="product-disclaimer">
               <br></br>
-              <strong>Please note:</strong> All information provided is for educational and scientific reference only. Buyer assumes all responsibility for lawful use and compliance with applicable regulations.
+              <strong>DISCLAIMER ❗:</strong> All information provided is for educational and scientific reference only. Buyer assumes all responsibility for lawful use and compliance with applicable regulations.
             </p>
           </div>
         </div>
