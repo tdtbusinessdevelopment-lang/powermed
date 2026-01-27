@@ -82,5 +82,5 @@
 .faq-section .faq-icon { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
 .faq-section .faq-icon.expanded { transform: rotate(90deg); color: #01686b }
 
-.product-disclaimer { margin-top:20px; font-size:20px; color:#000000; text-align: left; }
+.product-disclaimer { margin-top:20px; font-size:15px; color:#000000; text-align: left; }
 
