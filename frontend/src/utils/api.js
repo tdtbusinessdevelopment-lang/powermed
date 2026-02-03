@@ -2,9 +2,13 @@
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
-// Get token from localStorage
+// Get token from sessionStorage (admin sessions) first, then localStorage
 const getToken = () => {
-  return localStorage.getItem('token');
+  try {
+    return sessionStorage.getItem('token') || localStorage.getItem('token');
+  } catch (e) {
+    return localStorage.getItem('token');
+  }
 };
 
 // Helper function for API calls

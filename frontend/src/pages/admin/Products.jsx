@@ -13,23 +13,33 @@ export default function AdminProducts() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
-    brand: 'PowerMed',
     price: '',
     category: '',
     categoryType: '',
     description: '',
-    stock: '0',
     faqs: [],
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchProducts();
     fetchCategories();
   }, []);
+
+  // derive a lookup for category names by id (use string keys) for grouping and display
+  const categoryById = {};
+  categories.forEach((c) => {
+    try {
+      const key = c._id?.toString ? c._id.toString() : String(c._id);
+      categoryById[key] = c.name;
+    } catch (e) {
+      // ignore
+    }
+  });
 
   const fetchProducts = async () => {
     try {
@@ -104,12 +114,10 @@ export default function AdminProducts() {
     setEditingProduct(product);
     setFormData({
       name: product.name,
-      brand: product.brand || 'PowerMed',
       price: product.price.toString(),
       category: product.category._id || product.category,
       categoryType: product.categoryType || '',
       description: product.description || '',
-      stock: product.stock?.toString() || '0',
       faqs: product.faqs || [],
     });
     setImagePreview(product.image || '');
@@ -134,12 +142,10 @@ export default function AdminProducts() {
   const resetForm = () => {
     setFormData({
       name: '',
-      brand: 'PowerMed',
       price: '',
       category: '',
       categoryType: '',
       description: '',
-      stock: '0',
       faqs: [],
     });
     setImageFile(null);
@@ -173,65 +179,155 @@ export default function AdminProducts() {
       <AdminSidebar />
 
       <div className="admin-content">
-        <div className="admin-header">
-          <h1>Products</h1>
-          <button onClick={openModal} className="btn-primary">+ Add Product</button>
-        </div>
 
         {error && <div className="alert alert-error">{error}</div>}
         {success && <div className="alert alert-success">{success}</div>}
 
+        <div className="admin-header" style={{ marginBottom: 8 }}>
+          <h1>Products</h1>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <div className="search">
+              <input
+                type="search"
+                placeholder="Search products by name"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="button" onClick={() => setSearchQuery('')} title="Clear search">✖</button>
+            </div>
+            <button onClick={openModal} className="btn-primary">+ Add Product</button>
+          </div>
+        </div>
+
         {loading ? (
           <div className="loading">Loading products...</div>
         ) : (
-          <div className="table-container">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Brand</th>
-                  <th>Price</th>
-                  <th>Category</th>
-                  <th>Stock</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.length === 0 ? (
-                  <tr>
-                    <td colSpan="8" className="text-center">No products found</td>
-                  </tr>
-                ) : (
-                  products.map((product) => (
-                    <tr key={product._id}>
-                      <td>
-                        {product.image ? (
-                          <img src={product.image} alt={product.name} className="product-thumb" />
-                        ) : (
-                          <div className="product-thumb-placeholder">No Image</div>
-                        )}
-                      </td>
-                      <td>{product.name}</td>
-                      <td>{product.brand}</td>
-                      <td>₱{parseFloat(product.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                      <td>{product.category?.name || '-'}</td>
-                      <td>{product.stock || 0}</td>
-                      <td>
-                        <span className={`badge ${product.isActive ? 'badge-success' : 'badge-danger'}`}>
-                          {product.isActive ? 'Active' : 'Inactive'}
-                        </span>
-                      </td>
-                      <td>
-                        <button onClick={() => handleEdit(product)} className="btn-edit">Edit</button>
-                        <button onClick={() => handleDelete(product._id)} className="btn-delete">Delete</button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+          <div>
+            {/* Group products by category and render a table per category for easier scanning */}
+            {(() => {
+              const q = (searchQuery || '').trim().toLowerCase();
+              const filtered = products.filter((p) => (p.name || '').toLowerCase().includes(q));
+
+              // group by category id (use 'uncategorized' for missing) - always use string keys
+              const groups = {};
+              const getCatKey = (p) => {
+                if (!p.category) return 'uncategorized';
+                if (typeof p.category === 'string') return p.category;
+                if (p.category._id) return p.category._id.toString();
+                if (p.category.id) return p.category.id.toString();
+                // as last resort, try JSON string
+                try {
+                  return JSON.stringify(p.category);
+                } catch (e) {
+                  return 'uncategorized';
+                }
+              };
+
+              filtered.forEach((p) => {
+                const catId = getCatKey(p);
+                if (!groups[catId]) groups[catId] = [];
+                groups[catId].push(p);
+              });
+
+              // Render categories in the order of `categories` list
+              const rendered = [];
+
+              categories.forEach((cat) => {
+                const key = cat._id?.toString ? cat._id.toString() : String(cat._id);
+                const list = groups[key];
+                  if (list && list.length) {
+                  rendered.push(
+                    <div key={cat._id} className="product-group">
+                      <h3 className="product-group-title">{cat.name}</h3>
+                      <div className="table-container">
+                        <table className="admin-table">
+                          <thead>
+                            <tr>
+                              <th>Image</th>
+                              <th>Name</th>
+                              <th>Price</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {list.map((product) => (
+                              <tr key={product._id}>
+                                <td>
+                                  {product.image ? (
+                                    <img src={product.image} alt={product.name} className="product-thumb" />
+                                  ) : (
+                                    <div className="product-thumb-placeholder">No Image</div>
+                                  )}
+                                </td>
+                                <td>{product.name}</td>
+                                <td>₱{parseFloat(product.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                <td>
+                                  <button onClick={() => handleEdit(product)} className="btn-edit">Edit</button>
+                                  <button onClick={() => handleDelete(product._id)} className="btn-delete">Delete</button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                }
+                // remove from groups so we can detect uncategorized later
+                if (groups[key]) delete groups[key];
+              });
+
+              // any remaining groups are uncategorized (or categories not in list)
+              const remainingKeys = Object.keys(groups);
+              if (remainingKeys.length) {
+                remainingKeys.forEach((key) => {
+                  const list = groups[key];
+                  rendered.push(
+                      <div key={key} className="product-group">
+                        <h3 className="product-group-title">{categoryById[key] || 'Uncategorized'}</h3>
+                        <div className="table-container">
+                        <table className="admin-table">
+                          <thead>
+                            <tr>
+                              <th>Image</th>
+                              <th>Name</th>
+                              <th>Price</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {list.map((product) => (
+                              <tr key={product._id}>
+                                <td>
+                                  {product.image ? (
+                                    <img src={product.image} alt={product.name} className="product-thumb" />
+                                  ) : (
+                                    <div className="product-thumb-placeholder">No Image</div>
+                                  )}
+                                </td>
+                                <td>{product.name}</td>
+                                <td>₱{parseFloat(product.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                <td>
+                                  <button onClick={() => handleEdit(product)} className="btn-edit">Edit</button>
+                                  <button onClick={() => handleDelete(product._id)} className="btn-delete">Delete</button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                });
+              }
+
+              // if nothing matched, show a placeholder
+              if (rendered.length === 0) {
+                return <div className="text-center">No products found</div>;
+              }
+
+              return rendered;
+            })()}
           </div>
         )}
 
@@ -251,17 +347,6 @@ export default function AdminProducts() {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Brand</label>
-                    <input
-                      type="text"
-                      value={formData.brand}
-                      onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
                     <label>Price *</label>
                     <input
                       type="number"
@@ -269,14 +354,6 @@ export default function AdminProducts() {
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                       required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Stock</label>
-                    <input
-                      type="number"
-                      value={formData.stock}
-                      onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                     />
                   </div>
                 </div>

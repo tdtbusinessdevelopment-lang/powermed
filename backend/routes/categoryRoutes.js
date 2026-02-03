@@ -10,7 +10,9 @@ const router = express.Router();
 // @access  Public
 router.get('/', async (req, res) => {
   try {
-    const categories = await Category.find({ isActive: true }).sort({ name: 1 });
+    // Return categories in insertion order (earliest first) instead of alphabetical
+    // Sorting by `_id` ascending preserves insertion order (ObjectId contains timestamp)
+    const categories = await Category.find({ isActive: true }).sort({ _id: 1 });
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -37,7 +39,7 @@ router.get('/:id', async (req, res) => {
 // @access  Private (Admin)
 router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
-    const { name, description } = req.body;
+    const { name } = req.body;
 
     if (!name) {
       return res.status(400).json({ message: 'Category name is required' });
@@ -68,7 +70,6 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
 
     const category = new Category({
       name,
-      description,
       image: imageUrl || undefined, // Only set if imageUrl is not empty
     });
 
@@ -90,7 +91,7 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
 // @access  Private (Admin)
 router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
-    const { name, description, isActive } = req.body;
+    const { name, isActive } = req.body;
     console.log('Update request body:', { name, description, isActive, hasFile: !!req.file });
 
     const category = await Category.findById(req.params.id);
@@ -123,7 +124,7 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
     // Note: If no new image is provided, we keep the existing image (don't modify category.image)
 
     if (name) category.name = name;
-    if (description !== undefined) category.description = description;
+    // description field removed from schema — no-op
     if (isActive !== undefined) {
       // Handle string 'true'/'false' from form data
       category.isActive = isActive === 'true' || isActive === true;

@@ -26,9 +26,11 @@ router.get('/', async (req, res) => {
       query.$text = { $search: search };
     }
 
+    // Return products in insertion order (earliest first) instead of forcing alphabetical
+    // Use `_id` ascending to preserve DB insertion order (ObjectId includes timestamp)
     const products = await Product.find(query)
       .populate('category', 'name slug')
-      .sort({ createdAt: -1 });
+      .sort({ _id: 1 });
 
     res.json(products);
   } catch (error) {
@@ -56,7 +58,7 @@ router.get('/:id', async (req, res) => {
 // @access  Private (Admin)
 router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
-    const { name, brand, price, category, categoryType, description, stock } = req.body;
+    const { name, brand, price, category, categoryType, description } = req.body;
 
     // Validate required fields
     if (!name || !price || !category) {
@@ -104,7 +106,6 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
       categoryType,
       description,
       image: imageUrl,
-      stock: stock ? parseInt(stock) : 0,
       faqs,
     });
 
@@ -122,7 +123,7 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
 // @access  Private (Admin)
 router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
-    const { name, brand, price, category, categoryType, description, stock, isActive } = req.body;
+    const { name, brand, price, category, categoryType, description, isActive } = req.body;
 
     const product = await Product.findById(req.params.id);
     if (!product) {
@@ -167,7 +168,6 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
     if (price) product.price = parseFloat(price);
     if (categoryType !== undefined) product.categoryType = categoryType;
     if (description !== undefined) product.description = description;
-    if (stock !== undefined) product.stock = parseInt(stock);
     if (isActive !== undefined) product.isActive = isActive === 'true' || isActive === true;
 
     const updatedProduct = await product.save();
