@@ -10,7 +10,9 @@ const router = express.Router();
 // @access  Public
 router.get('/', async (req, res) => {
   try {
-    const categories = await Category.find({ isActive: true }).sort({ name: 1 });
+    // Return categories in insertion order (earliest first) instead of alphabetical
+    // Sorting by `_id` ascending preserves insertion order (ObjectId contains timestamp)
+    const categories = await Category.find({ isActive: true }).sort({ _id: 1 });
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -26,9 +26,11 @@ router.get('/', async (req, res) => {
       query.$text = { $search: search };
     }
 
+    // Return products in insertion order (earliest first) instead of forcing alphabetical
+    // Use `_id` ascending to preserve DB insertion order (ObjectId includes timestamp)
     const products = await Product.find(query)
       .populate('category', 'name slug')
-      .sort({ createdAt: -1 });
+      .sort({ _id: 1 });
 
     res.json(products);
   } catch (error) {
