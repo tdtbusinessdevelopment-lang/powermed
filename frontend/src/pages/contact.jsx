@@ -294,7 +294,7 @@ function Contact() {
                       <path d="M21.9 8c0-.46-.35-.85-.8-.98V6c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v1.02c-.45.13-.8.52-.8.98L2 22h20l-.1-14zM12 19c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zM5 8V6h14v2H5z" fill="currentColor"/>
                     </svg>
                   </div>
-                  <span>Visit Store</span>
+                  <span>Location</span>
                   <p>4th floor TDT Powersteel Building, 1017-A Vicente Cruz St., Sampaloc, Manila City, Philippines</p>
                 </div>
               </div>
