@@ -8,43 +8,33 @@ dotenv.config();
 const categories = [
   {
     name: 'Weight Management & Metabolic Support Peptides',
-    description: 'Peptides designed to support weight management and metabolic health.',
   },
   {
     name: 'Regenerative, Repair & Anti-Aging Peptides',
-    description: 'Peptides that promote tissue repair, regeneration, and anti-aging benefits.',
   },
   {
     name: 'Growth Hormone–Modulating Peptides',
-    description: 'Peptides that help modulate growth hormone levels for optimal health.',
   },
   {
     name: 'Cognitive, Mood & Stress Support Peptides',
-    description: 'Peptides designed to support cognitive function, mood, and stress management.',
   },
   {
     name: 'Skin, Beauty & Cosmetic Peptides',
-    description: 'Peptides focused on skin health, beauty, and cosmetic applications.',
   },
   {
     name: 'Sexual Wellness Peptides',
-    description: 'Peptides that support sexual wellness and hormonal balance.',
   },
   {
     name: 'Fat Burner Injectables (Not Peptides)',
-    description: 'Injectable fat-burning solutions for metabolic support.',
   },
   {
     name: 'Hormones & Growth Factors (Not Peptides)',
-    description: 'Hormones and growth factors for wellness and performance.',
   },
   {
     name: 'Vitamins, Cofactors & Others',
-    description: 'Essential vitamins, cofactors, and other wellness supplements.',
   },
   {
     name: 'Injectable Pens',
-    description: 'Convenient injectable pen devices for easy administration.',
   },
 ];
 

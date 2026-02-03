@@ -13,10 +13,6 @@ const categorySchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-    description: {
-      type: String,
-      trim: true,
-    },
     image: {
       type: String, // Cloudinary URL
     },

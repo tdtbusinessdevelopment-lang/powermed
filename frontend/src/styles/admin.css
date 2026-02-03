@@ -425,7 +425,7 @@
 .table-container {
   background: white;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: auto; /* allow internal scrolling if needed, prevents layout cutoff */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -439,6 +439,94 @@
   color: white;
 }
 
+/* Product group consistent styling */
+.product-group {
+  margin-bottom: 28px;
+}
+.product-group .product-group-title {
+  text-align: center;
+  font-weight: 700;
+  color: #0b6b6b;
+  margin: 6px 0 10px 0;
+}
+.product-group .table-container {
+  border-radius: 6px;
+  overflow: hidden;
+}
+.product-group .admin-table thead th {
+  padding: 10px 12px;
+}
+.product-group .admin-table td {
+  padding: 12px 14px;
+}
+
+/* Standardize per-category product tables: fixed layout and equal column widths */
+.product-group .admin-table {
+  table-layout: fixed; /* keep column sizes consistent across groups */
+  width: 100%;
+  min-width: 0;
+}
+
+/* Equally divide columns: Image | Name | Price | Actions (25% each) */
+.product-group .admin-table th:nth-child(1),
+.product-group .admin-table td:nth-child(1),
+.product-group .admin-table th:nth-child(2),
+.product-group .admin-table td:nth-child(2),
+.product-group .admin-table th:nth-child(3),
+.product-group .admin-table td:nth-child(3),
+.product-group .admin-table th:nth-child(4),
+.product-group .admin-table td:nth-child(4) {
+  width: 25%;
+  vertical-align: middle;
+}
+
+.product-group .admin-table th:nth-child(1),
+.product-group .admin-table td:nth-child(1) {
+  text-align: center;
+}
+.product-group .admin-table th:nth-child(2),
+.product-group .admin-table td:nth-child(2) {
+  text-align: left;
+  padding-left: 18px;
+  overflow: hidden;
+}
+.product-group .admin-table th:nth-child(3),
+.product-group .admin-table td:nth-child(3) {
+  text-align: center;
+}
+.product-group .admin-table th:nth-child(4),
+.product-group .admin-table td:nth-child(4) {
+  text-align: center;
+}
+
+.product-group .table-container {
+  padding: 8px; /* consistent inner spacing */
+}
+
+/* Improve visual separation between rows and add gap between image and name */
+.product-group .admin-table {
+  border-collapse: separate; /* allow spacing between rows */
+  border-spacing: 0 10px; /* vertical gap between rows */
+}
+
+.product-group .admin-table tbody tr {
+  background: white;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+  border-radius: 6px;
+}
+
+.product-group .admin-table tbody td {
+  border-bottom: none; /* remove internal separators so cards look clean */
+}
+
+/* increase spacing between image and name for readability */
+.product-group .admin-table td:nth-child(1) {
+  padding-right: 18px; /* space after thumbnail */
+}
+.product-group .admin-table td:nth-child(2) {
+  padding-left: 20px; /* extra space before name text */
+}
+
 .admin-table th {
   padding: 12px 14px;
   text-align: center;
@@ -446,54 +534,97 @@
 }
 
 /* Align header columns to match body cells */
-.admin-table th:nth-child(1) {
-  text-align: center;
-  width: 72px;
-  padding-left: 18px;
-  padding-right: 8px;
-}
-.admin-table th:nth-child(2) {
-  text-align: center;
-  padding-left: 6px;
-}
-.admin-table th:nth-child(3),
-.admin-table th:nth-child(5) {
-  text-align: center;
-}
-.admin-table th:nth-child(4),
-.admin-table th:nth-child(6),
-.admin-table th:nth-child(7),
-.admin-table th:nth-child(8) {
-  text-align: center;
-}
-
 .admin-table td {
   padding: 12px 14px;
   border-bottom: 1px solid #ecf0f1;
   vertical-align: middle;
-  white-space: nowrap;
+  /* allow wrapping so long content doesn't force horizontal overflow */
+  white-space: normal;
 }
 
-/* Column-specific alignment: keep image centered, names left-aligned */
-.admin-table td:nth-child(1) {
-  text-align: center; /* image */
+/* Truncate long names in admin tables to keep rows compact */
+.admin-table td.category-name {
+  /* Use normal wrapping and allow the inner element to control max height.
+     This avoids aggressive mid-word truncation from some -webkit-line-clamp behaviors. */
+  max-width: none;
+  white-space: normal;
+  text-align: left;
+  padding-left: 12px;
+  vertical-align: middle;
+}
+
+/* inner container for category name to ensure clamping works and uses available column width */
+.category-name-inner {
+  display: block;
+  white-space: normal;
+  line-height: 1.25;
+  /* limit to two lines by max-height, preserve whole words when wrapping */
+  max-height: calc(1.25em * 2);
+  overflow: hidden;
+}
+
+/* ensure header stays aligned when Status removed */
+.categories-table thead th {
+  text-align: left;
+  padding-left: 24px;
+}
+
+/* Categories table: give name column more room */
+.categories-table th:first-child,
+.categories-table td:first-child {
+  width: 70%;
+  padding-left: 24px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.categories-table th:last-child,
+.categories-table td:last-child {
+  width: 18%;
+}
+
+/* Add vertical spacing between category rows and card-like appearance */
+.categories-table {
+  border-collapse: separate;
+  border-spacing: 0 12px; /* vertical gap between rows */
+}
+.categories-table tbody tr {
+  background: white;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+  border-radius: 8px;
+}
+.categories-table td {
+  border-bottom: none; /* avoid separator lines between spaced rows */
+}
+
+.admin-header .search {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.admin-header .search input {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 220px;
+}
+
+.admin-header .search button {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Keep image column compact and centered */
+.admin-table td:first-child,
+.admin-table th:first-child {
+  text-align: center;
   width: 72px;
   padding-left: 18px;
   padding-right: 8px;
-}
-.admin-table td:nth-child(2) {
-  text-align: center; /* name */
-  padding-left: 6px;
-}
-.admin-table td:nth-child(3),
-.admin-table td:nth-child(5) {
-  text-align: center; /* brand, category */
-}
-.admin-table td:nth-child(4),
-.admin-table td:nth-child(6),
-.admin-table td:nth-child(7),
-.admin-table td:nth-child(8) {
-  text-align: center; /* price, stock, status, actions */
 }
 
 .admin-table tbody tr:hover {

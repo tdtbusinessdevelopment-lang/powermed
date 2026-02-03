@@ -10,7 +10,7 @@ export default function AdminCategories() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
-  const [formData, setFormData] = useState({ name: '', description: '' });
+  const [formData, setFormData] = useState({ name: '' });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
   const [error, setError] = useState('');
@@ -57,9 +57,6 @@ export default function AdminCategories() {
 
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
-      if (formData.description) {
-        formDataToSend.append('description', formData.description);
-      }
       if (imageFile) {
         formDataToSend.append('image', imageFile);
       }
@@ -91,7 +88,6 @@ export default function AdminCategories() {
     setEditingCategory(category);
     setFormData({
       name: category.name,
-      description: category.description || '',
     });
     setImagePreview(category.image || '');
     setImageFile(null);
@@ -99,7 +95,7 @@ export default function AdminCategories() {
   };
 
   const resetForm = () => {
-    setFormData({ name: '', description: '' });
+    setFormData({ name: '' });
     setImageFile(null);
     setImagePreview('');
     setEditingCategory(null);
@@ -147,31 +143,23 @@ export default function AdminCategories() {
           <div className="loading">Loading categories...</div>
         ) : (
           <div className="table-container">
-            <table className="admin-table">
+            <table className="admin-table categories-table">
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Description</th>
-                 
-                  <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {categories.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center">No categories found</td>
+                    <td colSpan="2" className="text-center">No categories found</td>
                   </tr>
                 ) : (
                   categories.map((category) => (
                     <tr key={category._id}>
-                      <td>{category.name}</td>
-                      <td>{category.description || '-'}</td>
-                   
-                      <td>
-                        <span className={`badge ${category.isActive ? 'badge-success' : 'badge-danger'}`}>
-                          {category.isActive ? 'Active' : 'Inactive'}
-                        </span>
+                      <td className="category-name" title={category.name}>
+                        <div className="category-name-inner">{category.name}</div>
                       </td>
                       <td>
                         <button onClick={() => handleEdit(category)} className="btn-edit">Edit</button>
@@ -199,14 +187,7 @@ export default function AdminCategories() {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label>Description</label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    rows="3"
-                  />
-                </div>
+                  {/* Description removed */}
                 <div className="form-group">
                   <label>Category Image</label>
                   <input

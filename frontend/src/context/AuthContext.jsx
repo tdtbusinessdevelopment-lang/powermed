@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useRef } from 'react';
 
 const AuthContext = createContext();
 
@@ -13,7 +13,10 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  // Prefer sessionStorage for admin sessions (cleared on tab close), fall back to localStorage
+  const getStoredToken = () => sessionStorage.getItem('token') || localStorage.getItem('token');
+  const [token, setToken] = useState(getStoredToken());
+  const inactivityTimer = useRef(null);
 
   useEffect(() => {
     if (token) {
@@ -22,6 +25,43 @@ export const AuthProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
+  }, [token]);
+
+  // Auto-logout on inactivity (5 minutes)
+  useEffect(() => {
+    const events = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'];
+
+    const clearInactivityTimer = () => {
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+        inactivityTimer.current = null;
+      }
+    };
+
+    const startInactivityTimer = () => {
+      clearInactivityTimer();
+      // 5 minutes = 300000 ms
+      inactivityTimer.current = setTimeout(() => {
+        logout();
+      }, 5 * 60 * 1000);
+    };
+
+    const resetTimer = () => {
+      if (token) startInactivityTimer();
+    };
+
+    if (token) {
+      // start timer and attach listeners
+      startInactivityTimer();
+      events.forEach((ev) => window.addEventListener(ev, resetTimer));
+      document.addEventListener('visibilitychange', resetTimer);
+    }
+
+    return () => {
+      clearInactivityTimer();
+      events.forEach((ev) => window.removeEventListener(ev, resetTimer));
+      document.removeEventListener('visibilitychange', resetTimer);
+    };
   }, [token]);
 
   const fetchUser = async () => {
@@ -66,7 +106,20 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         setToken(data.token);
         setUser(data);
-        localStorage.setItem('token', data.token);
+        // For admin accounts, make session tied to the browser tab (cleared on close)
+        // Other users remain in localStorage
+        try {
+          if (data?.role === 'admin') {
+            localStorage.removeItem('token');
+            sessionStorage.setItem('token', data.token);
+          } else {
+            sessionStorage.removeItem('token');
+            localStorage.setItem('token', data.token);
+          }
+        } catch (e) {
+          // storage might be restricted; fallback to localStorage
+          localStorage.setItem('token', data.token);
+        }
         return { success: true, user: data };
       } else {
         return { success: false, message: data.message || 'Login failed' };
@@ -79,7 +132,12 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('token');
+    try {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+    } catch (e) {
+      // ignore storage errors
+    }
   };
 
   const value = {
