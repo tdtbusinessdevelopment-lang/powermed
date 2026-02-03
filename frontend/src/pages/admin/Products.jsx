@@ -17,7 +17,6 @@ export default function AdminProducts() {
     category: '',
     categoryType: '',
     description: '',
-    stock: '0',
     faqs: [],
   });
   const [imageFile, setImageFile] = useState(null);
@@ -119,7 +118,6 @@ export default function AdminProducts() {
       category: product.category._id || product.category,
       categoryType: product.categoryType || '',
       description: product.description || '',
-      stock: product.stock?.toString() || '0',
       faqs: product.faqs || [],
     });
     setImagePreview(product.image || '');
@@ -148,7 +146,6 @@ export default function AdminProducts() {
       category: '',
       categoryType: '',
       description: '',
-      stock: '0',
       faqs: [],
     });
     setImageFile(null);
@@ -350,12 +347,6 @@ export default function AdminProducts() {
                     />
                   </div>
                   <div className="form-group">
-                    {/* Brand removed - all products are PowerMed */}
-                  </div>
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
                     <label>Price *</label>
                     <input
                       type="number"
@@ -363,14 +354,6 @@ export default function AdminProducts() {
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                       required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Stock</label>
-                    <input
-                      type="number"
-                      value={formData.stock}
-                      onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                     />
                   </div>
                 </div>

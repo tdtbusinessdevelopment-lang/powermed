@@ -33,7 +33,6 @@ const seedProducts = async () => {
       categoryType: 'Peptide',
       description: 'Boosts onset of sexual arousal, heightens libido, and addresses erectile dysfunction and female sexual dysfunction.',
       image: 'https://res.cloudinary.com/demo/image/upload/sample.jpg',
-      stock: 100,
       faqs: [
         { question: 'What is PT-141?', answer: 'PT-141 is a peptide used to treat sexual dysfunction in men and women.' },
         { question: 'How long until results?', answer: 'Most users report effects within 30-60 minutes.' },
