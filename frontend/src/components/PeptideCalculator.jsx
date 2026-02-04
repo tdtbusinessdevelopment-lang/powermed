@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import '../styles/peptide_calculator.css'
 
 export default function PeptideCalculator() {
-  const [dose, setDose] = useState(0.25)
-  const [strength, setStrength] = useState(1)
-  const [water, setWater] = useState(0.5)
+  const [dose, setDose] = useState(0)
+  const [strength, setStrength] = useState(0)
+  const [water, setWater] = useState(0)
   const [customDose, setCustomDose] = useState('')
   const [customStrength, setCustomStrength] = useState('')
   const [customWater, setCustomWater] = useState('')
