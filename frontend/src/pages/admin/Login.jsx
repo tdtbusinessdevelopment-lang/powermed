@@ -41,7 +41,7 @@ export default function AdminLogin() {
     <div className="admin-login-container">
       <div className="admin-login-box">
         <div className="admin-login-logo">
-          <img src="https://figmage.com/images/FT6UQOqUgEyM0ZPmMvU6W.png" alt="powermed logo" />
+          <img src="https://figmage.com/images/_yDQ0sv0GGwgHZsY5Pnnf.png" alt="powermed logo" />
         </div>
         <h1>PowerMed Admin</h1>
         <p>Sign in to access the admin panel</p>
