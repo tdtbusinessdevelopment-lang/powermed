@@ -142,7 +142,7 @@ export default function Topbar() {
         {/* Logo */}
         <div className="logo">
           <Link to="/">
-            <img src="https://figmage.com/images/FT6UQOqUgEyM0ZPmMvU6W.png" alt="powermed logo" />
+            <img src="https://figmage.com/images/_yDQ0sv0GGwgHZsY5Pnnf.png" alt="powermed logo" />
           </Link>
         </div>
 

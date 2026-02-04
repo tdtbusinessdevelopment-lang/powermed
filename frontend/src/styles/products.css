@@ -73,7 +73,7 @@
   min-width: 280px;
   padding: 16px 20px;
   background-color: #ffffff;
-  border: 2px solid #02989E;
+  border: 2px solid #e66f27;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -87,18 +87,18 @@
 }
 
 .category-card.active {
-  background-color: #02989E;
-  border-color: #02989E;
+  background-color: #e66f27;
+  border-color: #e66f27;
   color: #ffffff;
 }
 
 .category-card:not(.active) {
-  color: #02989E;
+  color: #e66f27;
 }
 
 .category-card:hover {
-  background-color: #02989E;
-  border-color: #02989E;
+  background-color: #e66f27;
+  border-color: #e66f27;
   color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -318,14 +318,14 @@
 }
 
 .product-title {
-  color: var(--green, #02989E);font-size:  clamp(1.2rem, 2.5vw, 1.6rem)
+  color: var(--green, #e66f27);font-size:  clamp(1.2rem, 2.5vw, 1.6rem)
 }
 
 .product-category-type {
   padding: 0 16px 12px;
   font-size: 13px;
   font-weight: 500;
-  color: #02989E;
+  color: #e66f27;
   line-height: 1.4;
   margin: 0;
   text-transform: capitalize;
@@ -343,7 +343,7 @@
 .view-product-btn {
   margin: 0 16px 16px;
   padding: 12px 20px;
-  background-color: #02989E;
+  background-color: #e66f27;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -367,7 +367,7 @@
 }
 
 .view-product-btn:hover {
-  background-color: #027678;
+  background-color: #b64d0b;
 }
 
 .view-product-btn .arrow {

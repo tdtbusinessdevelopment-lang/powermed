@@ -20,10 +20,10 @@
 }
 
 :root{
-  --red: #FF3233;
-  --dark-red: #CC2627;
-  --green: #02989E;
-  --dark-green: #027678;
+  --red: #838385;
+  --dark-red: #727272;
+  --green: #e66f27;
+  --dark-green: #b64d0b;
   --jakarta: 'Plus Jakarta Sans', sans-serif;
   --kufam: 'Kufam', sans-serif;
 }
@@ -86,15 +86,15 @@
 }
 
 .tagline-power {
-  color: #02989E;
+  color: #e66f27;
 }
 
 .tagline-m {
-  color: #FF3233;
+  color: #838385;
 }
 
 .tagline-ed {
-  color: #02989E;
+  color: #e66f27;
 }
 
 .hero-text p{
@@ -112,9 +112,9 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   background-color: transparent;
-  border: 3px solid #4A9E9E;
+  border: 3px solid #e66f27;
   border-radius: 30px;
-  color: #FF3233;
+  color: #e66f27;
   cursor: pointer;
   transition: all 0.3s ease;
   text-transform: uppercase;
@@ -122,7 +122,7 @@
 }
 
 .shop-now-btn:hover {
-  background-color: #4A9E9E;
+  background-color: #e66f27;
   color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(74, 158, 158, 0.3);
@@ -309,7 +309,7 @@
 
 .product-list li:before {
   content: "•";
-  color: #0d9488;
+  color: #d45b10;
   font-weight: bold;
   margin-right: 10px;
   font-size: 18px;
@@ -329,7 +329,7 @@
 }
 
 .explore-products-btn {
-  background-color: #0d9488;
+  background-color: #db6115;
   color: white;
   font-weight: 600;
   padding: 14px 28px;
@@ -342,7 +342,7 @@
 }
 
 .explore-products-btn:hover {
-  background-color: #0f766e;
+  background-color: #c46123;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: translateY(-1px);
 }
