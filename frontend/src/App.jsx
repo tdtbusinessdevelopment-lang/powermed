@@ -13,6 +13,7 @@ import AdminProducts from './pages/admin/Products.jsx'
 import ChangePassword from './pages/admin/ChangePassword.jsx'
 import About from './pages/about.jsx';  
 import Contact from './pages/contact.jsx';
+import PeptideCalculatorPage from './pages/PeptideCalculatorPage.jsx';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/calculator" element={<PeptideCalculatorPage />} />
             
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />

@@ -211,6 +211,13 @@ export default function Topbar() {
                     ABOUT US
                 </NavLink>
                 <NavLink 
+                    to="/calculator" 
+                    className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                    onClick={closeMobileMenu}
+                >
+                    CALCULATOR
+                </NavLink>
+                <NavLink 
                     to="/contact" 
                     className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
                     onClick={closeMobileMenu}
