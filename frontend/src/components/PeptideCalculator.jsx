@@ -167,17 +167,18 @@ export default function PeptideCalculator() {
         </div>
 
         {/* Results Section */}
-        {results && (
-          <div className="results-section">
-            <h2 className="results-title">Results</h2>
-            
-            <div className="results-content">
+        <div className="results-section">
+          <h2 className="results-title">Results</h2>
+          
+          <div className="results-content">
+            {results && (
               <div className="results-info">
                 <p className="result-label">PEPTIDE DOSE: <span className="result-value">{results.dose} mg</span></p>
                 <p className="result-label">DRAW SYRINGE TO: <span className="result-value">{results.syringeUnits} units</span></p>
               </div>
+            )}
 
-              {/* Syringe Visualizer */}
+            {/* Syringe Visualizer */}
               <div className="syringe-container">
                 <svg className="syringe-svg" viewBox="0 0 1800 400" xmlns="http://www.w3.org/2000/svg">
                   <defs>
@@ -205,7 +206,7 @@ export default function PeptideCalculator() {
                   <rect
                     x="177"
                     y="183"
-                    width={1300 * Math.min(results.syringeUnits, 100) / 100}
+                    width={1300 * Math.min((results?.syringeUnits || 0), 100) / 100}
                     height="24"
                     fill="url(#plungerGradient)"
                     stroke="#1a1a1a"
@@ -214,7 +215,7 @@ export default function PeptideCalculator() {
 
                   {/* Plunger head */}
                   <rect
-                    x={177 + (1300 * Math.min(results.syringeUnits, 100)) / 100 - 18}
+                    x={177 + (1300 * Math.min((results?.syringeUnits || 0), 100)) / 100 - 18}
                     y="145"
                     width="36"
                     height="100"
@@ -223,7 +224,7 @@ export default function PeptideCalculator() {
                     strokeWidth="3"
                   />
                   <rect
-                    x={177 + (1300 * Math.min(results.syringeUnits, 100)) / 100 - 16}
+                    x={177 + (1300 * Math.min((results?.syringeUnits || 0), 100)) / 100 - 16}
                     y="148"
                     width="32"
                     height="94"
@@ -241,7 +242,7 @@ export default function PeptideCalculator() {
                   <rect
                     x="300"
                     y="133"
-                    width={(1300 * Math.min(results.syringeUnits, 100)) / 100}
+                    width={(1300 * Math.min((results?.syringeUnits || 0), 100)) / 100}
                     height="116"
                     fill="url(#fillGradient)"
                   />
@@ -250,7 +251,7 @@ export default function PeptideCalculator() {
                   <rect
                     x="300"
                     y="133"
-                    width={(1300 * Math.min(results.syringeUnits, 100)) / 100}
+                    width={(1300 * Math.min((results?.syringeUnits || 0), 100)) / 100}
                     height="14"
                     fill="#ffffff"
                     opacity="0.3"
@@ -317,20 +318,21 @@ export default function PeptideCalculator() {
                 </svg>
               </div>
 
-              <div className="results-info">
-                <p className="result-label">YOUR VIAL CONTAINS: <span className="result-value">{results.vialDoses} doses</span></p>
-                <p className="result-label">CONCENTRATION: <span className="result-value">{results.concentration} mg/mL</span></p>
-              </div>
+              {results && (
+                <div className="results-info">
+                  <p className="result-label">YOUR VIAL CONTAINS: <span className="result-value">{results.vialDoses} doses</span></p>
+                  <p className="result-label">CONCENTRATION: <span className="result-value">{results.concentration} mg/mL</span></p>
+                </div>
+              )}
             </div>
           </div>
-        )}
 
-        {!results && (
-          <div className="no-results">
-            <p>Select or enter valid values to calculate dosage</p>
-          </div>
-        )}
-      </div>
+          {!results && (
+            <div className="no-results">
+              <p>Select or enter valid values to calculate dosage</p>
+            </div>
+          )}
+        </div>
     </div>
   )
 }
