@@ -44,6 +44,17 @@ app.get("/", (req, res) => {
   res.json({ message: "Backend is running 🚀", version: "1.0.0" });
 });
 
+// Debug endpoint to check Cloudinary credentials (remove in production!)
+app.get("/debug/cloudinary", (req, res) => {
+  res.json({
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME ? "SET" : "MISSING",
+    apiKey: process.env.CLOUDINARY_API_KEY ? "SET" : "MISSING",
+    apiSecret: process.env.CLOUDINARY_API_SECRET ? "SET" : "MISSING",
+    env: process.env.NODE_ENV,
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminAuthRoutes);
 app.use("/api/categories", categoryRoutes);
