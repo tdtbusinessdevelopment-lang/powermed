@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
 import Footer from '../components/footer.jsx'
 import { productAPI } from '../utils/api'
+import { getCloudinaryProductImage } from '../utils/cloudinary'
 import '../styles/product_details.css'
 
 export default function ProductDetails() {
@@ -54,7 +55,7 @@ export default function ProductDetails() {
         <div className="product-details-container">
           <div className="product-image-column">
             {product.image ? (
-              <img src={product.image} alt={product.name} className="product-detail-image" />
+              <img src={getCloudinaryProductImage(product.image)} alt={product.name} className="product-detail-image" />
             ) : (
               <div className="product-image-placeholder">No Image</div>
             )}

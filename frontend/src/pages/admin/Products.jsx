@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { productAPI, categoryAPI } from '../../utils/api';
+import { getCloudinaryThumbnail } from '../../utils/cloudinary';
 import AdminSidebar from '../../components/AdminSidebar';
 import '../../styles/admin.css';
 
@@ -254,7 +255,7 @@ export default function AdminProducts() {
                               <tr key={product._id}>
                                 <td>
                                   {product.image ? (
-                                    <img src={product.image} alt={product.name} className="product-thumb" />
+                                    <img src={getCloudinaryThumbnail(product.image, 150)} alt={product.name} className="product-thumb" />
                                   ) : (
                                     <div className="product-thumb-placeholder">No Image</div>
                                   )}
@@ -300,7 +301,7 @@ export default function AdminProducts() {
                               <tr key={product._id}>
                                 <td>
                                   {product.image ? (
-                                    <img src={product.image} alt={product.name} className="product-thumb" />
+                                    <img src={getCloudinaryThumbnail(product.image, 150)} alt={product.name} className="product-thumb" />
                                   ) : (
                                     <div className="product-thumb-placeholder">No Image</div>
                                   )}

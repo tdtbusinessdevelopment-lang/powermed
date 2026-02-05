@@ -6,6 +6,7 @@ import '../styles/products.css'
 
 
 import { categoryAPI, productAPI } from '../utils/api'
+import { getCloudinaryThumbnail } from '../utils/cloudinary'
 
 
 export default function Products() {
@@ -289,7 +290,7 @@ export default function Products() {
                   <div key={product._id} className="product-card">
                     {product.image ? (
                       <img 
-                        src={product.image} 
+                        src={getCloudinaryThumbnail(product.image, 300)} 
                         alt={product.name}
                         className="product-image"
                         onError={(e) => {

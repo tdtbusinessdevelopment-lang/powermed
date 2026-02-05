@@ -50,7 +50,6 @@ const uploadToCloudinary = (buffer, folder = 'powermed/products') => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: folder,
-        transformation: [{ width: 800, height: 800, crop: 'limit' }],
       },
       (error, result) => {
         if (error) reject(error);
