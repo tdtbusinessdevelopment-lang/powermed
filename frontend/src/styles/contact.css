@@ -360,7 +360,7 @@
 }
 
 .contact-card {
-  background: linear-gradient(135deg, #04b8be 0%, var(--green) 100%);
+  background: linear-gradient(135deg, #b64d0b 0%, var(--green) 100%);
   border-radius: 0.75rem;
   padding: 2rem 1.5rem;
   display: flex;
