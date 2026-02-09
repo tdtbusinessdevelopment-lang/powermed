@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { FaTachometerAlt, FaBoxOpen, FaList, FaUserLock, FaSignOutAlt } from 'react-icons/fa';
 
 export default function AdminSidebar() {
   const { user, logout } = useAuth();
@@ -17,16 +18,20 @@ export default function AdminSidebar() {
       </div>
       <nav className="admin-nav">
         <Link to="/admin/dashboard" className={`nav-item ${isActive('/admin/dashboard')}`}>
-          Dashboard
+          <FaTachometerAlt className="nav-icon" />
+          <span>Dashboard</span>
         </Link>
         <Link to="/admin/categories" className={`nav-item ${isActive('/admin/categories')}`}>
-          Categories
+          <FaList className="nav-icon" />
+          <span>Categories</span>
         </Link>
         <Link to="/admin/products" className={`nav-item ${isActive('/admin/products')}`}>
-          Products
+          <FaBoxOpen className="nav-icon" />
+          <span>Products</span>
         </Link>
         <Link to="/admin/change-password" className={`nav-item ${isActive('/admin/change-password')}`}>
-          Profile
+          <FaUserLock className="nav-icon" />
+          <span>Profile</span>
         </Link>
       </nav>
       <div className="admin-footer">
@@ -37,6 +42,7 @@ export default function AdminSidebar() {
           <p className="user-email">{user?.email}</p>
         </div>
         <button onClick={logout} className="logout-button">
+          <FaSignOutAlt style={{ marginRight: '8px' }} />
           Logout
         </button>
       </div>

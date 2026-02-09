@@ -22,6 +22,10 @@ router.get('/', async (req, res) => {
       query.isActive = isActive === 'true';
     }
 
+    if (req.query.isFeatured !== undefined) {
+      query.isFeatured = req.query.isFeatured === 'true';
+    }
+
     if (search) {
       query.$text = { $search: search };
     }
@@ -48,6 +52,27 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
     res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// @route   POST /api/products/:id/view
+// @desc    Increment product view count
+// @access  Public
+router.post('/:id/view', async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { views: 1 } },
+      { new: true }
+    );
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json({ views: product.views });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -82,8 +107,8 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
       imageUrl = cloudinaryResult.secure_url;
     } catch (uploadError) {
       console.error('Cloudinary upload error:', uploadError);
-      return res.status(500).json({ 
-        message: uploadError.message || 'Failed to upload image to Cloudinary. Please check your internet connection and Cloudinary credentials.' 
+      return res.status(500).json({
+        message: uploadError.message || 'Failed to upload image to Cloudinary. Please check your internet connection and Cloudinary credentials.'
       });
     }
 
@@ -107,11 +132,13 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
       description,
       image: imageUrl,
       faqs,
+      isActive: req.body.isActive === 'true' || req.body.isActive === true,
+      isFeatured: req.body.isFeatured === 'true' || req.body.isFeatured === true,
     });
 
     const savedProduct = await product.save();
     const populatedProduct = await Product.findById(savedProduct._id).populate('category', 'name slug');
-    
+
     res.status(201).json(populatedProduct);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -123,7 +150,7 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
 // @access  Private (Admin)
 router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res) => {
   try {
-    const { name, brand, price, category, categoryType, description, isActive } = req.body;
+    const { name, brand, price, category, categoryType, description, isActive, isFeatured } = req.body;
 
     const product = await Product.findById(req.params.id);
     if (!product) {
@@ -146,8 +173,8 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
         product.image = cloudinaryResult.secure_url;
       } catch (uploadError) {
         console.error('Cloudinary upload error:', uploadError);
-        return res.status(500).json({ 
-          message: uploadError.message || 'Failed to upload image to Cloudinary. Please check your internet connection and Cloudinary credentials.' 
+        return res.status(500).json({
+          message: uploadError.message || 'Failed to upload image to Cloudinary. Please check your internet connection and Cloudinary credentials.'
         });
       }
     }
@@ -168,11 +195,13 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
     if (price) product.price = parseFloat(price);
     if (categoryType !== undefined) product.categoryType = categoryType;
     if (description !== undefined) product.description = description;
+    if (description !== undefined) product.description = description;
     if (isActive !== undefined) product.isActive = isActive === 'true' || isActive === true;
+    if (isFeatured !== undefined) product.isFeatured = isFeatured === 'true' || isFeatured === true;
 
     const updatedProduct = await product.save();
     const populatedProduct = await Product.findById(updatedProduct._id).populate('category', 'name slug');
-    
+
     res.json(populatedProduct);
   } catch (error) {
     res.status(400).json({ message: error.message });

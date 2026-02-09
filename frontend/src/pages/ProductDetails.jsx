@@ -11,6 +11,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [expandedFaq, setExpandedFaq] = useState(null)
+  const viewIncremented = React.useRef(false)
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -18,8 +19,18 @@ export default function ProductDetails() {
         setLoading(true)
         const data = await productAPI.getById(id)
         setProduct(data)
+        setProduct(data)
+
+        // Increment view count only once
+        if (!viewIncremented.current) {
+          console.log('Attempting to increment view for:', id);
+          viewIncremented.current = true;
+          productAPI.incrementView(id)
+            .then(res => console.log('View increment success:', res))
+            .catch(err => console.error('View increment failed:', err));
+        }
       } catch (e) {
-        console.error('Failed to load product', e)
+        console.error('Failed to load product or increment view', e)
       } finally {
         setLoading(false)
       }
@@ -67,11 +78,11 @@ export default function ProductDetails() {
             </div>
 
             <p className="product-short-desc">{product.description}</p>
-            
+
 
             <div className="product-faqs">
-                
-              
+
+
               {(product.faqs || []).length === 0 && (
                 <p>No FAQs available for this product.</p>
               )}

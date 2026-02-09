@@ -19,12 +19,16 @@ export default function AdminProducts() {
     categoryType: '',
     description: '',
     faqs: [],
+    isActive: true,
+    isFeatured: false,
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     fetchProducts();
@@ -79,6 +83,7 @@ export default function AdminProducts() {
     e.preventDefault();
     setError('');
     setSuccess('');
+    setIsSubmitting(true);
 
     try {
       if (editingProduct) {
@@ -95,6 +100,7 @@ export default function AdminProducts() {
         // Create product
         if (!imageFile) {
           setError('Product image is required');
+          setIsSubmitting(false); // Early exit needs reset
           return;
         }
         const payload = { ...formData, faqs: JSON.stringify(formData.faqs) };
@@ -108,6 +114,8 @@ export default function AdminProducts() {
       }
     } catch (error) {
       setError(error.message || 'Operation failed');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -120,6 +128,8 @@ export default function AdminProducts() {
       categoryType: product.categoryType || '',
       description: product.description || '',
       faqs: product.faqs || [],
+      isActive: product.isActive !== undefined ? product.isActive : true,
+      isFeatured: product.isFeatured || false,
     });
     setImagePreview(product.image || '');
     setImageFile(null);
@@ -132,11 +142,14 @@ export default function AdminProducts() {
     }
 
     try {
+      setDeletingId(id);
       await productAPI.delete(id);
       setSuccess('Product deleted successfully!');
       fetchProducts();
     } catch (error) {
       setError('Failed to delete product');
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -148,6 +161,8 @@ export default function AdminProducts() {
       categoryType: '',
       description: '',
       faqs: [],
+      isActive: true,
+      isFeatured: false,
     });
     setImageFile(null);
     setImagePreview('');
@@ -236,7 +251,7 @@ export default function AdminProducts() {
               categories.forEach((cat) => {
                 const key = cat._id?.toString ? cat._id.toString() : String(cat._id);
                 const list = groups[key];
-                  if (list && list.length) {
+                if (list && list.length) {
                   rendered.push(
                     <div key={cat._id} className="product-group">
                       <h3 className="product-group-title">{cat.name}</h3>
@@ -247,6 +262,7 @@ export default function AdminProducts() {
                               <th>Image</th>
                               <th>Name</th>
                               <th>Price</th>
+                              <th>Status</th>
                               <th>Actions</th>
                             </tr>
                           </thead>
@@ -260,11 +276,27 @@ export default function AdminProducts() {
                                     <div className="product-thumb-placeholder">No Image</div>
                                   )}
                                 </td>
-                                <td>{product.name}</td>
+                                <td>
+                                  <div style={{ fontWeight: 500 }}>
+                                    {product.name}
+                                    {product.isFeatured && <span title="Featured" style={{ marginLeft: '6px', color: '#f39c12' }}>★</span>}
+                                  </div>
+                                </td>
                                 <td>₱{parseFloat(product.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                 <td>
-                                  <button onClick={() => handleEdit(product)} className="btn-edit">Edit</button>
-                                  <button onClick={() => handleDelete(product._id)} className="btn-delete">Delete</button>
+                                  <span className={`badge ${product.isActive ? 'badge-success' : 'badge-danger'}`}>
+                                    {product.isActive ? 'Active' : 'Hidden'}
+                                  </span>
+                                </td>
+                                <td>
+                                  <button onClick={() => handleEdit(product)} className="btn-edit" disabled={deletingId === product._id}>Edit</button>
+                                  <button
+                                    onClick={() => handleDelete(product._id)}
+                                    className="btn-delete"
+                                    disabled={deletingId === product._id}
+                                  >
+                                    {deletingId === product._id ? 'Deleting...' : 'Delete'}
+                                  </button>
                                 </td>
                               </tr>
                             ))}
@@ -284,15 +316,16 @@ export default function AdminProducts() {
                 remainingKeys.forEach((key) => {
                   const list = groups[key];
                   rendered.push(
-                      <div key={key} className="product-group">
-                        <h3 className="product-group-title">{categoryById[key] || 'Uncategorized'}</h3>
-                        <div className="table-container">
+                    <div key={key} className="product-group">
+                      <h3 className="product-group-title">{categoryById[key] || 'Uncategorized'}</h3>
+                      <div className="table-container">
                         <table className="admin-table">
                           <thead>
                             <tr>
                               <th>Image</th>
                               <th>Name</th>
                               <th>Price</th>
+                              <th>Status</th>
                               <th>Actions</th>
                             </tr>
                           </thead>
@@ -306,11 +339,27 @@ export default function AdminProducts() {
                                     <div className="product-thumb-placeholder">No Image</div>
                                   )}
                                 </td>
-                                <td>{product.name}</td>
+                                <td>
+                                  <div style={{ fontWeight: 500 }}>
+                                    {product.name}
+                                    {product.isFeatured && <span title="Featured" style={{ marginLeft: '6px', color: '#f39c12' }}>★</span>}
+                                  </div>
+                                </td>
                                 <td>₱{parseFloat(product.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                 <td>
-                                  <button onClick={() => handleEdit(product)} className="btn-edit">Edit</button>
-                                  <button onClick={() => handleDelete(product._id)} className="btn-delete">Delete</button>
+                                  <span className={`badge ${product.isActive ? 'badge-success' : 'badge-danger'}`}>
+                                    {product.isActive ? 'Active' : 'Hidden'}
+                                  </span>
+                                </td>
+                                <td>
+                                  <button onClick={() => handleEdit(product)} className="btn-edit" disabled={deletingId === product._id}>Edit</button>
+                                  <button
+                                    onClick={() => handleDelete(product._id)}
+                                    className="btn-delete"
+                                    disabled={deletingId === product._id}
+                                  >
+                                    {deletingId === product._id ? 'Deleting...' : 'Delete'}
+                                  </button>
                                 </td>
                               </tr>
                             ))}
@@ -394,6 +443,35 @@ export default function AdminProducts() {
                   />
                 </div>
 
+                <div className="form-row">
+                  <div className="form-group checkbox-group">
+                    <div className="checkbox-label">
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={formData.isActive}
+                          onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                        />
+                        <span className="slider"></span>
+                      </label>
+                      <span>Active Product</span>
+                    </div>
+                  </div>
+                  <div className="form-group checkbox-group">
+                    <div className="checkbox-label">
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={formData.isFeatured}
+                          onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
+                        />
+                        <span className="slider"></span>
+                      </label>
+                      <span>Featured Product</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="form-group">
                   <label>FAQs</label>
                   {(formData.faqs || []).map((faq, idx) => (
@@ -441,8 +519,8 @@ export default function AdminProducts() {
                   <button type="button" onClick={() => setShowModal(false)} className="btn-secondary">
                     Cancel
                   </button>
-                  <button type="submit" className="btn-primary">
-                    {editingProduct ? 'Update' : 'Create'}
+                  <button type="submit" className="btn-primary" disabled={isSubmitting}>
+                    {isSubmitting ? (editingProduct ? 'Updating...' : 'Creating...') : (editingProduct ? 'Update' : 'Create')}
                   </button>
                 </div>
               </form>

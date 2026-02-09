@@ -1,7 +1,13 @@
 /* Admin Panel Styles */
 :root {
   --red: #838385;
+  /* Kept as per existing, though named red it's gray? */
+  --primary-orange: #e66f27;
+  /* Universal Orange */
+  --primary-teal: #0b6b6b;
+  /* Admin Side Header Color */
   --green: #e66f27;
+  /* Mapping old var to new orange for compatibility */
   --white: #ffffff;
 }
 
@@ -39,7 +45,7 @@
   text-align: center;
 }
 
-.admin-login-box > p {
+.admin-login-box>p {
   text-align: center;
   color: #666;
   margin-bottom: 30px;
@@ -87,7 +93,7 @@
 }
 
 .login-button:hover:not(:disabled) {
-  background: #027678;
+  background: var(--primary-orange);
 }
 
 .login-button:disabled {
@@ -130,6 +136,8 @@
 .admin-logo h2 {
   margin: 0;
   font-size: 20px;
+  color: white;
+  /* Sidebar text usually white */
 }
 
 .admin-nav {
@@ -138,11 +146,19 @@
 }
 
 .nav-item {
-  display: block;
-  padding: 12px 20px;
-  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  transition: background 0.3s;
+  transition: all 0.2s ease-in-out;
+  border-left: 4px solid transparent;
+}
+
+.nav-icon {
+  font-size: 18px;
+  min-width: 20px;
 }
 
 .nav-item:hover {
@@ -150,9 +166,10 @@
 }
 
 .nav-item.active {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  font-weight: 600;
+  font-weight: 500;
+  border-left-color: white;
 }
 
 .admin-footer {
@@ -215,7 +232,8 @@
 
 .admin-header h1 {
   margin: 0;
-  color: var(--green);
+  color: #333;
+  /* Changed from teal to black per user request */
 }
 
 /* Buttons */
@@ -231,7 +249,7 @@
 }
 
 .btn-primary:hover {
-  background: #027678;
+  background: var(--primary-orange);
 }
 
 .btn-secondary {
@@ -249,33 +267,39 @@
 }
 
 .btn-edit {
-  background: #f39c12;
+  background: #3498db;
   color: white;
-  padding: 5px 10px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
-  margin-right: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 8px;
+  /* Gap between buttons */
+  transition: all 0.2s ease;
 }
 
 .btn-edit:hover {
-  background: #e67e22;
+  background: #2980b9;
+  transform: translateY(-1px);
 }
 
 .btn-delete {
   background: var(--red);
   color: white;
-  padding: 5px 10px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
-  transition: background 0.3s ease;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .btn-delete:hover {
-  background: #CC2627;
+  background: #c0392b;
+  transform: translateY(-1px);
 }
 
 /* Dashboard */
@@ -296,7 +320,7 @@
 
 .dashboard-card h3 {
   margin: 0 0 15px 0;
-  color: var(--green);
+  color: var(--primary-teal);
   font-size: 20px;
 }
 
@@ -311,13 +335,45 @@
 .stat-number {
   font-size: 48px;
   font-weight: bold;
-  color: var(--green);
+  color: var(--primary-teal);
   line-height: 1;
 }
 
 .stat-loading {
   color: #95a5a6;
   font-size: 14px;
+}
+
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header-flex h3 {
+  margin: 0;
+}
+
+.card-icon {
+  font-size: 24px;
+  color: #e0e0e0;
+  /* Light gray icon by default */
+}
+
+/* Hover effects for dashboard cards */
+.dashboard-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-card:hover .card-icon {
+  color: var(--primary-orange);
+  /* Highlight icon on hover */
 }
 
 .dashboard-card p {
@@ -327,7 +383,7 @@
 }
 
 .card-link {
-  color: var(--green);
+  color: var(--primary-teal);
   text-decoration: none;
   font-weight: 500;
 }
@@ -351,7 +407,7 @@
 }
 
 .card-link-button:hover {
-  background: #027678;
+  background: var(--primary-orange);
   text-decoration: none;
 }
 
@@ -364,7 +420,7 @@
 
 .welcome-section h2 {
   margin: 0 0 10px 0;
-  color: var(--green);
+  color: var(--primary-teal);
 }
 
 .profile-container {
@@ -385,9 +441,9 @@
 .profile-info-section h2,
 .password-section h2 {
   margin: 0 0 20px 0;
-  color: var(--green);
+  color: var(--primary-teal);
   font-size: 24px;
-  border-bottom: 2px solid var(--green);
+  border-bottom: 2px solid var(--primary-teal);
   padding-bottom: 10px;
 }
 
@@ -425,13 +481,15 @@
 .table-container {
   background: white;
   border-radius: 8px;
-  overflow: auto; /* allow internal scrolling if needed, prevents layout cutoff */
+  overflow: auto;
+  /* allow internal scrolling if needed, prevents layout cutoff */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .admin-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .admin-table thead {
@@ -443,40 +501,64 @@
 .product-group {
   margin-bottom: 28px;
 }
+
 .product-group .product-group-title {
   text-align: center;
   font-weight: 700;
-  color: #0b6b6b;
+  color: var(--primary-teal);
   margin: 6px 0 10px 0;
 }
+
 .product-group .table-container {
   border-radius: 6px;
   overflow: hidden;
 }
+
 .product-group .admin-table thead th {
   padding: 10px 12px;
 }
+
 .product-group .admin-table td {
   padding: 12px 14px;
 }
 
 /* Standardize per-category product tables: fixed layout and equal column widths */
 .product-group .admin-table {
-  table-layout: fixed; /* keep column sizes consistent across groups */
+  table-layout: fixed;
+  /* keep column sizes consistent across groups */
   width: 100%;
   min-width: 0;
 }
 
 /* Equally divide columns: Image | Name | Price | Actions (25% each) */
+/* Adjusted for 5 columns: Image | Name | Price | Status | Actions */
 .product-group .admin-table th:nth-child(1),
-.product-group .admin-table td:nth-child(1),
+.product-group .admin-table td:nth-child(1) {
+  width: 10%;
+  vertical-align: middle;
+}
+
 .product-group .admin-table th:nth-child(2),
-.product-group .admin-table td:nth-child(2),
+.product-group .admin-table td:nth-child(2) {
+  width: 30%;
+  vertical-align: middle;
+}
+
 .product-group .admin-table th:nth-child(3),
-.product-group .admin-table td:nth-child(3),
+.product-group .admin-table td:nth-child(3) {
+  width: 15%;
+  vertical-align: middle;
+}
+
 .product-group .admin-table th:nth-child(4),
 .product-group .admin-table td:nth-child(4) {
-  width: 25%;
+  width: 15%;
+  vertical-align: middle;
+}
+
+.product-group .admin-table th:nth-child(5),
+.product-group .admin-table td:nth-child(5) {
+  width: 30%;
   vertical-align: middle;
 }
 
@@ -484,58 +566,74 @@
 .product-group .admin-table td:nth-child(1) {
   text-align: center;
 }
+
 .product-group .admin-table th:nth-child(2),
 .product-group .admin-table td:nth-child(2) {
   text-align: left;
   padding-left: 18px;
   overflow: hidden;
 }
+
 .product-group .admin-table th:nth-child(3),
 .product-group .admin-table td:nth-child(3) {
   text-align: center;
 }
+
 .product-group .admin-table th:nth-child(4),
 .product-group .admin-table td:nth-child(4) {
   text-align: center;
 }
 
+.product-group .admin-table th:nth-child(5),
+.product-group .admin-table td:nth-child(5) {
+  text-align: center;
+}
+
 .product-group .table-container {
-  padding: 8px; /* consistent inner spacing */
+  padding: 8px;
+  /* consistent inner spacing */
 }
 
 /* Improve visual separation between rows and add gap between image and name */
 .product-group .admin-table {
-  border-collapse: separate; /* allow spacing between rows */
-  border-spacing: 0 10px; /* vertical gap between rows */
+  border-collapse: separate;
+  /* allow spacing between rows */
+  border-spacing: 0 10px;
+  /* vertical gap between rows */
 }
 
 .product-group .admin-table tbody tr {
   background: white;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
   border-radius: 6px;
 }
 
 .product-group .admin-table tbody td {
-  border-bottom: none; /* remove internal separators so cards look clean */
+  border-bottom: none;
+  /* remove internal separators so cards look clean */
 }
 
 /* increase spacing between image and name for readability */
 .product-group .admin-table td:nth-child(1) {
-  padding-right: 18px; /* space after thumbnail */
+  padding-right: 18px;
+  /* space after thumbnail */
 }
+
 .product-group .admin-table td:nth-child(2) {
-  padding-left: 20px; /* extra space before name text */
+  padding-left: 20px;
+  /* extra space before name text */
 }
 
 .admin-table th {
-  padding: 12px 14px;
+  padding: 16px;
   text-align: center;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 /* Align header columns to match body cells */
 .admin-table td {
-  padding: 12px 14px;
+  padding: 16px;
   border-bottom: 1px solid #ecf0f1;
   vertical-align: middle;
   /* allow wrapping so long content doesn't force horizontal overflow */
@@ -586,15 +684,19 @@
 /* Add vertical spacing between category rows and card-like appearance */
 .categories-table {
   border-collapse: separate;
-  border-spacing: 0 12px; /* vertical gap between rows */
+  border-spacing: 0 12px;
+  /* vertical gap between rows */
 }
+
 .categories-table tbody tr {
   background: white;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
 }
+
 .categories-table td {
-  border-bottom: none; /* avoid separator lines between spaced rows */
+  border-bottom: none;
+  /* avoid separator lines between spaced rows */
 }
 
 .admin-header .search {
@@ -708,18 +810,82 @@
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
   font-size: 14px;
   font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #f9f9f9;
+}
+
+/* Toggle Switch Styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  margin-right: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked+.slider {
+  background-color: var(--primary-orange);
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px var(--primary-orange);
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--green);
+  border-color: var(--primary-teal);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(11, 107, 107, 0.1);
 }
 
 .form-row {
@@ -825,4 +991,29 @@
     align-items: flex-start;
     gap: 15px;
   }
+}
+
+/* Chart Styles */
+.chart-container {
+  height: 400px;
+  width: 100%;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.loading-container,
+.no-data-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #666;
+  font-size: 16px;
+}
+
+.dashboard-section h2 {
+  color: var(--primary-teal);
+  margin-bottom: 15px;
 }

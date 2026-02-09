@@ -15,6 +15,8 @@ export default function AdminCategories() {
   const [imagePreview, setImagePreview] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     fetchCategories();
@@ -48,6 +50,7 @@ export default function AdminCategories() {
     e.preventDefault();
     setError('');
     setSuccess('');
+    setIsSubmitting(true);
 
     try {
       const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
@@ -81,6 +84,8 @@ export default function AdminCategories() {
       }
     } catch (error) {
       setError('Network error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -107,6 +112,7 @@ export default function AdminCategories() {
     }
 
     try {
+      setDeletingId(id);
       const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
       const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
         method: 'DELETE',
@@ -123,6 +129,8 @@ export default function AdminCategories() {
       }
     } catch (error) {
       setError('Network error. Please try again.');
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -162,8 +170,14 @@ export default function AdminCategories() {
                         <div className="category-name-inner">{category.name}</div>
                       </td>
                       <td>
-                        <button onClick={() => handleEdit(category)} className="btn-edit">Edit</button>
-                        <button onClick={() => handleDelete(category._id)} className="btn-delete">Delete</button>
+                        <button onClick={() => handleEdit(category)} className="btn-edit" disabled={deletingId === category._id}>Edit</button>
+                        <button
+                          onClick={() => handleDelete(category._id)}
+                          className="btn-delete"
+                          disabled={deletingId === category._id}
+                        >
+                          {deletingId === category._id ? 'Deleting...' : 'Delete'}
+                        </button>
                       </td>
                     </tr>
                   ))
@@ -187,7 +201,7 @@ export default function AdminCategories() {
                     required
                   />
                 </div>
-                  {/* Description removed */}
+                {/* Description removed */}
                 <div className="form-group">
                   <label>Category Image</label>
                   <input
@@ -205,8 +219,8 @@ export default function AdminCategories() {
                   <button type="button" onClick={() => setShowModal(false)} className="btn-secondary">
                     Cancel
                   </button>
-                  <button type="submit" className="btn-primary">
-                    {editingCategory ? 'Update' : 'Create'}
+                  <button type="submit" className="btn-primary" disabled={isSubmitting}>
+                    {isSubmitting ? (editingCategory ? 'Updating...' : 'Creating...') : (editingCategory ? 'Update' : 'Create')}
                   </button>
                 </div>
               </form>

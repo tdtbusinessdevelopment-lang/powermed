@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Topbar from '../components/topbar.jsx'
 import Footer from '../components/footer.jsx'
@@ -9,18 +9,20 @@ import '../styles/landingpage.css'
 
 import bg from '../assets/images/landingpage-bg.png'
 import model from '../assets/images/landingpage-model.png'
+import { productAPI } from '../utils/api'
+import { getCloudinaryProductImage } from '../utils/cloudinary'
 
 export default function landingpage() {
   const settings = {
-    dots: false, 
-    arrows: false, 
+    dots: false,
+    arrows: false,
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 10000,      
-    autoplaySpeed: 0, 
-    cssEase: 'linear', 
+    speed: 10000,
+    autoplaySpeed: 0,
+    cssEase: 'linear',
     pauseOnHover: false,
     variableWidth: false,
     swipe: true,
@@ -62,6 +64,40 @@ export default function landingpage() {
           slidesToScroll: 1,
           swipe: true,
           touchMove: true,
+        }
+      }
+    ]
+  };
+
+  const featuredSettings = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
         }
       }
     ]
@@ -131,30 +167,56 @@ export default function landingpage() {
   ]
 
   // FAQ data
-    const faqs = [
-      {
-        question: 'What are peptides and how do they work?',
-        answer: 'Peptides are short chains of amino acids that act as signaling molecules in the body. They can help regulate various biological functions including metabolism, tissue repair, and hormone production.'
-      },
-      {
-        question: 'Are your products safe and tested?',
-        answer: 'Yes, all our products undergo strict quality control and testing procedures. We ensure that every product meets pharmaceutical-grade standards before reaching our customers.'
-      },
-      {
-        question: 'How long does shipping take?',
-        answer: 'Standard shipping typically takes 3-5 business days within Metro Manila and 5-7 business days for provincial areas. Express shipping options are also available.'
-      },
-      {
-        question: 'Do I need a prescription for peptide products?',
-        answer: 'Some peptide products may require a prescription depending on local regulations. We recommend consulting with a healthcare professional before starting any new supplement regimen.'
-      }
-    ]
-  
-    const [expandedFaq, setExpandedFaq] = useState(0)
-  
-    const handleFaqClick = (index) => {
-      setExpandedFaq(expandedFaq === index ? null : index)
+  const faqs = [
+    {
+      question: 'What are peptides and how do they work?',
+      answer: 'Peptides are short chains of amino acids that act as signaling molecules in the body. They can help regulate various biological functions including metabolism, tissue repair, and hormone production.'
+    },
+    {
+      question: 'Are your products safe and tested?',
+      answer: 'Yes, all our products undergo strict quality control and testing procedures. We ensure that every product meets pharmaceutical-grade standards before reaching our customers.'
+    },
+    {
+      question: 'How long does shipping take?',
+      answer: 'Standard shipping typically takes 3-5 business days within Metro Manila and 5-7 business days for provincial areas. Express shipping options are also available.'
+    },
+    {
+      question: 'Do I need a prescription for peptide products?',
+      answer: 'Some peptide products may require a prescription depending on local regulations. We recommend consulting with a healthcare professional before starting any new supplement regimen.'
     }
+  ]
+
+  const [expandedFaq, setExpandedFaq] = useState(0)
+
+  const handleFaqClick = (index) => {
+    setExpandedFaq(expandedFaq === index ? null : index)
+  }
+
+  const [featuredProducts, setFeaturedProducts] = useState([])
+  const [loadingFeatured, setLoadingFeatured] = useState(true)
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        // Fetch only active and featured products
+        const data = await productAPI.getAll({ isFeatured: true, isActive: true })
+        // Limit to 4 for the landing page grid if there are many
+        setFeaturedProducts(data.slice(0, 8))
+      } catch (error) {
+        console.error('Failed to load featured products', error)
+      } finally {
+        setLoadingFeatured(false)
+      }
+    }
+    fetchFeatured()
+  }, [])
+
+  const formatPrice = (price) => {
+    return parseFloat(price).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })
+  }
 
   return (
     <div>
@@ -196,6 +258,51 @@ export default function landingpage() {
               </div>
             ))}
           </Slider>
+        </div>
+
+        {/* Featured Products Section */}
+        <div className="featured-products-section">
+          <div className="featured-container">
+            <h2 className="featured-products-title">Featured Products</h2>
+
+            {loadingFeatured ? (
+              <div className="loading-featured">Loading featured products...</div>
+            ) : featuredProducts.length > 0 ? (
+              <div className="featured-carousel-wrapper">
+                <Slider {...featuredSettings} className="featured-slider">
+                  {featuredProducts.map((product) => (
+                    <div key={product._id} className="landing-product-card-wrapper">
+                      <div className="landing-product-card">
+                        <div className="landing-product-image-container">
+                          {product.image ? (
+                            <img
+                              src={getCloudinaryProductImage(product.image)}
+                              alt={product.name}
+                              className="landing-product-image"
+                            />
+                          ) : (
+                            <div className="landing-product-image" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#eee', color: '#999' }}>
+                              No Image
+                            </div>
+                          )}
+                        </div>
+                        <div className="landing-product-info">
+                          <div className="landing-product-brand">{product.brand || 'PowerMed'}</div>
+                          <div className="landing-product-name">{product.name}</div>
+                          <div className="landing-product-price">Starts at ₱{formatPrice(product.price)}</div>
+                          <Link to={`/product/${product._id}`} className="landing-product-btn">
+                            VIEW PRODUCT
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            ) : (
+              <p style={{ color: '#666', fontStyle: 'italic' }}>Check back soon for our featured selection!</p>
+            )}
+          </div>
         </div>
 
         <div className="first-info-section">

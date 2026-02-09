@@ -34,6 +34,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
     faqs: [
       {
         question: {
@@ -49,6 +53,10 @@ const productSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true,
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
     },
   },
   {

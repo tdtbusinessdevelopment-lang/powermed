@@ -14,20 +14,20 @@ const getToken = () => {
 // Helper function for API calls
 const apiCall = async (endpoint, options = {}) => {
   const token = getToken();
-  
+
   // Build headers - don't set Content-Type for FormData (browser will set it with boundary)
   const headers = {};
-  
+
   // Only set Content-Type if not using FormData
   if (!(options.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json';
   }
-  
+
   // Merge any custom headers from options
   if (options.headers) {
     Object.assign(headers, options.headers);
   }
-  
+
   // Always add Authorization if token exists
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
@@ -98,6 +98,7 @@ export const productAPI = {
     if (filters.category) queryParams.append('category', filters.category);
     if (filters.search) queryParams.append('search', filters.search);
     if (filters.isActive !== undefined) queryParams.append('isActive', filters.isActive);
+    if (filters.isFeatured !== undefined) queryParams.append('isFeatured', filters.isFeatured);
 
     const queryString = queryParams.toString();
     return apiCall(`/products${queryString ? `?${queryString}` : ''}`);
@@ -111,7 +112,7 @@ export const productAPI = {
   // Create product (with image upload)
   create: async (productData, imageFile) => {
     const formData = new FormData();
-    
+
     // Append all product fields
     Object.keys(productData).forEach(key => {
       if (productData[key] !== undefined && productData[key] !== null) {
@@ -133,7 +134,7 @@ export const productAPI = {
   // Update product (with optional image upload)
   update: async (id, productData, imageFile = null) => {
     const formData = new FormData();
-    
+
     // Append all product fields
     Object.keys(productData).forEach(key => {
       if (productData[key] !== undefined && productData[key] !== null) {
@@ -156,6 +157,13 @@ export const productAPI = {
   delete: async (id) => {
     return apiCall(`/products/${id}`, {
       method: 'DELETE',
+    });
+  },
+
+  // Increment product view
+  incrementView: async (id) => {
+    return apiCall(`/products/${id}/view`, {
+      method: 'POST',
     });
   },
 };
