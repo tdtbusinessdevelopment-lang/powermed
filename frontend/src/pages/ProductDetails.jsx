@@ -23,11 +23,8 @@ export default function ProductDetails() {
 
         // Increment view count only once
         if (!viewIncremented.current) {
-          console.log('Attempting to increment view for:', id);
           viewIncremented.current = true;
-          productAPI.incrementView(id)
-            .then(res => console.log('View increment success:', res))
-            .catch(err => console.error('View increment failed:', err));
+          productAPI.incrementView(id).catch(err => console.error('View increment failed:', err));
         }
       } catch (e) {
         console.error('Failed to load product or increment view', e)
