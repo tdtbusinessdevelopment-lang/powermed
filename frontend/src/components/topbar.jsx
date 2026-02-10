@@ -17,10 +17,45 @@ export default function Topbar() {
   const [loading, setLoading] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
-
+  const [currentBottomTextIndex, setCurrentBottomTextIndex] = useState(0)
+  
   const utilityTexts = [
     "Introducing PowerMed — Advanced Peptide Solutions for Modern Wellness. Science-Driven. Results-Focused.",
     "Start strong. Stay consistent. Save up to 25%"
+  ]
+  
+  const utilityBottomTexts = [
+    "Semaglutide - Clinically proven weight management.",
+    "Tirzepatide - Elevating Standards in Personalized Endocrine Care.",
+    "Retatrutide - Manage weight, improve metabolism.",
+    "Cagrilintide - Precision Intervention in Hormonal Weight Regulation.",
+    "AOD9604 - Precision Adipose Tissue Regulation and Metabolic Efficiency.",
+    "5-Amino-1MO - Insulin sense for defense that is dense.",
+    "Survodutide - Metabolic flow helps your health grow.",
+    "MOTS-C - Natural essence for health's fluorescence.",
+    "BPC-157 - Accelerates tissue repair and reduces inflammation.",
+    "TB-500 - Accelerate healing and reduce recovery time.",
+    "Epitalon - Advanced cellular rejuvenation for timeless skin vitality.",
+    "SS31 - Maximizing mitochondrial resilience for prolonged metabolic health.",
+    "GHK-Cu - Advanced peptide therapy for systemic dermal regeneration.",
+    "DSIP -  Neuromodulating peptide for optimized sleep architecture and stress resilience.",
+    "Semax - Advanced melanocortin therapy for neural regeneration and cognitive optimization.",
+    "Selank - Acilitating neuromuscular performance and systemic mental wellness.",
+    "Snap-8 - Advanced relief for wrinkle grief.",
+    "BB20 - Systemic flow to help your health grow.",
+    "GHK-Cu - Wellness attained and strength regained.",
+    "Glow ( GHK-Cu, TB-500, BPC-157) - Triple blend for health to mend",
+    "PT-141 - Clinical-grade melanocortin agonist for rapid-onset sexual wellness and response.",
+    "Kisspeptin - Precision hormonal signaling for the restoration of physiological reproductive health.",
+    "Oxytocin - Advanced hormonal support for cardiovascular health and emotional homeostasis.",
+    "Lipo-C - A synergistic lipotropic formulation designed for systemic fat metabolism support.",
+    "Lemon Bottle - Strategic metabolic solution for targeted localized lipolysis.",
+    "HGH - Hormonal grace for a steady pace.",
+    "HCG - Integrity gained as health is sustained.",
+    "IGF-1 LR3 - Potency clear throughout the year.",
+    "BAC Water - Stability found for a health that's sound.",
+    "Botox - Surface repair for skin beyond compare.",
+    "NAD+ - DNA repair with clinical flair."
   ]
 
   // Track scroll position
@@ -28,17 +63,23 @@ export default function Topbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }
-
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Text rotation effect
+  // Text rotation effect for top bar
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % utilityTexts.length)
-    }, 10000) 
+    }, 8000) // 8 seconds
+    return () => clearInterval(interval)
+  }, [])
 
+  // Text rotation effect for bottom bar - faster
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBottomTextIndex((prevIndex) => (prevIndex + 1) % utilityBottomTexts.length)
+    }, 4000) // 4 seconds
     return () => clearInterval(interval)
   }, [])
 
@@ -135,17 +176,24 @@ export default function Topbar() {
                 </div>
             </div>
             <div className="utility-bar-bottom">
-                <p>We deliver between 3–9 PM on the night before your selected date</p>
+                <div className="utility-text-container">
+                  {utilityBottomTexts.map((text, index) => (
+                    <p 
+                      key={index}
+                      className={`utility-text ${index === currentBottomTextIndex ? 'active' : ''}`}
+                    >
+                      {text}
+                    </p>
+                  ))}
+                </div>
             </div>
         </div>
-
         {/* Logo */}
         <div className="logo">
           <Link to="/">
             <img src="https://figmage.com/images/_yDQ0sv0GGwgHZsY5Pnnf.png" alt="powermed logo" />
           </Link>
         </div>
-
         {/* Header with Dropdown */}
         <div className="header-container">
           <header className="header">
@@ -153,13 +201,11 @@ export default function Topbar() {
               <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
                 ☰
               </button>
-
               {/* Nav - removed header-left wrapper */}
               <nav className={`header-nav ${mobileMenuOpen ? 'active' : ''}`}>
                 <button className="mobile-menu-close" onClick={closeMobileMenu}>
                     ×
                 </button>
-
                 <div className="nav-link-wrapper">
                   <NavLink 
                       to="/products" 
@@ -202,7 +248,6 @@ export default function Topbar() {
                     </div>
                   )}
                 </div>
-
                 <NavLink 
                     to="/about" 
                     className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
@@ -225,28 +270,23 @@ export default function Topbar() {
                     CONTACT US
                 </NavLink>
               </nav>
-
               <div 
                 className={`mobile-overlay ${mobileMenuOpen ? 'active' : ''}`}
                 onClick={closeMobileMenu}
               ></div>
-
               <div className="header-right">
                   <div className="search-container">
                       <button className="search-btn" onClick={toggleSearch}>
                           <FaSearch />
                       </button>
                   </div>
-
                   <Link to="/products" className="view-btn">View Products</Link>
-
                   <button className="cart-btn" onClick={toggleCart}>
                     <BsBag />
                   </button>
               </div>
               
         </header>
-
         {/* Products Dropdown Menu - Desktop only */}
         {productsOpen && (
           <div className="products-dropdown desktop-dropdown">
@@ -274,7 +314,6 @@ export default function Topbar() {
           </div>
         )}
       </div>
-
       {/* Search Overlay */}
       <div 
         className={`search-overlay ${searchOpen ? 'active' : ''}`}
@@ -292,13 +331,11 @@ export default function Topbar() {
           <IoClose />
         </button>
       </div>
-
       {/* Cart Overlay */}
       <div 
         className={`cart-overlay ${cartOpen ? 'active' : ''}`}
         onClick={closeCart}
       />
-
       {/* Cart Sidebar */}
       <div className={`cart-sidebar ${cartOpen ? 'active' : ''}`}>
         <div className="cart-sidebar-header">

@@ -68,13 +68,34 @@
   background-color: var(--green);
   padding: 15px 0;
   text-align: center;
+  position: relative;
+  min-height: 44px;
 }
 
-.utility-bar-bottom p {
+/* Bottom bar specific text styles */
+.utility-bar-bottom .utility-text-container {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  overflow: visible;
+}
+
+.utility-bar-bottom .utility-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  margin: 0;
   color: white;
   font-weight: bold;
   font-family: 'Plus Jakarta Sans';
   font-size: 14px;
+}
+
+.utility-bar-bottom .utility-text.active {
+  opacity: 1;
 }
 
 .logo {
@@ -569,11 +590,8 @@
 @media (max-width: 768px) {
 
   .utility-bar-top p,
-  .utility-bar-bottom p {
-    font-size: 12px;
-  }
-
-  .utility-text {
+  .utility-bar-top .utility-text,
+  .utility-bar-bottom .utility-text {
     font-size: 12px;
   }
 
@@ -783,12 +801,8 @@
   }
 
   .utility-bar-top p,
-  .utility-bar-bottom p {
-    font-size: 11px;
-    padding: 0 10px;
-  }
-
-  .utility-text {
+  .utility-bar-top .utility-text,
+  .utility-bar-bottom .utility-text {
     font-size: 11px;
     padding: 0 10px;
   }
