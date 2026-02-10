@@ -207,13 +207,11 @@ export default function AdminCategories() {
                 No categories found
               </div>
             ) : (
-              categories.map((category, index) => {
-                // Cycle through 5 gradients based on index
-                const gradientClass = `bg-gradient-${index % 5}`;
+              categories.map((category) => {
                 const count = getProductCount(category._id);
 
                 return (
-                  <div key={category._id} className={`category-card ${gradientClass}`}>
+                  <div key={category._id} className="category-card">
 
                     {/* Product Count Badge (Replacing Image) */}
                     <div className="category-count-wrapper">

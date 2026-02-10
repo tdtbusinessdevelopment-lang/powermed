@@ -132,7 +132,7 @@ export default function AdminDashboard() {
                     interval={0}
                     tick={{ fontSize: 12 }}
                   />
-                  <YAxis allowDecimals={false} />
+                  <YAxis allowDecimals={false} hide />
                   <Tooltip
                     formatter={(value) => [`${value} Views`, 'Views']}
                     labelStyle={{ color: '#333' }}
