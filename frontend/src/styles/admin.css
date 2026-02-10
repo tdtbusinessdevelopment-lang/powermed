@@ -6,7 +6,7 @@
   /* Universal Orange */
   --primary-teal: #e66f27;
   /* Admin Side Header Color */
-  --green: #fd8d48;
+  --green: #e66f27;
   /* Mapping old var to new orange for compatibility */
   --white: #ffffff;
 }
