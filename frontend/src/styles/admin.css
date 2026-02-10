@@ -4,9 +4,9 @@
   /* Kept as per existing, though named red it's gray? */
   --primary-orange: #e66f27;
   /* Universal Orange */
-  --primary-teal: #0b6b6b;
+  --primary-teal: #e66f27;
   /* Admin Side Header Color */
-  --green: #e66f27;
+  --green: #fd8d48;
   /* Mapping old var to new orange for compatibility */
   --white: #ffffff;
 }
@@ -1016,4 +1016,241 @@ input:checked+.slider:before {
 .dashboard-section h2 {
   color: var(--primary-teal);
   margin-bottom: 15px;
+}
+
+/* Gradient Cards */
+.card-gradient-orange {
+  background: linear-gradient(135deg, #FF9966 0%, #FF5E62 100%);
+  color: white;
+  border: none;
+}
+
+.card-gradient-blue {
+  background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+  color: white;
+  border: none;
+}
+
+/* Specific overrides for elements inside gradient cards */
+.dashboard-card[class*="card-gradient-"] h3,
+.dashboard-card[class*="card-gradient-"] p,
+.dashboard-card[class*="card-gradient-"] .stat-number,
+.dashboard-card[class*="card-gradient-"] .stat-loading,
+.dashboard-card[class*="card-gradient-"] .card-icon {
+  color: white !important;
+  /* Force white over specificity */
+}
+
+.dashboard-card[class*="card-gradient-"] .stat-loading {
+  opacity: 0.8;
+}
+
+.dashboard-card[class*="card-gradient-"] .card-link-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.dashboard-card[class*="card-gradient-"] .card-link-button:hover {
+  background: white;
+  color: #333;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal FAQ Styling */
+.faq-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.faq-row input {
+  flex: 1;
+}
+
+.faq-row button {
+  flex-shrink: 0;
+  height: fit-content;
+}
+
+/* Category Grid Layout */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.category-card {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  min-height: 180px;
+  /* Slightly taller for icon */
+  display: flex;
+  flex-direction: column;
+  /* Stack icon and text */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Category Count Badge - Minimal/Typographic */
+.category-count-wrapper {
+  /* Removed background/border for cleaner look */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  /* Removed fixed width/height to let text breathe */
+}
+
+/* Hover effect on the number/label group */
+.category-card:hover .category-count-wrapper {
+  transform: scale(1.1);
+}
+
+.category-count-number {
+  font-size: 56px;
+  /* Larger, bolder number */
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  /* Soft shadow for lift */
+  letter-spacing: -2px;
+  /* Tighter tracking for modern feel */
+}
+
+.category-count-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  /* Wide tracking for label */
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 4px;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-card h3 {
+  margin: 0;
+  color: white;
+  font-size: 18px;
+  /* Slightly smaller to fit */
+  font-weight: 600;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  line-height: 1.3;
+}
+
+/* Redefine gradients without overlay logic needed for bg-image */
+/* ... existing gradients are fine ... */
+
+
+/* Action Buttons Container */
+.category-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Show actions on hover */
+.category-card:hover .category-actions {
+  opacity: 1;
+}
+
+/* Action Icons */
+.btn-action-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-action-icon:hover {
+  background: white;
+  color: var(--primary-teal);
+  transform: scale(1.1);
+}
+
+.btn-action-icon.delete:hover {
+  color: var(--red);
+}
+
+/* Category Gradients */
+/* 1. Sunset Orange (Theme Match) */
+.bg-gradient-0 {
+  background: linear-gradient(135deg, #FF9966 0%, #FF5E62 100%);
+}
+
+/* 2. Ocean Blue (Theme Complement) */
+.bg-gradient-1 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* 3. Lush Green */
+.bg-gradient-2 {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+/* 4. Purple Love */
+.bg-gradient-3 {
+  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+}
+
+/* 5. Sunny Morning */
+.bg-gradient-4 {
+  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
+/* Background Image styling if applicable */
+.category-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.category-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  /* Dark overlay for text readability */
+  z-index: 1;
 }
