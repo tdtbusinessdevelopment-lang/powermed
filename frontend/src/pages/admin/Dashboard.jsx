@@ -12,7 +12,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell
-} from 'recharts';
+} from "recharts";
 import { FaBoxOpen, FaList } from 'react-icons/fa';
 import '../../styles/admin.css';
 
