@@ -61,7 +61,7 @@ function Contact() {
                   checked={inquiryType === 'corporate'}
                   onChange={() => handleInquiryChange('corporate')}
                 />
-                <span>Corporate Services</span>
+                <span>Product Inquiry</span>
               </label>
 
               <label className="radio-option">
@@ -72,7 +72,18 @@ function Contact() {
                   checked={inquiryType === 'event'}
                   onChange={() => handleInquiryChange('event')}
                 />
-                <span>Event Services</span>
+                <span>Order/Delivery Inquiry</span>
+              </label>
+
+              <label className="radio-option">
+                <input
+                  type="radio"
+                  name="inquiryType"
+                  value="general"
+                  checked={inquiryType === 'general'}
+                  onChange={() => handleInquiryChange('general')}
+                />
+                <span>General Inquiry</span>
               </label>
             </div>
           </div>
