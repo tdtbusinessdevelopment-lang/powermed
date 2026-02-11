@@ -96,8 +96,8 @@
     font-family: var(--jakarta);
 }
 
-.learn p,
-.support p {
+.learn a,
+.support a {
     font-size: 15px;
     margin-bottom: 12px;
     cursor: pointer;
@@ -105,10 +105,13 @@
     font-weight: 400;
     transition: opacity 0.3s;
     font-family: var(--jakarta);
+    display: block;
+    text-decoration: none;
+    color: inherit;
 }
 
-.learn p:hover,
-.support p:hover {
+.learn a:hover,
+.support a:hover {
     opacity: 0.7;
 }
 
@@ -206,16 +209,17 @@
     gap: 15px;
 }
 
-.footer-links a {
+.footer-link-item {
     color: white;
     text-decoration: none;
     font-size: 12px;
     font-weight: 400;
     letter-spacing: 0.5px;
     transition: opacity 0.3s;
+    cursor: pointer;
 }
 
-.footer-links a:hover {
+.footer-link-item:hover {
     opacity: 0.7;
 }
 
@@ -246,6 +250,164 @@
     opacity: 0.8;
     color: rgba(255, 255, 255, 0.8);
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 85vh;
+    position: relative;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.modal-close:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.modal-body {
+    padding: 40px;
+    overflow-y: auto;
+    max-height: 85vh;
+}
+
+.modal-body h2 {
+    color: #e66f27;
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-family: var(--jakarta);
+}
+
+.last-updated {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.modal-scroll-content {
+    color: #333;
+    line-height: 1.8;
+}
+
+.modal-scroll-content h3 {
+    color: #000;
+    font-size: 18px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-family: var(--jakarta);
+}
+
+.modal-scroll-content p {
+    margin-bottom: 15px;
+    color: #444;
+    font-size: 15px;
+}
+
+.modal-scroll-content ul {
+    margin-left: 25px;
+    margin-bottom: 15px;
+}
+
+.modal-scroll-content ul li {
+    margin-bottom: 8px;
+    color: #444;
+    font-size: 15px;
+    text-align: left;
+}
+
+.disclaimer-warning {
+    background-color: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.disclaimer-warning h3 {
+    color: #856404;
+    margin-top: 0 !important;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.disclaimer-warning p {
+    color: #856404;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.disclaimer-footer {
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--red);
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 4px;
+}
+
+.disclaimer-footer p {
+    margin: 0;
+    color: #333;
+    font-weight: 600;
 }
 
 /* Responsive Design */
@@ -286,5 +448,52 @@
     .footer-links {
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .modal-content {
+        max-height: 90vh;
+        margin: 10px;
+    }
+
+    .modal-body {
+        padding: 30px 20px;
+        max-height: 90vh;
+    }
+
+    .modal-body h2 {
+        font-size: 24px;
+        padding-right: 30px;
+    }
+
+    .modal-scroll-content h3 {
+        font-size: 16px;
+    }
+
+    .modal-scroll-content p,
+    .modal-scroll-content ul li {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links .divider {
+        display: none;
+    }
+
+    .modal-overlay {
+        padding: 10px;
+    }
+
+    .modal-body {
+        padding: 25px 15px;
+    }
+
+    .modal-body h2 {
+        font-size: 20px;
     }
 }
