@@ -70,7 +70,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="dashboard-grid">
-          <div className="dashboard-card">
+          <div className="dashboard-card card-gradient-orange">
             <div className="card-header-flex">
               <h3>Categories</h3>
               <FaList className="card-icon" />
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
             </Link>
           </div>
 
-          <div className="dashboard-card">
+          <div className="dashboard-card card-gradient-blue">
             <div className="card-header-flex">
               <h3>Products</h3>
               <FaBoxOpen className="card-icon" />
@@ -126,13 +126,13 @@ export default function AdminDashboard() {
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis
                     dataKey="name"
-                    angle={-45}
-                    textAnchor="end"
-                    height={80}
+                    angle={0}
+                    textAnchor="middle"
+                    height={30}
                     interval={0}
                     tick={{ fontSize: 12 }}
                   />
-                  <YAxis allowDecimals={false} />
+                  <YAxis allowDecimals={false} hide />
                   <Tooltip
                     formatter={(value) => [`${value} Views`, 'Views']}
                     labelStyle={{ color: '#333' }}
