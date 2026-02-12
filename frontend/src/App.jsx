@@ -14,6 +14,7 @@ import ChangePassword from './pages/admin/ChangePassword.jsx'
 import About from './pages/about.jsx';  
 import Contact from './pages/contact.jsx';
 import PeptideCalculatorPage from './pages/PeptideCalculatorPage.jsx';
+import FAQs from './pages/faqs.jsx';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<About />} />
+            <Route path="/faqs" element={<FAQs />} />
             <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/contact" element={<Contact />} />

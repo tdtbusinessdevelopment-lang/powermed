@@ -6,6 +6,8 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import '../styles/landingpage.css'
+import { useNavigate } from 'react-router-dom';
+import FAQs from './faqs.jsx';
 
 import bg from '../assets/images/landingpage-bg.png'
 import model from '../assets/images/landingpage-model.png'
@@ -68,6 +70,8 @@ export default function landingpage() {
       }
     ]
   };
+
+  const navigate = useNavigate();
 
   const featuredSettings = {
     dots: true,
@@ -400,7 +404,7 @@ export default function landingpage() {
               ))}
               <div className="landing-faq-separator"></div>
             </div>
-            <button className="landing-view-all-faqs-btn">VIEW ALL FAQS</button>
+            <button className="landing-view-all-faqs-btn" onClick={() => navigate('/FAQs')}>VIEW ALL FAQS</button>
           </div>
         </div>
       </div>

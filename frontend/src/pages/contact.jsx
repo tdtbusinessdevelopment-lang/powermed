@@ -3,6 +3,9 @@ import '../styles/contact.css'
 import Topbar from '../components/topbar.jsx'
 import Footer from '../components/footer.jsx'
 import maps from '../assets/images/maps-sample.png'
+import { useNavigate } from 'react-router-dom';
+import FAQs from './faqs.jsx';
+
 
 function Contact() {
   const [inquiryType, setInquiryType] = useState('')
@@ -19,6 +22,8 @@ function Contact() {
     state: '',
     country: ''
   })
+
+  const navigate = useNavigate();
 
   const handleInquiryChange = (type) => {
     setInquiryType(type)
@@ -250,7 +255,9 @@ function Contact() {
 
         <div className="visit-faqs">
           <p>Find instant answers about product information, delivery schedules, and account management in our Help Center.</p>
-          <button className="visit-faqs-btn">Visit FAQs</button>
+          <button className="visit-faqs-btn" onClick={() => navigate('/FAQs')}>
+            Visit FAQs
+          </button>
         </div>
 
         <div className="customer-support">
