@@ -20,10 +20,10 @@
 }
 
 :root {
-  --red: #838385;
-  --dark-red: #727272;
-  --green: #e66f27;
-  --dark-green: #b64d0b;
+  --gray: #838385;
+  --dark-gray: #727272;
+  --orange: #e66f27;
+  --dark-orange: #b64d0b;
   --jakarta: 'Plus Jakarta Sans', sans-serif;
   --kufam: 'Kufam', sans-serif;
 }
@@ -199,7 +199,7 @@
 }
 
 .how-it-works-subtitle {
-  color: var(--green);
+  color: var(--orange);
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
@@ -254,7 +254,7 @@
 }
 
 .step-badge.active {
-  background-color: var(--red);
+  background-color: var(--gray);
 }
 
 .step-badge span {
@@ -988,7 +988,7 @@
   transform: translateX(-50%);
   width: 60px;
   height: 4px;
-  background-color: var(--green);
+  background-color: var(--orange);
   border-radius: 2px;
 }
 
@@ -1061,7 +1061,7 @@
 .landing-product-brand {
   font-size: 11px;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--orange);
   font-weight: 700;
   margin-bottom: 6px;
   font-family: var(--jakarta);
@@ -1095,8 +1095,8 @@
   width: 100%;
   padding: 12px;
   background: white;
-  border: 2px solid var(--green);
-  color: var(--green);
+  border: 2px solid var(--orange);
+  color: var(--orange);
   text-align: center;
   border-radius: 8px;
   font-weight: 700;
@@ -1109,9 +1109,9 @@
 }
 
 .landing-product-btn:hover {
-  background: var(--green);
+  background: var(--orange);
   color: white;
-  border-color: var(--green);
+  border-color: var(--orange);
 }
 
 .loading-featured {
@@ -1129,7 +1129,7 @@
 }
 
 .featured-slider .slick-dots li.slick-active button:before {
-  color: var(--green);
+  color: var(--orange);
 }
 
 .featured-slider .slick-dots {

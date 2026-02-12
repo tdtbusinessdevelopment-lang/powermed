@@ -318,7 +318,7 @@
 }
 
 .product-title {
-  color: var(--green, #e66f27);font-size:  clamp(1.2rem, 2.5vw, 1.6rem)
+  color: var(--orange, #e66f27);font-size:  clamp(1.2rem, 2.5vw, 1.6rem)
 }
 
 .product-category-type {

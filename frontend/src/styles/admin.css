@@ -1,12 +1,12 @@
 /* Admin Panel Styles */
 :root {
-  --red: #838385;
+  --gray: #838385;
   /* Kept as per existing, though named red it's gray? */
   --primary-orange: #e66f27;
   /* Universal Orange */
   --primary-teal: #e66f27;
   /* Admin Side Header Color */
-  --green: #e66f27;
+  --orange: #e66f27;
   /* Mapping old var to new orange for compatibility */
   --white: #ffffff;
 }
@@ -53,7 +53,7 @@
 
 .error-message {
   background: rgba(255, 50, 51, 0.1);
-  color: var(--red);
+  color: var(--gray);
   padding: 12px;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -74,7 +74,7 @@
 }
 
 .warning {
-  color: var(--red);
+  color: var(--gray);
   font-weight: bold;
   margin-top: 10px;
 }
@@ -82,7 +82,7 @@
 .login-button {
   width: 100%;
   padding: 12px;
-  background: var(--green);
+  background: var(--orange);
   color: white;
   border: none;
   border-radius: 5px;
@@ -111,7 +111,7 @@
 
 .admin-sidebar {
   width: 250px;
-  background: var(--green);
+  background: var(--orange);
   color: white;
   display: flex;
   flex-direction: column;
@@ -203,7 +203,7 @@
 .logout-button {
   width: 100%;
   padding: 10px;
-  background: var(--red);
+  background: var(--gray);
   color: white;
   border: none;
   border-radius: 5px;
@@ -239,7 +239,7 @@
 
 /* Buttons */
 .btn-primary {
-  background: var(--green);
+  background: var(--orange);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -287,7 +287,7 @@
 }
 
 .btn-delete {
-  background: var(--red);
+  background: var(--gray);
   color: white;
   padding: 8px 16px;
   border: none;
@@ -397,7 +397,7 @@
   display: inline-block;
   width: 100%;
   padding: 12px 20px;
-  background: var(--green);
+  background: var(--orange);
   color: white;
   text-decoration: none;
   font-weight: 500;
@@ -494,7 +494,7 @@
 }
 
 .admin-table thead {
-  background: var(--green);
+  background: var(--orange);
   color: white;
 }
 
@@ -962,13 +962,13 @@ input:checked+.slider:before {
 
 .alert-error {
   background: rgba(255, 50, 51, 0.1);
-  color: var(--red);
+  color: var(--gray);
   border: 1px solid rgba(255, 50, 51, 0.3);
 }
 
 .alert-success {
   background: rgba(2, 152, 158, 0.1);
-  color: var(--green);
+  color: var(--orange);
   border: 1px solid rgba(2, 152, 158, 0.3);
 }
 
@@ -1225,7 +1225,7 @@ input:checked+.slider:before {
 }
 
 .btn-action-icon.delete:hover {
-  background: var(--red);
+  background: var(--gray);
   color: white;
 }
 

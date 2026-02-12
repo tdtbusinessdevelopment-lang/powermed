@@ -5,7 +5,7 @@
 }
 
 .footer {
-    background-color: var(--red);
+    background-color: var(--gray);
     padding: 20px 40px;
     padding-top: 60px;
     color: white;
@@ -160,7 +160,7 @@
     width: 100%;
     padding: 14px;
     background-color: white;
-    color: var(--green);
+    color: var(--orange);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -173,7 +173,7 @@
 }
 
 .email-button:hover {
-    background-color: var(--green);
+    background-color: var(--orange);
     color: white;
 }
 
@@ -398,7 +398,7 @@
 
 .disclaimer-footer {
     background-color: #f8f9fa;
-    border-left: 4px solid var(--red);
+    border-left: 4px solid var(--gray);
     padding: 20px;
     margin-top: 30px;
     border-radius: 4px;

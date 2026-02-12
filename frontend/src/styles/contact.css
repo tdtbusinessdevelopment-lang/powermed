@@ -40,7 +40,7 @@
 .help-center h2 {
   font-size: 1.875rem;
   font-weight: 700;
-  color: var(--green);
+  color: var(--orange);
   margin-bottom: 2rem;
   font-family: var(--jakarta);
 }
@@ -90,7 +90,7 @@
   height: 1.125rem;
   margin-right: 0.75rem;
   cursor: pointer;
-  accent-color: var(--green);
+  accent-color: var(--orange);
 }
 
 .radio-option span {
@@ -163,7 +163,7 @@
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--green);
+  border-color: var(--orange);
   box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
 }
 
@@ -247,7 +247,7 @@
 
 .submit-btn {
   padding: 0.875rem 2.5rem;
-  background-color: var(--red);
+  background-color: var(--gray);
   color: #ffffff;
   font-weight: 600;
   font-size: 1rem;
@@ -259,12 +259,12 @@
 }
 
 .submit-btn:hover {
-  background-color: var(--dark-red);
+  background-color: var(--dark-gray);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .submit-btn:active {
-  background-color: var(--dark-red);
+  background-color: var(--dark-gray);
   transform: scale(0.98);
 }
 
@@ -288,8 +288,8 @@
 .visit-faqs-btn {
   padding: 0.625rem 1.25rem;
   margin-top: 20px;
-  background-color: var(--green);
-  border: 1px solid var(--green);
+  background-color: var(--orange);
+  border: 1px solid var(--orange);
   border-radius: 0.375rem;
   cursor: pointer;
   font-size: 20px;
@@ -300,12 +300,12 @@
 }
 
 .visit-faqs-btn:hover {
-  background-color: var(--dark-green);
-  border-color: var(--dark-green);
+  background-color: var(--dark-orange);
+  border-color: var(--dark-orange);
 }
 
 .visit-faqs-btn:active {
-  background-color: var(--dark-green);
+  background-color: var(--dark-orange);
 }
 
 /* Customer Support Section */
@@ -340,7 +340,7 @@
 .contact-options h2 {
   font-size: 1.875rem;
   font-weight: 700;
-  color: var(--green);
+  color: var(--orange);
   margin-bottom: 13px;
   font-family: var(--jakarta);
 }
@@ -360,7 +360,7 @@
 }
 
 .contact-card {
-  background: linear-gradient(135deg, #b64d0b 0%, var(--green) 100%);
+  background: linear-gradient(135deg, #b64d0b 0%, var(--orange) 100%);
   border-radius: 0.75rem;
   padding: 2rem 1.5rem;
   display: flex;

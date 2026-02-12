@@ -65,7 +65,7 @@
 }
 
 .utility-bar-bottom {
-  background-color: var(--green);
+  background-color: var(--orange);
   padding: 15px 0;
   text-align: center;
   position: relative;
@@ -189,7 +189,7 @@
 .dropdown-icon.plus {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.8);
-  color: var(--red);
+  color: var(--gray);
 }
 
 .dropdown-icon.plus.show {
@@ -250,7 +250,7 @@
 
 .dropdown-item:hover {
   background-color: #f5f5f5;
-  color: var(--green);
+  color: var(--orange);
 }
 
 .header-right {
@@ -279,7 +279,7 @@
 }
 
 .search-btn:hover {
-  color: var(--green);
+  color: var(--orange);
 }
 
 .search-overlay {
@@ -358,12 +358,12 @@
 }
 
 .search-close-btn:hover {
-  color: var(--green);
+  color: var(--orange);
 }
 
 /* View Button */
 .view-btn {
-  background-color: var(--green);
+  background-color: var(--orange);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -405,7 +405,7 @@
 }
 
 .cart-btn:hover {
-  color: var(--green);
+  color: var(--orange);
 }
 
 .cart-btn svg {
@@ -417,7 +417,7 @@
   position: absolute;
   top: -4px;
   right: -4px;
-  background-color: var(--red);
+  background-color: var(--gray);
   color: #ffffff;
   font-size: 11px;
   font-weight: bold;
@@ -510,7 +510,7 @@
 }
 
 .cart-close-btn:hover {
-  color: var(--green);
+  color: var(--orange);
 }
 
 .cart-sidebar-content {
