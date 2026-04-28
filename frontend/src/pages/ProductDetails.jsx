@@ -108,13 +108,13 @@ export default function ProductDetails() {
               <strong>DISCLAIMER ❗:</strong> All information provided is for educational and scientific reference only. Buyer assumes all responsibility for lawful use and compliance with applicable regulations.
             </p>
 
-            <a 
-              href="https://shopee.ph/poweraxis.ph" 
-              target="_blank" 
+            <a
+              href="https://shopee.ph/poweraxis.ph"
+              target="_blank"
               rel="noopener noreferrer"
               className="shopee-buy-button"
             >
-              Order on Shopee
+              Order Now
             </a>
           </div>
         </div>
