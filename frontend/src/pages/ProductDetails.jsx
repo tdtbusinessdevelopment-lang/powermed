@@ -77,6 +77,7 @@ export default function ProductDetails() {
             <p className="product-short-desc">{product.description}</p>
 
 
+
             <div className="product-faqs">
 
 
@@ -106,6 +107,15 @@ export default function ProductDetails() {
               <br></br>
               <strong>DISCLAIMER ❗:</strong> All information provided is for educational and scientific reference only. Buyer assumes all responsibility for lawful use and compliance with applicable regulations.
             </p>
+
+            <a 
+              href="https://shopee.ph/poweraxis.ph" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="shopee-buy-button"
+            >
+              Order on Shopee
+            </a>
           </div>
         </div>
       </div>

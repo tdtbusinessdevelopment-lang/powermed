@@ -16,13 +16,13 @@
 }
 
 .product-image-column {
-  background: linear-gradient(180deg, rgba(2,152,158,0.06) 0%, rgba(2,152,158,0.03) 100%);
+  background: linear-gradient(180deg, rgba(2, 152, 158, 0.06) 0%, rgba(2, 152, 158, 0.03) 100%);
   border-radius: 20px;
   padding: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(3,79,75,0.08);
+  box-shadow: 0 10px 30px rgba(3, 79, 75, 0.08);
 }
 
 .product-detail-image {
@@ -36,20 +36,106 @@
   padding: 8px 4px;
 }
 
-.product-meta { display:flex; align-items:center; gap:12px }
-.product-prescription { color: var(--orange, #02989E); font-weight:700; font-size:18px }
-.product_title { font-size:40px; color: var(--orange, #02989E); }
-.product-short-desc { color:#2b2b2b; font-size:16px; margin-bottom:18px; text-align: left; }
+.product-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
 
-.book-consult-btn { display:inline-block; background: var(--orange, #02989E); color:#fff; padding:14px 28px; border-radius:28px; margin:12px 0 24px; border:none; cursor:pointer; box-shadow: 0 6px 18px rgba(2,152,158,0.14) }
-.book-consult-btn:hover { background: var(--dark-orange, #027678) }
+.product-prescription {
+  color: var(--orange, #02989E);
+  font-weight: 700;
+  font-size: 18px
+}
 
-.product-faqs { margin-top:20px }
-.product-faqs h3 { margin-bottom:12px; font-size:20px }
-.faq-item { border-top:1px solid rgba(0,0,0,0.06); padding:12px 0 }
-.faq-question { display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:600; color: #000000; font-size: 20px; text-align: left; }
-.faq-toggle { font-size:20px; margin-left:12px }
-.faq-answer { margin-top:8px; color:#333; text-align: left; }
+.product_title {
+  font-size: 40px;
+  color: var(--orange, #02989E);
+}
+
+.product-short-desc {
+  color: #2b2b2b;
+  font-size: 16px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.shopee-buy-button {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  background: #e66f27;
+  color: #fff;
+  padding: 16px;
+  border-radius: 50px;
+  margin: 32px auto 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(238, 77, 45, 0.24);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.shopee-buy-button:hover {
+  background: #d73d20;
+  transform: translateY(-2px);
+}
+
+.book-consult-btn {
+  display: inline-block;
+  background: var(--orange, #02989E);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 28px;
+  margin: 12px 0 24px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(2, 152, 158, 0.14)
+}
+
+.book-consult-btn:hover {
+  background: var(--dark-orange, #027678)
+}
+
+.product-faqs {
+  margin-top: 20px
+}
+
+.product-faqs h3 {
+  margin-bottom: 12px;
+  font-size: 20px
+}
+
+.faq-item {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 12px 0
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #000000;
+  font-size: 20px;
+  text-align: left;
+}
+
+.faq-toggle {
+  font-size: 20px;
+  margin-left: 12px
+}
+
+.faq-answer {
+  margin-top: 8px;
+  color: #333;
+  text-align: left;
+}
 
 /* FAQ open/close animation scoped to product details and FAQ section */
 .product-details-page .faq-answer,
@@ -59,28 +145,56 @@
   overflow: hidden;
   transition: max-height 300ms ease, opacity 220ms ease, margin 220ms ease;
 }
+
 .product-details-page .faq-answer .faq-answer-inner,
 .faq-section .faq-answer .faq-answer-inner {
   padding: 0 0 20px 0;
 }
+
 .product-details-page .faq-answer.expanded,
 .faq-section .faq-answer.expanded {
-  max-height: 600px; /* large enough to contain content */
+  max-height: 600px;
+  /* large enough to contain content */
   opacity: 1;
   margin-top: 8px;
 }
 
 .product-details-page .faq-question,
-.faq-section .faq-question { transition: color 180ms ease, transform 220ms ease; }
+.faq-section .faq-question {
+  transition: color 180ms ease, transform 220ms ease;
+}
+
 .product-details-page .faq-question.open,
-.faq-section .faq-question.open { color: #01686b; }
+.faq-section .faq-question.open {
+  color: #01686b;
+}
+
 .product-details-page .faq-toggle,
-.faq-section .faq-toggle { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
+.faq-section .faq-toggle {
+  transition: transform 220ms ease, color 180ms ease;
+  display: inline-block;
+  width: 22px;
+  text-align: center
+}
+
 .product-details-page .faq-toggle.expanded,
 
 /* Also style the small plus icon used in the general FAQ list */
-.faq-section .faq-icon { transition: transform 220ms ease, color 180ms ease; display:inline-block; width:22px; text-align:center }
-.faq-section .faq-icon.expanded { transform: rotate(90deg); color: #01686b }
+.faq-section .faq-icon {
+  transition: transform 220ms ease, color 180ms ease;
+  display: inline-block;
+  width: 22px;
+  text-align: center
+}
 
-.product-disclaimer { margin-top:20px; font-size:15px; color:#000000; text-align: left; }
+.faq-section .faq-icon.expanded {
+  transform: rotate(90deg);
+  color: #01686b
+}
 
+.product-disclaimer {
+  margin-top: 20px;
+  font-size: 15px;
+  color: #000000;
+  text-align: left;
+}
