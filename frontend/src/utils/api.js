@@ -110,7 +110,7 @@ export const productAPI = {
   },
 
   // Create product (with image upload)
-  create: async (productData, imageFile) => {
+  create: async (productData, imageFiles) => {
     const formData = new FormData();
 
     // Append all product fields
@@ -120,9 +120,14 @@ export const productAPI = {
       }
     });
 
-    // Append image file
-    if (imageFile) {
-      formData.append('image', imageFile);
+    // Support single file or array of files
+    const files = Array.isArray(imageFiles) ? imageFiles : (imageFiles ? [imageFiles] : []);
+    files.forEach(f => formData.append('images', f.file || f));
+
+    // Append labels if provided
+    const labels = files.map(f => f.label || '');
+    if (labels.some(l => l)) {
+      formData.append('imageLabels', JSON.stringify(labels));
     }
 
     return apiCall('/products', {
@@ -132,7 +137,7 @@ export const productAPI = {
   },
 
   // Update product (with optional image upload)
-  update: async (id, productData, imageFile = null) => {
+  update: async (id, productData, imageFiles = null, replaceImages = true) => {
     const formData = new FormData();
 
     // Append all product fields
@@ -142,9 +147,18 @@ export const productAPI = {
       }
     });
 
-    // Append image file if provided
-    if (imageFile) {
-      formData.append('image', imageFile);
+    // Support single file or array of files
+    if (imageFiles) {
+      const files = Array.isArray(imageFiles) ? imageFiles : [imageFiles];
+      files.forEach(f => formData.append('images', f.file || f));
+
+      // Append labels if provided
+      const labels = files.map(f => f.label || '');
+      if (labels.some(l => l)) {
+        formData.append('imageLabels', JSON.stringify(labels));
+      }
+
+      formData.append('replaceImages', String(replaceImages));
     }
 
     return apiCall(`/products/${id}`, {

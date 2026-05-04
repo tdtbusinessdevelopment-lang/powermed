@@ -18,18 +18,140 @@
 .product-image-column {
   background: linear-gradient(180deg, rgba(2, 152, 158, 0.06) 0%, rgba(2, 152, 158, 0.03) 100%);
   border-radius: 20px;
-  padding: 48px;
+  padding: 32px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(3, 79, 75, 0.08);
+}
+
+/* ── Main image wrapper (positions arrows & badge) ── */
+.product-main-image-wrap {
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(3, 79, 75, 0.08);
+  min-height: 260px;
 }
 
 .product-detail-image {
   max-width: 100%;
-  max-height: 520px;
+  max-height: 460px;
   object-fit: contain;
   border-radius: 12px;
+  display: block;
+}
+
+/* Fade-in animation on image switch */
+@keyframes galleryFadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.gallery-anim {
+  animation: galleryFadeIn 0.25s ease;
+}
+
+/* Image label badge */
+.image-label-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(230, 111, 39, 0.88);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+}
+
+/* Prev / Next arrow buttons */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.9);
+  border: 1.5px solid rgba(170, 170, 170, 0.5);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #e66f27;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  z-index: 2;
+}
+.gallery-arrow:hover:not(:disabled) {
+  background: #e66f27;
+  border-color: #e66f27;
+  color: #fff;
+  transform: translateY(-50%) scale(1.08);
+}
+.gallery-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.gallery-arrow-left  { left:  6px; }
+.gallery-arrow-right { right: 6px; }
+
+/* ── Thumbnail strip ── */
+.product-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
+  padding-top: 4px;
+}
+
+.thumb-btn {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: border-color 0.2s, transform 0.15s;
+  overflow: hidden;
+}
+.thumb-btn img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.thumb-btn:hover {
+  border-color: rgba(230, 111, 39, 0.5);
+  transform: translateY(-2px);
+}
+.thumb-btn.thumb-active {
+  border-color: #e66f27;
+  box-shadow: 0 0 0 3px rgba(230, 111, 39, 0.18);
+}
+.thumb-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e66f27;
+  max-width: 72px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-info-column {

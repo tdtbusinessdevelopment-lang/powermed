@@ -23,9 +23,14 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Product category is required'],
     },
     image: {
-      type: String, // Cloudinary URL
-      required: [true, 'Product image is required'],
+      type: String, // Cloudinary URL (primary / legacy)
     },
+    images: [
+      {
+        url: { type: String, required: true },  // Cloudinary URL
+        label: { type: String, trim: true, default: '' }, // e.g. "5mg", "10ml"
+      },
+    ],
     categoryType: {
       type: String,
       trim: true,

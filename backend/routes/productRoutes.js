@@ -81,7 +81,7 @@ router.post('/:id/view', async (req, res) => {
 // @route   POST /api/products
 // @desc    Create a new product
 // @access  Private (Admin)
-router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) => {
+router.post('/', protectAdmin, admin, upload.array('images', 10), async (req, res) => {
   try {
     const { name, brand, price, category, categoryType, description } = req.body;
 
@@ -96,19 +96,35 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
       return res.status(404).json({ message: 'Category not found' });
     }
 
-    if (!req.file) {
-      return res.status(400).json({ message: 'Product image is required' });
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: 'At least one product image is required' });
     }
 
-    // Upload image to Cloudinary
-    let imageUrl = '';
+    // Parse image labels (optional JSON array matching file order)
+    let imageLabels = [];
+    if (req.body.imageLabels) {
+      try {
+        imageLabels = JSON.parse(req.body.imageLabels);
+        if (!Array.isArray(imageLabels)) imageLabels = [];
+      } catch (e) {
+        imageLabels = [];
+      }
+    }
+
+    // Upload all images to Cloudinary
+    let uploadedImages = [];
     try {
-      const cloudinaryResult = await uploadToCloudinary(req.file.buffer);
-      imageUrl = cloudinaryResult.secure_url;
+      const uploadPromises = req.files.map((file, idx) =>
+        uploadToCloudinary(file.buffer).then(result => ({
+          url: result.secure_url,
+          label: imageLabels[idx] || '',
+        }))
+      );
+      uploadedImages = await Promise.all(uploadPromises);
     } catch (uploadError) {
       console.error('Cloudinary upload error:', uploadError);
       return res.status(500).json({
-        message: uploadError.message || 'Failed to upload image to Cloudinary. Please check your internet connection and Cloudinary credentials.'
+        message: uploadError.message || 'Failed to upload image(s) to Cloudinary.'
       });
     }
 
@@ -130,7 +146,8 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
       category,
       categoryType,
       description,
-      image: imageUrl,
+      image: uploadedImages[0]?.url || '',  // legacy primary image
+      images: uploadedImages,
       faqs,
       isActive: req.body.isActive === 'true' || req.body.isActive === true,
       isFeatured: req.body.isFeatured === 'true' || req.body.isFeatured === true,
@@ -145,10 +162,11 @@ router.post('/', protectAdmin, admin, upload.single('image'), async (req, res) =
   }
 });
 
+
 // @route   PUT /api/products/:id
 // @desc    Update a product
 // @access  Private (Admin)
-router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res) => {
+router.put('/:id', protectAdmin, admin, upload.array('images', 10), async (req, res) => {
   try {
     const { name, brand, price, category, categoryType, description, isActive, isFeatured } = req.body;
 
@@ -166,17 +184,62 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
       product.category = category;
     }
 
-    // Upload new image if provided
-    if (req.file) {
+    // Upload new images if provided
+    if (req.files && req.files.length > 0) {
+      // Parse image labels (optional JSON array matching file order)
+      let imageLabels = [];
+      if (req.body.imageLabels) {
+        try {
+          imageLabels = JSON.parse(req.body.imageLabels);
+          if (!Array.isArray(imageLabels)) imageLabels = [];
+        } catch (e) {
+          imageLabels = [];
+        }
+      }
+
+      // Parse any existing images the frontend wants to keep
+      let keepImages = [];
+      if (req.body.keepImages) {
+        try {
+          keepImages = JSON.parse(req.body.keepImages);
+          if (!Array.isArray(keepImages)) keepImages = [];
+        } catch (e) {
+          keepImages = [];
+        }
+      }
+
       try {
-        const cloudinaryResult = await uploadToCloudinary(req.file.buffer);
-        product.image = cloudinaryResult.secure_url;
+        const uploadPromises = req.files.map((file, idx) =>
+          uploadToCloudinary(file.buffer).then(result => ({
+            url: result.secure_url,
+            label: imageLabels[idx] || '',
+          }))
+        );
+        const uploadedImages = await Promise.all(uploadPromises);
+
+        // Merge: existing kept images come first, new uploads are appended
+        product.images = [...keepImages, ...uploadedImages];
+
+        // Keep legacy field in sync with first image
+        product.image = product.images[0]?.url || product.image;
       } catch (uploadError) {
         console.error('Cloudinary upload error:', uploadError);
         return res.status(500).json({
-          message: uploadError.message || 'Failed to upload image to Cloudinary. Please check your internet connection and Cloudinary credentials.'
+          message: uploadError.message || 'Failed to upload image(s) to Cloudinary.'
         });
       }
+    }
+
+
+    // Allow updating image labels / order without re-uploading
+    if (req.body.images !== undefined && (!req.files || req.files.length === 0)) {
+      try {
+        const parsedImages = JSON.parse(req.body.images);
+        if (Array.isArray(parsedImages)) {
+          product.images = parsedImages;
+          product.image = parsedImages[0]?.url || product.image;
+        }
+      } catch (e) { /* ignore parse errors */ }
     }
 
     // Parse FAQs if provided (expected as JSON string in multipart form)
@@ -195,7 +258,6 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
     if (price) product.price = parseFloat(price);
     if (categoryType !== undefined) product.categoryType = categoryType;
     if (description !== undefined) product.description = description;
-    if (description !== undefined) product.description = description;
     if (isActive !== undefined) product.isActive = isActive === 'true' || isActive === true;
     if (isFeatured !== undefined) product.isFeatured = isFeatured === 'true' || isFeatured === true;
 
@@ -207,6 +269,7 @@ router.put('/:id', protectAdmin, admin, upload.single('image'), async (req, res)
     res.status(400).json({ message: error.message });
   }
 });
+
 
 // @route   DELETE /api/products/:id
 // @desc    Delete a product (hard delete - permanently removes from database)

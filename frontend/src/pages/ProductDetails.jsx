@@ -11,6 +11,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [expandedFaq, setExpandedFaq] = useState(null)
+  const [activeImageIdx, setActiveImageIdx] = useState(0)
   const viewIncremented = React.useRef(false)
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export default function ProductDetails() {
         setLoading(true)
         const data = await productAPI.getById(id)
         setProduct(data)
-        setProduct(data)
+        setActiveImageIdx(0)
 
         // Increment view count only once
         if (!viewIncremented.current) {
@@ -56,19 +57,90 @@ export default function ProductDetails() {
     </div>
   )
 
+  // Build the images list — prefer the new `images` array, fallback to legacy `image`
+  const imageList = (product.images && product.images.length > 0)
+    ? product.images
+    : product.image
+      ? [{ url: product.image, label: '' }]
+      : []
+
+  const currentImage = imageList[activeImageIdx]
+
+  const goTo = (idx) => {
+    setActiveImageIdx(Math.max(0, Math.min(idx, imageList.length - 1)))
+  }
+
   return (
     <div>
       <Topbar />
       <div className="product-details-page">
         <div className="product-details-container">
+
+          {/* ── Image Gallery Column ── */}
           <div className="product-image-column">
-            {product.image ? (
-              <img src={getCloudinaryProductImage(product.image)} alt={product.name} className="product-detail-image" />
-            ) : (
-              <div className="product-image-placeholder">No Image</div>
+            {/* Main display */}
+            <div className="product-main-image-wrap">
+              {imageList.length > 0 ? (
+                <>
+                  <img
+                    key={activeImageIdx}
+                    src={getCloudinaryProductImage(currentImage.url)}
+                    alt={currentImage.label || product.name}
+                    className="product-detail-image gallery-anim"
+                  />
+                  {currentImage.label && (
+                    <span className="image-label-badge">{currentImage.label}</span>
+                  )}
+                </>
+              ) : (
+                <div className="product-image-placeholder">No Image</div>
+              )}
+
+              {/* Prev / Next arrows (only when >1 image) */}
+              {imageList.length > 1 && (
+                <>
+                  <button
+                    className="gallery-arrow gallery-arrow-left"
+                    onClick={() => goTo(activeImageIdx - 1)}
+                    disabled={activeImageIdx === 0}
+                    aria-label="Previous image"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    className="gallery-arrow gallery-arrow-right"
+                    onClick={() => goTo(activeImageIdx + 1)}
+                    disabled={activeImageIdx === imageList.length - 1}
+                    aria-label="Next image"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Thumbnail strip */}
+            {imageList.length > 1 && (
+              <div className="product-thumbnails">
+                {imageList.map((img, idx) => (
+                  <button
+                    key={idx}
+                    className={`thumb-btn ${idx === activeImageIdx ? 'thumb-active' : ''}`}
+                    onClick={() => goTo(idx)}
+                    title={img.label || `Image ${idx + 1}`}
+                  >
+                    <img
+                      src={getCloudinaryProductImage(img.url)}
+                      alt={img.label || `Thumbnail ${idx + 1}`}
+                    />
+                    {img.label && <span className="thumb-label">{img.label}</span>}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
+          {/* ── Info Column ── */}
           <div className="product-info-column">
             <div className="product-meta">
               <h1 className="product_title">{product.name}</h1>
@@ -76,11 +148,7 @@ export default function ProductDetails() {
 
             <p className="product-short-desc">{product.description}</p>
 
-
-
             <div className="product-faqs">
-
-
               {(product.faqs || []).length === 0 && (
                 <p>No FAQs available for this product.</p>
               )}

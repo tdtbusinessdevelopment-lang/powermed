@@ -22,8 +22,7 @@ export default function AdminProducts() {
     isActive: true,
     isFeatured: false,
   });
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  const [imageEntries, setImageEntries] = useState([]); // [{file, label, preview, existingUrl}]
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -67,16 +66,33 @@ export default function AdminProducts() {
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleImageEntryAdd = () => {
+    setImageEntries(prev => [...prev, { file: null, label: '', preview: '', existingUrl: '' }]);
+  };
+
+  const handleImageEntryFile = (index, file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageEntries(prev => {
+        const next = [...prev];
+        next[index] = { ...next[index], file, preview: reader.result };
+        return next;
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleImageEntryLabel = (index, label) => {
+    setImageEntries(prev => {
+      const next = [...prev];
+      next[index] = { ...next[index], label };
+      return next;
+    });
+  };
+
+  const handleImageEntryRemove = (index) => {
+    setImageEntries(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -87,24 +103,48 @@ export default function AdminProducts() {
 
     try {
       if (editingProduct) {
-        // Update product
+        // Update product — only upload entries that have a new file
         const payload = { ...formData, faqs: JSON.stringify(formData.faqs) };
-        const result = await productAPI.update(editingProduct._id, payload, imageFile);
+        const newFileEntries = imageEntries.filter(e => e.file);
+        const imageFiles = newFileEntries.length > 0
+          ? newFileEntries.map(e => ({ file: e.file, label: e.label }))
+          : null;
+
+        // Always build the full ordered images list from all entries
+        // Existing entries keep their URL; new file entries will be appended after upload
+        const existingImages = imageEntries
+          .filter(e => e.existingUrl)
+          .map(e => ({ url: e.existingUrl, label: e.label }));
+
+        if (imageFiles) {
+          // Tell the backend which existing images to KEEP before appending new ones
+          payload.keepImages = JSON.stringify(existingImages);
+        } else {
+          // No new files — just update the existing images metadata (labels, order)
+          if (existingImages.length > 0) {
+            payload.images = JSON.stringify(existingImages);
+          }
+        }
+
+        const result = await productAPI.update(editingProduct._id, payload, imageFiles, true);
         if (result) {
           setSuccess('Product updated successfully!');
           setShowModal(false);
           resetForm();
           fetchProducts();
         }
+
       } else {
         // Create product
-        if (!imageFile) {
-          setError('Product image is required');
-          setIsSubmitting(false); // Early exit needs reset
+        const newFileEntries = imageEntries.filter(e => e.file);
+        if (newFileEntries.length === 0) {
+          setError('At least one product image is required');
+          setIsSubmitting(false);
           return;
         }
         const payload = { ...formData, faqs: JSON.stringify(formData.faqs) };
-        const result = await productAPI.create(payload, imageFile);
+        const imageFiles = newFileEntries.map(e => ({ file: e.file, label: e.label }));
+        const result = await productAPI.create(payload, imageFiles);
         if (result) {
           setSuccess('Product created successfully!');
           setShowModal(false);
@@ -131,8 +171,18 @@ export default function AdminProducts() {
       isActive: product.isActive !== undefined ? product.isActive : true,
       isFeatured: product.isFeatured || false,
     });
-    setImagePreview(product.image || '');
-    setImageFile(null);
+    // Populate image entries from existing images array, or fallback to legacy image
+    const existingImages = product.images && product.images.length > 0
+      ? product.images.map(img => ({
+          file: null,
+          label: img.label || '',
+          preview: img.url || '',
+          existingUrl: img.url || '',
+        }))
+      : product.image
+        ? [{ file: null, label: '', preview: product.image, existingUrl: product.image }]
+        : [];
+    setImageEntries(existingImages);
     setShowModal(true);
   };
 
@@ -164,8 +214,7 @@ export default function AdminProducts() {
       isActive: true,
       isFeatured: false,
     });
-    setImageFile(null);
-    setImagePreview('');
+    setImageEntries([]);
     setEditingProduct(null);
   };
 
@@ -501,19 +550,99 @@ export default function AdminProducts() {
                 </div>
 
                 <div className="form-group">
-                  <label>Product Image {!editingProduct && '*'}</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    required={!editingProduct}
-                  />
-                  {imagePreview && (
-                    <div className="image-preview">
-                      <img src={imagePreview} alt="Preview" />
+                  <label>Product Images {!editingProduct && '*'}</label>
+
+                  {/* ── Existing saved images ── */}
+                  {imageEntries.filter(e => e.existingUrl).length > 0 && (
+                    <div style={{ marginBottom: 10 }}>
+                      <p style={{ fontSize: 12, color: '#666', marginBottom: 6 }}>
+                        Current images (will be kept on save):
+                      </p>
+                      <div className="multi-image-list">
+                        {imageEntries
+                          .map((entry, idx) => ({ entry, idx }))
+                          .filter(({ entry }) => entry.existingUrl)
+                          .map(({ entry, idx }) => (
+                            <div key={idx} className="multi-image-row">
+                              <div className="multi-image-preview">
+                                <img src={entry.preview} alt={`Image ${idx + 1}`} />
+                              </div>
+                              <div className="multi-image-controls">
+                                <span style={{ fontSize: 12, color: '#888', fontStyle: 'italic' }}>
+                                  Saved image
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder="Label (e.g. 5mg, 10ml)"
+                                  value={entry.label}
+                                  onChange={(e) => handleImageEntryLabel(idx, e.target.value)}
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                className="btn-delete"
+                                onClick={() => handleImageEntryRemove(idx)}
+                                title="Remove this image"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ))}
+                      </div>
                     </div>
                   )}
+
+                  {/* ── New image upload rows ── */}
+                  {imageEntries.filter(e => !e.existingUrl).length > 0 && (
+                    <div style={{ marginBottom: 8 }}>
+                      <p style={{ fontSize: 12, color: '#666', marginBottom: 6 }}>
+                        New images to upload:
+                      </p>
+                      <div className="multi-image-list">
+                        {imageEntries
+                          .map((entry, idx) => ({ entry, idx }))
+                          .filter(({ entry }) => !entry.existingUrl)
+                          .map(({ entry, idx }) => (
+                            <div key={idx} className="multi-image-row">
+                              <div className="multi-image-preview">
+                                {entry.preview ? (
+                                  <img src={entry.preview} alt={`New ${idx + 1}`} />
+                                ) : (
+                                  <div className="multi-image-placeholder">No image</div>
+                                )}
+                              </div>
+                              <div className="multi-image-controls">
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={(e) => handleImageEntryFile(idx, e.target.files[0])}
+                                />
+                                <input
+                                  type="text"
+                                  placeholder="Label (e.g. 5mg, 10ml)"
+                                  value={entry.label}
+                                  onChange={(e) => handleImageEntryLabel(idx, e.target.value)}
+                                />
+                              </div>
+                              <button
+                                type="button"
+                                className="btn-delete"
+                                onClick={() => handleImageEntryRemove(idx)}
+                                title="Remove this image"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <button type="button" className="btn-primary" style={{ marginTop: 4 }} onClick={handleImageEntryAdd}>
+                    + Add Image
+                  </button>
                 </div>
+
 
                 <div className="modal-actions">
                   <button type="button" onClick={() => setShowModal(false)} className="btn-secondary">
