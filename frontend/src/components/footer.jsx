@@ -73,7 +73,6 @@ export default function Footer() {
               <span className="footer-link-item" onClick={(e) => openModal(e, 'disclaimer')}>RESEARCH USE ONLY DISCLAIMER</span>
             </div>
           </div>
-          <Link to="/admin/login" className="admin-access-link">Admin</Link>
         </div>
       </div>
 
